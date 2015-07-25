@@ -1,9 +1,6 @@
-/*
- * -- BASE STYLES --
- * Most of these are inherited from Base, but I want to change a few.
- */
-
 body {
+  font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
   color: #526066;
 }
 
@@ -16,7 +13,6 @@ h2, h3 {
 p {
   line-height: 1.6em;
 }
-
 
 /*
  * -- Layout Styles --
@@ -31,122 +27,142 @@ p {
 
 /*
  * -- MENU STYLES --
- * Make the menu have a very faint box-shadow.
  */
 .pure-menu {
   box-shadow: 0 1px 1px rgba(0,0,0, 0.10);
 }
 
-
-/*
- * -- BANNER --
- * The top banner with the headings. By using a combination
- * of `display: table;` and `display: table-cell;`, we can
- * vertically center the text.
- */
-
 .banner {
-  //background: transparent url('http://blog.rix1.org/content/images/2015/05/0711_0987.jpg') center center no-repeat fixed;
-  background: transparent url('https://download.unsplash.com/photo-1428954376791-d9ae785dfb2d') center -240px no-repeat fixed;
+  background:  linear-gradient(
+          rgba(0, 0, 0, 0.6),
+          rgba(0, 0, 0, 0.6)
+  ),url('https://download.unsplash.com/photo-1428954376791-d9ae785dfb2d') center center no-repeat;
   text-align: center;
   background-size: cover;
-  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://24.media.tumblr.com/ccb268832580ac12951828a1c179de69/tumblr_mo2xbk8JUK1st5lhmo1_1280.jpg', sizingMethod='scale');
 
-  height: 200px;
+  height: 10vh;
   width: 100%;
-  margin-bottom: 3em;
+  margin-bottom: 1.5em;
   display: table;
 }
 
-
 .banner-head {
   text-align: left;
-  margin: 100px auto 0;
+  padding-left: 10px;
+
+  margin: 4em auto 0;
   max-width: 980px;
-  font-size: 2em;
   color: white;
-  font-family: "Courier New", Courier, monospace;
-  font-weight: 200;
+  font-family: "Avenir",'Open Sans', sans-serif;
+  font-weight: 600;
+  letter-spacing: .05em;
   text-shadow: 0 1px 20px rgba(0,0,0,.6);
 }
 
 
-.banner-desc{
+#banner-desc{
   text-align: left;
   max-width: 980px;
+  padding-left: 10px;
   margin: 10px auto 0;
   color: white;
-  font-family: "Courier New", Courier, monospace;
+  font-weight: 200;
+  font-family:'Open Sans', sans-serif;
   text-shadow: 0 1px 20px rgba(0,0,0,.6);
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 2vmax;
+
 }
 
 /*
- * -- PRICING TABLE WRAPPER --
- * This element wraps up all the pricing table elements
+ * -- TOPIC BOX WRAPPER --
  */
 
-.topic-tables,
+.topic-box,
 .information {
   max-width: 980px;
   margin: 0 auto;
 }
-.topic-tables {
+
+.center{
+  text-align: center;
+}
+
+.quote{
+  font-weight: 200;
+}
+
+.topic-box{
   margin-bottom: 3.125em;
   text-align: center;
 }
 
 /*
- * -- PRICING TABLE  --
- * Every pricing table has the .pricing-table class
+ * -- TPOIC BOX --
+ * Every topic box has the .topic-box class
  */
 .topic {
   border: 1px solid #ddd;
-  margin: 0 0.5em 2em;
-  //padding: 0 0 3em;
+  margin: 1em 0.5em 2em;
 }
 
 /*
- * -- PRICING TABLE HEADER COLORS --
+ * -- TOPIC BOX HEADER COLORS --
  * Choose a different color based on the type of pricing table.
  */
-.topic-table-free .topic-table-header {
-  background: #519251;
+.topic-box-free .topic-box-header {
+  //background: #FCFFF5;
+  //background: #d1dbbd;
+  //background: #91AA9D;
+  background: #3E606F;
+  //background: #193441;
 }
 
-.topic-table-biz .topic-table-header {
+.selectable{
+  background: #3E606F;
+}
+
+.selected{
+    background: #91AA9D !important;
+    cursor: pointer;
+}
+
+.selectable:hover{
+  cursor: pointer;
+  background: #91AA9D;
+}
+
+.topic-box-biz .topic-box-header {
   background: #2c4985;
 }
 
 /*
- * -- PRICING TABLE HEADER --
+ * -- TOPIC BOX HEADER --
  * By default, a header is black/white, and has some styles for its <h2> name.
  */
-.topic-table-header {
-  background: #111;
+.topic-box-header {
+  background: #313131;
   color: #fff;
 }
-.topic-table-header h2 {
+.topic-box-header h2 {
   margin: 0;
   padding-top: 2em;
+  padding-bottom: 1em;
   font-size: 1em;
   font-weight: normal;
 
 }
 
-
-/*
- * -- PRICING TABLE PRICE --
- * Styles for the price and the corresponding <span>per month</span>
- */
-.topic-table-icon {
+.topic-box-icon {
   font-size: 6em;
   margin: 0.2em 0 0;
   font-weight: 100;
 }
-.topic-table-icon span {
+.topic-box-icon span {
+  margin-top: 1em;
   display: block;
-  text-transform: uppercase;
-  font-size: 0.2em;
+  font-size: 0.15em;
   padding-bottom: 2em;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.5);
@@ -156,10 +172,10 @@ p {
 
 
 /*
- * -- PRICING TABLE LIST --
- * Each pricing table has a <ul> which is denoted by the .pricing-table-list class
+ * -- TABLE LIST --
+ * Each table has a <ul> which is denoted by the .topic-box-list class
  */
-.topic-table-desc {
+.topic-box-desc {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -168,10 +184,10 @@ p {
 
 
 /*
- * -- PRICING TABLE LIST ELEMENTS --
- * Styles for the individual list elements within each pricing table
+ * -- LIST ELEMENTS --
+ * Styles for the individual list elements within a table
  */
-.topic-table-desc li {
+.topic-box-desc li {
   padding: 0.8em 0;
   background: #f7f7f7;
   border-bottom: 1px solid #e7e7e7;
@@ -179,13 +195,13 @@ p {
 
 
 /*
- * -- PRICING TABLE BUTTON --
- * Styles for the "Choose" button at the bottom of a pricing table.
+ * -- BUTTON --
  * This inherits from Pure Button.
  */
 .button-choose {
   border: 1px solid #ccc;
   background: #fff;
+  font-size: 1.4em;
   color: #333;
   border-radius: 2em;
   font-weight: bold;
@@ -199,7 +215,7 @@ p {
 }
 
 .footer {
-  background: #111;
+  background: #0e2b34;
   color: #888;
   text-align: center;
 }
