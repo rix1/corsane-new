@@ -11,15 +11,7 @@
         </div>
 
         <div ng-repeat="topic in home.topics" class="pure-u-1 pure-u-md-1-3">
-            <div class="topic topic-box-free">
-                <div class="topic-box-header" ng-click="changeClass(topic)" ng-class="topic.selected ? 'selected' : 'selectable'">
-                    <h2>{{topic.name}}</h2>
-					<span class="topic-box-icon">
-                        <i ng-class="topic.icon"></i>
-						<span>{{topic.desc}}</span>
-					</span>
-                </div>
-            </div>
+            <topic-box ng-click="select()" topic="topic"></topic-box>
         </div>
         <div class="pure-u-1">
             <button ng-class="selected ? '':'pure-button-disabled'" class="button-choose pure-button">Next</button>
