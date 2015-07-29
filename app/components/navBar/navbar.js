@@ -1,3 +1,7 @@
+/*
+* @deprecated
+*
+
 (function(window, document){
     var menu = document.getElementById('menu'),
         WINDOW_CHANGE_EVENT = ('onorientationchange' in window) ? 'orientationchange' : 'resize';
@@ -31,4 +35,4 @@
     });
 
     window.addEventListener(WINDOW_CHANGE_EVENT, closeMenu);
-    })(this, this.document);
+    })(this, this.document);*/

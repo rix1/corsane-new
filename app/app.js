@@ -5,11 +5,11 @@ angular.module('myApp', [
     'ngRoute',
     'myApp.landing',
     'myApp.profile',
+    'myApp.article',
+    'myApp.topic',
     'myApp.version',
     'myApp.directives.topicBox',
-    'myApp.directives.menuBar'
-
-
+    'myApp.directives.navbar'
 ])
 
     .config(['$routeProvider', function($routeProvider) {

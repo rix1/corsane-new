@@ -2,13 +2,13 @@
 
 angular.module('myApp.profile', ['ngRoute'])
 
-.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/profile', {
-    templateUrl: '/profile.html',
-    controller: 'ProfileCtrl'
-  });
-}])
+    .config(['$routeProvider', function($routeProvider) {
+        $routeProvider.when('/profile', {
+            templateUrl: 'views/profile/profile.html',
+            controller: 'profileCtrl'
+        });
+    }])
 
-.controller('ProfileCtrl', [function() {
-
-}]);
+    .controller('profileCtrl', ['$scope', function($scope) {
+        // something
+    }]);

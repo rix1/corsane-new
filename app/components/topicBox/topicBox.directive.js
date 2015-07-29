@@ -3,15 +3,16 @@ angular.module('myApp.directives.topicBox', [])
         return {
             restrict: 'E',
             scope: {
-              topic: '='
+                topic: '='
             },
             templateUrl: "components/topicBox/topicBox.html",
-            controller: function ($scope) {
-                $scope.changeClass = function (topic) {
-                    topic.selected = !topic.selected;
-                    //$scope.box = "selected";
-                    console.log(topic);
-                };
-            }
+            controller: 'topicBoxCtrl'
         }
-    });
+    })
+    .controller('topicBoxCtrl', ['$scope', function ($scope) {
+        $scope.changeClass = function (topic) {
+            topic.selected = !topic.selected;
+            //$scope.box = "selected";
+            console.log(topic);
+        };
+    }]);
