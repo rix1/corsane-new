@@ -1,3 +1,6 @@
+# CUSTOM
+*.css
+
 logs/*
 !.gitkeep
 node_modules/
@@ -12,7 +15,8 @@ tmp
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*

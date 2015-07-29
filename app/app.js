@@ -3,12 +3,15 @@
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
     'ngRoute',
-    'myApp.home',
-    'myApp.view1',
+    'myApp.landing',
+    'myApp.profile',
     'myApp.version',
-    'myApp.directives.topicBox'
+    'myApp.directives.topicBox',
+    'myApp.directives.menuBar'
+
+
 ])
 
     .config(['$routeProvider', function($routeProvider) {
-        $routeProvider.otherwise({redirectTo: '/home'});
+        $routeProvider.otherwise({redirectTo: '/landing'});
     }]);

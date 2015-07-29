@@ -1,0 +1,116 @@
+
+/*
+ * -- TPOIC BOX --
+ * Every topic box has the .topicBox class
+ */
+.topic {
+  border: 1px solid #ddd;
+  margin: 0.4em 0.4em 0.4em;
+
+  @media (max-width: @screen-xs-max) {
+    margin: 1em 0.5em 0;
+  }
+}
+
+/*
+ * -- TOPIC BOX HEADER COLORS --
+ * Choose a different color based on the type of pricing table.
+ */
+.topic-box-free .topic-box-header {
+  //background: #FCFFF5;
+  //background: #d1dbbd;
+  //background: #91AA9D;
+  background: @blue-light;
+  //background: #193441;
+
+}
+
+.selectable{
+  background: @blue-light;
+}
+
+.selected{
+  background: @blue-dark !important;
+  cursor: pointer;
+}
+
+.selectable:hover{
+  cursor: pointer;
+  background: @green-grey;
+}
+
+.topic-box-biz .topic-box-header {
+  background: @blue-dark;
+}
+
+/*
+ * -- TOPIC BOX HEADER --
+ * By default, a header is black/white, and has some styles for its <h2> name.
+ */
+.topic-box-header {
+  background: #313131;
+  color: #fff;
+}
+.topic-box-header h2 {
+  margin: 0;
+  padding-top: 2em;
+  padding-bottom: 1em;
+  font-size: 1em;
+  font-weight: normal;
+
+  @media (max-width: @screen-xs-max) {
+  }
+}
+
+.topic-box-icon {
+  font-size: 6em;
+  margin: 0.2em 0 0;
+  font-weight: 100;
+}
+.topic-box-icon span {
+  margin-top: 1em;
+  display: block;
+  font-size: 0.15em;
+  padding-bottom: 2em;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.5);
+  *color: #fff;
+}
+
+/*
+ * -- TABLE LIST --
+ * Each table has a <ul> which is denoted by the .topicBox-list class
+ */
+.topic-box-desc {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+
+/*
+ * -- TOPIC BOX WRAPPER --
+ */
+
+.topic-box,
+.information {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.topic-box{
+  margin-bottom: 3.125em;
+  text-align: center;
+}
+
+
+/*
+ * -- LIST ELEMENTS --
+ * Styles for the individual list elements within a table
+ */
+.topic-box-desc li {
+  padding: 0.8em 0;
+  background: #f7f7f7;
+  border-bottom: 1px solid #e7e7e7;
+}
