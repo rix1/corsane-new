@@ -1,7 +1,7 @@
 
 /*
  * -- TPOIC BOX --
- * Every topic box has the .topicBox class
+ * Every topics box has the .topicBox class
  */
 .topic {
   border: 1px solid #ddd;
@@ -22,7 +22,6 @@
   //background: #91AA9D;
   background: @blue-light;
   //background: #193441;
-
 }
 
 .topic-box-free > .selectable{
@@ -113,4 +112,18 @@
   padding: 0.8em 0;
   background: #f7f7f7;
   border-bottom: 1px solid #e7e7e7;
+  list-style: none;
+
+  &:hover{
+    background-color: average(@grey-light, #ffffff);
+  }
+}
+
+.topic-box-desc a{
+  text-decoration: none;
+  color: @blue-light;
+}
+
+.after{
+  margin-top: -0.8em;
 }

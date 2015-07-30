@@ -23,20 +23,22 @@
 <body>
 <div id="wrapper">
 
-<!--[if lt IE 7]>
-<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-<![endif]-->
+    <!--[if lt IE 7]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
 
 
     <!-- ABOVE TEMPLATE -->
+    <div id="content" >
+        <navbar></navbar>
 
-    <navbar></navbar>
-
-    <div id="content" ng-view></div>
-    <!-- BELOW TEMPLATE -->
-    <div id="fot" class="footer l-box">
-        <p>All rights reserved Corsane AS</p>
+        <div ng-view></div>
+        <!-- BELOW TEMPLATE -->
+        <div class="footer">
+            <p>All rights reserved Corsane AS</p>
+        </div>
     </div>
+
 </div>
 
 
@@ -52,6 +54,7 @@
 
 <script src="views/profile/profile.js"></script>
 <script src="views/landing/landing.js"></script>
+<script src="views/topics/topics.js"></script>
 <script src="views/topic/topic.js"></script>
 <script src="views/article/article.js"></script>
 

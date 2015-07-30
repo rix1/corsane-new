@@ -6,6 +6,7 @@ angular.module('myApp', [
     'myApp.landing',
     'myApp.profile',
     'myApp.article',
+    'myApp.topics',
     'myApp.topic',
     'myApp.version',
     'myApp.directives.topicBox',

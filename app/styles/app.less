@@ -24,6 +24,10 @@ h2, h3 {
 .intro{
   font-size: 2vmax;
   font-weight: 200;
+
+  @media (min-width: @screen-lg-min) {
+    font-size: 2vmin;
+  }
 }
 
 .big-center{
@@ -35,6 +39,7 @@ h2, h3 {
 
 .quote{
   font-weight: 200;
+  color: @blue-dark;
 }
 
 .help {
@@ -42,7 +47,7 @@ h2, h3 {
   font-weight: 500;
   font-size: 18px;
   opacity: 0.6;
- 
+
   &:after{
     content: '...';
   }
@@ -56,7 +61,6 @@ h2, h3 {
 #wrapper{
   position: relative;
   min-height: 100%;
-
 }
 
 #content{
@@ -72,7 +76,7 @@ h2, h3 {
   padding: 0.5em 2em;
 }
 
-.banner {
+.img-banner {
   background:  linear-gradient(
           rgba(0, 0, 0, 0.6),
           rgba(0, 0, 0, 0.6)
@@ -116,6 +120,72 @@ h2, h3 {
 }
 
 
+
+
+/*.banner{
+  text-align: center;
+  height: 10vh;
+  margin-bottom: 1.5em;
+  display: table;
+
+  h1{
+    color: white;
+    font-family: "Avenir",'Open Sans', sans-serif;
+    font-weight: 600;
+    letter-spacing: .05em;
+    padding-left: 10px;
+    text-align: left;
+  }
+
+  h2{
+    color: white;
+    font-weight: 200;
+    font-family:'Open Sans', sans-serif;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 2vm;
+    padding-left: 10px;
+    text-align: left;
+  }
+}
+
+.img-banner {
+  .banner;
+  background:  linear-gradient(
+          rgba(0, 0, 0, 0.6),
+          rgba(0, 0, 0, 0.6)
+  ),url('https://download.unsplash.com/photo-1428954376791-d9ae785dfb2d') center center no-repeat;
+  background-size: cover;
+
+  h1{
+    text-shadow: 0 1px 20px rgba(0,0,0,.6);
+  }
+
+  h2{
+    text-shadow: 0 1px 20px rgba(0,0,0,.6);
+  }
+}
+
+.default-banner {
+  .banner;
+  background-color: white;
+  border-bottom: solid 1px @green-bright;
+
+  h1 {
+    color: @blue-light;
+  }
+  h2{
+    color: @grey-light;
+  }
+}*/
+
+.hr-style{
+  border: 0;
+  height: 1px;
+  width: 14%;
+  background-color: @green-bright;
+}
+
 /*
  * -- BUTTON --
  * This inherits from Pure Button.
@@ -136,12 +206,11 @@ h2, h3 {
   font-weight: 500;
 }
 
-#fot {
+.footer {
   background: #0e2b34;
   color: #888;
   text-align: center;
-
-  width:100%;
+  width: 100%;
   position:absolute;
   bottom:0;
   left:0;
@@ -150,8 +219,6 @@ h2, h3 {
 .footer a {
   color: #ddd;
 }
-
-
 
 /*
  * -- TABLET MEDIA QUERIES --
@@ -174,7 +241,7 @@ h2, h3 {
  * On phones, we want to reduce the height and font-size of the banner further
  */
 @media (min-width: 480px) {
-  .banner {
+  .img-banner {
     height: 400px;
   }
   .banner-head {
