@@ -76,76 +76,38 @@ h2, h3 {
   padding: 0.5em 2em;
 }
 
-.img-banner {
-  background:  linear-gradient(
-          rgba(0, 0, 0, 0.6),
-          rgba(0, 0, 0, 0.6)
-  ),url('https://download.unsplash.com/photo-1428954376791-d9ae785dfb2d') center center no-repeat;
+.banner{
   text-align: center;
   background-size: cover;
 
   height: 10vh;
   width: 100%;
-  margin-bottom: 1.5em;
-  display: table;
-}
-
-.banner-head {
-  text-align: left;
-  padding-left: 10px;
-
-  margin: 4em auto 0;
-  max-width: 980px;
-  color: white;
-  font-family: "Avenir",'Open Sans', sans-serif;
-  font-weight: 600;
-  letter-spacing: .05em;
-  text-shadow: 0 1px 20px rgba(0,0,0,.6);
-}
-
-
-#banner-desc{
-  text-align: left;
-  max-width: 980px;
-  padding-left: 10px;
-  margin: 10px auto 0;
-  color: white;
-  font-weight: 200;
-  font-family:'Open Sans', sans-serif;
-  text-shadow: 0 1px 20px rgba(0,0,0,.6);
-  text-transform: none;
-  letter-spacing: 0;
-  font-size: 2vmax;
-
-}
-
-
-
-
-/*.banner{
-  text-align: center;
-  height: 10vh;
-  margin-bottom: 1.5em;
+  margin-bottom: 2.5em;
   display: table;
 
   h1{
+    text-align: left;
+    padding-left: 10px;
+
+    margin: 4em auto 0;
+    max-width: 980px;
     color: white;
     font-family: "Avenir",'Open Sans', sans-serif;
     font-weight: 600;
     letter-spacing: .05em;
-    padding-left: 10px;
-    text-align: left;
   }
 
   h2{
+    text-align: left;
+    max-width: 980px;
+    padding-left: 10px;
+    margin: 10px auto 0;
     color: white;
     font-weight: 200;
     font-family:'Open Sans', sans-serif;
     text-transform: none;
     letter-spacing: 0;
-    font-size: 2vm;
-    padding-left: 10px;
-    text-align: left;
+    font-size: 2vmax;
   }
 }
 
@@ -155,7 +117,6 @@ h2, h3 {
           rgba(0, 0, 0, 0.6),
           rgba(0, 0, 0, 0.6)
   ),url('https://download.unsplash.com/photo-1428954376791-d9ae785dfb2d') center center no-repeat;
-  background-size: cover;
 
   h1{
     text-shadow: 0 1px 20px rgba(0,0,0,.6);
@@ -164,20 +125,23 @@ h2, h3 {
   h2{
     text-shadow: 0 1px 20px rgba(0,0,0,.6);
   }
+
 }
 
-.default-banner {
+.default-banner{
   .banner;
-  background-color: white;
-  border-bottom: solid 1px @green-bright;
+  border-bottom: solid 1px @grey-light;
 
-  h1 {
+  h1{
     color: @blue-light;
+    margin-top: 2em;
   }
   h2{
-    color: @grey-light;
+    color: @blue-light;
+    margin-bottom: 2em;
+
   }
-}*/
+}
 
 .hr-style{
   border: 0;
