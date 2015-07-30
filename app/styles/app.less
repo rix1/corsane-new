@@ -2,9 +2,17 @@ html,
 body {
   font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
   height: 100%;
-  color: @blue-light;
   padding: 0;
   margin: 0;
+  color: @blue-light;
+}
+
+/*
+* -- Text Styles --
+*/
+
+p {
+  line-height: 1.6em;
 }
 
 h2, h3 {
@@ -13,9 +21,37 @@ h2, h3 {
   font-weight: 600;
 }
 
-p {
-  line-height: 1.6em;
+.intro{
+  font-size: 2vmax;
+  font-weight: 200;
 }
+
+.big-center{
+
+}
+.center{
+  text-align: center;
+}
+
+.quote{
+  font-weight: 200;
+}
+
+.help {
+  font-style: italic;
+  font-weight: 500;
+  font-size: 18px;
+  opacity: 0.6;
+ 
+  &:after{
+    content: '...';
+  }
+}
+
+
+/*
+ * -- Layout Styles --
+ */
 
 #wrapper{
   position: relative;
@@ -27,9 +63,7 @@ p {
   padding-bottom: 100px;
 }
 
-/*
- * -- Layout Styles --
- */
+
 .l-content {
   margin: 0 auto;
 }
@@ -81,22 +115,6 @@ p {
 
 }
 
-.big-center{
-
-}
-
-
-
-.center{
-  text-align: center;
-}
-
-.quote{
-  font-weight: 200;
-}
-
-
-
 
 /*
  * -- BUTTON --
@@ -109,7 +127,7 @@ p {
   color: #333;
   border-radius: 2em;
   font-weight: bold;
-  //position: relative;
+  position: relative;
   bottom: -1.5em;
 }
 

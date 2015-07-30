@@ -10,6 +10,8 @@ angular.module('myApp.directives.navbar', [])
         };
     })
 
-    .controller('navCtrl', ['$scope', function($scope) {
-        console.log("Navbar directive called");
+    .controller('navCtrl', ['$scope', '$location', function($scope, $location) {
+        $scope.isActive = function (destination) {
+            return destination === $location.path();
+        }
     }]);

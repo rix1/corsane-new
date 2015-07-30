@@ -1,3 +1,37 @@
+/*
+ * -- MENU STYLES --
+ */
+.pure-menu {
+  box-shadow: 0 1px 1px rgba(0,0,0, 0.10);
+}
+
+.pure-menu-list > li > a {
+
+  background-color: @blue-light;
+
+  &:hover{
+    background-color: @blue-dark;
+  }
+  &:active {
+    background-color: @blue-dark;
+  }
+  &:focus{
+    background-color: @blue-dark;
+  }
+}
+
+.pure-menu-list > .active > a,
+.pure-menu-list > .active > a:hover,
+.pure-menu-list > .active > a:focus{
+  background-color: @blue-dark;
+}
+
+.pure-menu-item{
+
+}
+
+
+
 .pure-menu-heading{
   color: white;
 }
@@ -8,7 +42,6 @@
 
 .custom-wrapper {
   background-color: @blue-light;
-  margin-bottom: 1em;
   -webkit-font-smoothing: antialiased;
   height: 2.1em;
   overflow: hidden;
