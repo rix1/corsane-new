@@ -10,6 +10,7 @@ angular.module('myApp', [
     'myApp.topic',
     'myApp.version',
     'myApp.directives.topicBox',
+    'myApp.directives.login',
     'myApp.directives.navbar'
 ])
 
