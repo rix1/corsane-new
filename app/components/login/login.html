@@ -15,8 +15,8 @@
         <label for="show-password" class="pure-checkbox">
             <input name="show-password" id="show-password" ng-model="showpw" type="checkbox"> Show password
         </label>
-        <label for="terms" class="pure-checkbox">
-            <input name="test2" id="terms" ng-checked="testModel.item2" type="checkbox"> I've read the <a href="">terms and conditions</a>
+        <label ng-show="!login" for="terms" class="pure-checkbox">
+            <input  name="test2" id="terms" ng-checked="testModel.item2" type="checkbox"> I've read the <a href="">terms and conditions</a>
         </label>
         <div class="pure-g">
             <div class="pure-u-1">
