@@ -1,7 +1,10 @@
+html,
 body {
   font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
-
+  height: 100%;
   color: @blue-light;
+  padding: 0;
+  margin: 0;
 }
 
 h2, h3 {
@@ -14,6 +17,16 @@ p {
   line-height: 1.6em;
 }
 
+#wrapper{
+  position: relative;
+  min-height: 100%;
+
+}
+
+#content{
+  padding-bottom: 100px;
+}
+
 /*
  * -- Layout Styles --
  */
@@ -23,13 +36,6 @@ p {
 
 .l-box {
   padding: 0.5em 2em;
-}
-
-/*
- * -- MENU STYLES --
- */
-.pure-menu {
-  box-shadow: 0 1px 1px rgba(0,0,0, 0.10);
 }
 
 .banner {
@@ -103,7 +109,7 @@ p {
   color: #333;
   border-radius: 2em;
   font-weight: bold;
-  position: relative;
+  //position: relative;
   bottom: -1.5em;
 }
 
@@ -112,11 +118,17 @@ p {
   font-weight: 500;
 }
 
-.footer {
+#fot {
   background: #0e2b34;
   color: #888;
   text-align: center;
+
+  width:100%;
+  position:absolute;
+  bottom:0;
+  left:0;
 }
+
 .footer a {
   color: #ddd;
 }
