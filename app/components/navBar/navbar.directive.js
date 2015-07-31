@@ -32,6 +32,7 @@ angular.module('myApp.directives.navbar', [])
 
         $scope.open = 'custom-wrapper';
         $scope.toggle = '';
+        $scope.list = '';
 
 
         $scope.$watch('model.check', function (old, newval) {
@@ -40,8 +41,10 @@ angular.module('myApp.directives.navbar', [])
             if(old){
                 $scope.open = 'custom-wrapper';
                 $scope.toggle = '';
+                $scope.list = 'pure-menu-horizontal';
             }else{
                 $scope.open = 'custom-wrapper open';
+                $scope.list = '';
                 $scope.toggle = 'x';
             }
         });

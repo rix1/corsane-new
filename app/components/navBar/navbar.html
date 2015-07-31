@@ -2,9 +2,7 @@
     <input type="checkbox" ng-model="model.check" ng-hide="true"/>
     <div class="pure-u-1 pure-u-md-1-3">
         <div class="pure-menu">
-            <label for="temp" style="color: yellow">
-                <input id="temp" ng-model="model.check" type="checkbox" class="pure-menu-heading custom-brand"/> Corsane: {{open}}
-            </label>
+            <a href="#/home" class="pure-menu-heading custom-brand">Corsane</a>
             <a href="#/" ng-click="model.check =!model.check" ng-class="toggle" class="custom-toggle" id="toggle" >
                 <s class="bar"></s>
                 <s class="bar"></s>
@@ -12,7 +10,7 @@
         </div>
     </div>
     <div class="pure-u-1 pure-u-md-1-3">
-        <div class="pure-menu pure-menu-horizontal custom-can-transform">
+        <div ng-class="list" class="pure-menu pure-menu-horizontal">
             <ul class="pure-menu-list">
                 <li class="pure-menu-item" ng-class="{active: isActive('/landing')}"><a href="#/landing" class="pure-menu-link">Home</a></li>
                 <li class="pure-menu-item" ng-class="{active: isActive('/topics')}"><a href="#/topics" class="pure-menu-link">Topic</a></li>
@@ -22,7 +20,7 @@
         </div>
     </div>
     <div class="pure-u-1 pure-u-md-1-3">
-        <div class="pure-menu pure-menu-horizontal custom-menu-3 custom-can-transform">
+        <div ng-class="list" class="pure-menu pure-menu-horizontal custom-menu-3">
             <ul class="pure-menu-list">
                 <li class="pure-menu item"><a href="#/profile" class="pure-menu-link">Profile</a></li>
                 <li class="pure-menu item"><a href="#/article" class="pure-menu-link">Article</a></li>
