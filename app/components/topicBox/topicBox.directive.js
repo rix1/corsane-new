@@ -12,8 +12,6 @@ angular.module('myApp.directives.topicBox', [])
     })
     .controller('topicBoxCtrl', ['$scope', function ($scope) {
 
-        console.log($scope.topic);
-
         if($scope.selectable){
             $scope.topic.class = 'selectable';
         }else{

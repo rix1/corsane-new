@@ -8,7 +8,9 @@ angular.module('myApp', [
     'myApp.article',
     'myApp.topics',
     'myApp.topic',
+    //'myApp.lab',
     'myApp.version',
+    //'myApp.directives.labField',
     'myApp.directives.topicBox',
     'myApp.directives.login',
     'myApp.directives.navbar'
