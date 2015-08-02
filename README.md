@@ -1,5 +1,12 @@
+For developers : 
 TALK WITH RIKARD IF YOU ARE BUILDING THIS YOURSELF
 
+For people who only want to take a look:
+
+1. Navigate to '/app/styles/'.
+2. Run command 'lessc --no-color style.less'
+3. Run 'npm start' - it will run both npm install and bower install
+4. Redo step 1-2 if you forgot them. 
 
 ### Install Dependencies
 
