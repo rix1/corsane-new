@@ -9,7 +9,7 @@ angular.module('myApp.landing', ['ngRoute'])
         });
     }])
 
-    .controller('landingCtrl', ['$scope', function($scope) {
+    .controller('landingCtrl', ['$scope', '$window', function($scope, $window) {
         var c = this;
 
         $scope.select = function() {
@@ -28,6 +28,7 @@ angular.module('myApp.landing', ['ngRoute'])
                     selected.push(c.topics[i]);
                 }
             }
-            console.log(selected);
+            $window.location.href = '#/topics';
+            //console.log(selected);
         };
     }]);

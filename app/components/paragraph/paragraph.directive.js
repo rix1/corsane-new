@@ -12,9 +12,6 @@ angular.module('myApp.directives.paragraph', [])
     })
 
     .controller('paraCtrl', ['$scope', function($scope) {
-
-        $scope.isIntro = 'readable';
-
         $scope.getText = function (text) {
             console.log("paragraphCtrl: working");
             if($scope.prev){

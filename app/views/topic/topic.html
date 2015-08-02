@@ -1,15 +1,12 @@
 <div ng-controller="topicCtrl as topicC">
     <div class="default-banner center-text">
-        <h1 class="banner-head">{{topicC.topic.title}}<br/></h1>
+        <h1 class="banner-head tag-topic">{{topicC.topic.title}}</h1>
         <h2 id="banner-desc">{{topicC.topic.desc}}</h2>
     </div>
 
 
     <div class="l-content">
-
-        <!--TODO: Make directive out of large-text/quote thingy?-->
         <div ng-repeat="article in topicC.articles">
-            <!--<p>HEISANN</p>-->
             <paragraph content="article" prev="true"></paragraph>
             <hr class="hr-style"/>
         </div>

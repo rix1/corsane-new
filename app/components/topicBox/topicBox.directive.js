@@ -10,12 +10,12 @@ angular.module('myApp.directives.topicBox', [])
             controller: 'topicBoxCtrl'
         }
     })
-    .controller('topicBoxCtrl', ['$scope', function ($scope) {
+    .controller('topicBoxCtrl', ['$scope','$window', function ($scope, $window) {
 
         if($scope.selectable){
             $scope.topic.class = 'selectable';
         }else{
-            $scope.topic.class = '';
+            $scope.topic.class = 'hoverhand';
         }
 
         $scope.changeClass = function (topic) {
@@ -26,6 +26,8 @@ angular.module('myApp.directives.topicBox', [])
                 } else {
                     topic.class = 'selectable';
                 }
+            }else{
+                $window.location.href = '#/topic';
             }
         };
     }]);
