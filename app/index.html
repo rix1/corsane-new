@@ -32,7 +32,7 @@
     <div id="content" >
         <navbar></navbar>
 
-        <div ng-view></div>
+        <div ng-click="model.check = !model.check" ng-view></div>
         <!-- BELOW TEMPLATE -->
         <div class="footer">
             <p>All rights reserved Corsane AS</p>
@@ -52,14 +52,13 @@
 <script src="components/topicBox/topicBox.directive.js"></script>
 <script src="components/navbar/navbar.directive.js"></script>
 <script src="components/login/login.directive.js"></script>
+<script src="components/paragraph/paragraph.directive.js"></script>
 
 <script src="views/profile/profile.js"></script>
 <script src="views/landing/landing.js"></script>
 <script src="views/topics/topics.js"></script>
 <script src="views/topic/topic.js"></script>
 <script src="views/article/article.js"></script>
-<script src="views/lab/lab.js"></script>
-<script src="views/lab/lab.directive.js"></script>
 <script src="components/version/version.js"></script>
 <script src="components/version/version-directive.js"></script>
 <script src="components/version/interpolate-filter.js"></script>
