@@ -5,8 +5,15 @@ For people who only want to take a look:
 
 1. Navigate to `/app/styles/`.
 2. Run command `lessc --no-color style.less`
-3. Run `npm start` - it will run both npm install and bower install
+3. Run `npm start` - it will run both npm install, bower install and start a small web server.
 4. Redo step 1-2 if you forgot them. 
+
+
+---
+
+Skip the rest of this document. It is not done!
+
+---
 
 ### Install Dependencies
 
