@@ -1,18 +1,4 @@
-*For developers :* 
-This README is unfinished and may contain errors and flaws. Please contact rix1 on Slack:Corsane if you encounter any problems. 
-
-*Minimum required to test the applicaiton:*
-1. Navigate to `/app/styles/`.
-2. Run command `lessc --no-color style.less > style.css`
-3. In root - run `npm start` - it will run both npm install, bower install and start a small web server.
-4. The application should now be available on `http://localhost:8000/app`. If you need to change any server settings, do so in `package.json`.
-5. Redo step 1-2 if you forgot them. 
-
----
-
-Skip the rest of this document. It is not done!
-
----
+This repository contains the front-end code for Corsane's new direction. 
 
 ### Install Dependencies
 
