@@ -13,7 +13,6 @@ angular.module('myApp.directives.paragraph', [])
 
     .controller('paraCtrl', ['$scope', function($scope) {
         $scope.getText = function (text) {
-            console.log("paragraphCtrl: working");
             if($scope.prev){
                 $scope.isIntro = 'intro';
                 return text.slice(0, 100);

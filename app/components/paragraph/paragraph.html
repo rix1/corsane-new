@@ -7,9 +7,9 @@
             <p ng-class="isIntro">
                 {{getText(content.text)}}
             </p>
-            <div ng-if="!prev">
-                <p class="icon-row fa fa-heart"> {{content.favorites}}</p>
-                <p class="icon-row fa fa-comment"> {{content.favorites}}</p>
+            <div class="icon-row" ng-if="!prev">
+                <p class="fa fa-heart"> {{content.favorites}}</p>
+                <p class="fa fa-comment"> {{content.favorites}}</p>
             </div>
         </div>
     </div>
