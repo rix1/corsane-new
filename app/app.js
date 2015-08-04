@@ -3,6 +3,7 @@
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
     'ngRoute',
+    'myApp.config',
     'myApp.landing',
     'myApp.profile',
     'myApp.article',
@@ -24,11 +25,6 @@ angular.module('myApp', [
         $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
         $httpProvider.defaults.headers.post['Content-Type'] =  'application/x-www-form-urlencoded';
     }])
-
-    .constant('config', {
-        // backend enpoint
-        baseUrl: 'http://10.0.1.123:1337/' // TODO: Change to localhost
-    })
 
     .run(['$injector', '$http', 'authService',
         function($injector, $http, authService) {

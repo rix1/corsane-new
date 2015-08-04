@@ -16,6 +16,18 @@ folders in your project.
 
 *Note that the `bower_components` folder would normally be installed in the root folder, but this is changed through the `.bowerrc` file. Doing so makes it easier to serve the files by a webserver like nginx.*
 
+### Example config
+
+Create file ```/app/config.js``` and add the following
+
+```
+angular
+    .module('myApp.config', [])
+    .constant('config', {
+        baseUrl: 'http://your-api.com/'
+    });
+```
+
 ### Run the Application
 
 Because this project uses the [LESS](http://lesscss.org/) CSS pre-processor, we need to compile the style.less file. Do this by typing (from root directory):
