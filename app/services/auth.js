@@ -2,26 +2,27 @@ angular.module('myApp.services')
     .factory('authService', ['$http', 'config', '$q',
         function($http, config, $q) {
 
+            var transformReq = function(obj) {
+                var str = [];
+                for(var p in obj)
+                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            };
+
             return {
 
                 login: function(username, password) {
 
                     var defer = $q.defer();
-                    var send =  {
-                        username: username,
-                        password: password
-                    };
 
                     $http({
                         method: 'POST',
                         url: config.baseUrl + 'auth/login',
-                        transformRequest: function(obj) {
-                            var str = [];
-                            for(var p in obj)
-                                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                            return str.join("&");
-                        },
-                        data: send
+                        transformRequest: transformReq(),
+                        data: {
+                            username: username,
+                            password: password
+                        }
                     }).success(function(res) {
                         defer.resolve(res);
                     }).error(function(err, data, status, config) {
@@ -60,10 +61,11 @@ angular.module('myApp.services')
                     $http({
                         method: 'POST',
                         url: config.baseUrl + 'user',
-                        data: $.param({
+                        transformRequest: transformReq(),
+                        data: {
                             username: username,
                             password: password
-                        })
+                        }
                     }).success(function(res) {
                         defer.resolve(res);
                     }).error(function(err, data, status, config) {
@@ -80,9 +82,10 @@ angular.module('myApp.services')
                     $http({
                         method: 'POST',
                         url: config.baseUrl + 'auth/forgotten_password',
-                        data: $.param({
-                            email: email
-                        })
+                        transformRequest: transformReq(),
+                        data: {
+                            username: email
+                        }
                     }).success(function(res) {
                         defer.resolve(res);
                     }).error(function(err, data, status, config) {

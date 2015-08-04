@@ -9,44 +9,46 @@ angular.module('myApp.directives.login', [])
     })
 
     .controller('loginCtrl', ['$scope', '$http', '$location', 'authService', function($scope, $http, $location, authService) {
-        var user = {};
         var text = ['login', 'sign up', 'register'];
+        var models = [{h1: "login",alt:"sign up",btn:"login",login:true},{h1: "sign up",alt:"login",btn:"register"}];
 
-        var registerView = ('/register' === $location.path());
-        console.log(registerView);
+        var loginURL = ('/login' === $location.path());
+        $scope.error = {err:false, msg:""};
 
-        $scope.user = user;
-
-        $scope.login = false;
-
+        $scope.model = loginURL ? models[0]:models[1];
         $scope.showpw = false;
         $scope.switch = function () {
-
-            $scope.login ? ($scope.h1 = text[1]):($scope.h1 = text[0]);
-            $scope.login ? ($scope.alt = text[0]):($scope.alt = text[1]);
-            $scope.login ? ($scope.btn = text[2]):($scope.btn = text[0]);
-            $scope.login = !$scope.login;
-
+            if(loginURL){
+                $location.path("/register");
+            }else{
+                $location.path("/login");
+            }
         };
-        $scope.h1 = text[1];
-        $scope.alt = text[0];
-        $scope.btn = text[1];
-
-
-        if(!registerView){
-            $scope.login = !registerView;
-
-        }
-
-
         $scope.submit = function (form) {
-            authService.login(form.email, form.password)
-                .then(function (res) {
-                    $http.defaults.headers.common['Authorization'] = "Bearer " + res.token;
-                    $location.path("/profile");
-                    //console.log(res);
-                }, function (err) {
-                    console.log(err);
-                });
+
+            if(!form || !form.email || !form.password) {
+                $scope.error.err = true;
+                $scope.error.msg = "Please fill in the fields";
+
+                console.log("error");
+            }else{
+                if (loginURL) {
+                    authService.login(form.email, form.password)
+                        .then(function (res) {
+                            $http.defaults.headers.common['Authorization'] = "Bearer " + res.token;
+                            $location.path("/profile");
+                        }, function (err) {
+                            $scope.error.msg = err.message;
+                        });
+                }else{
+                    authService.register(form.email, form.password)
+                        .then(function (res) {
+                            $http.defaults.headers.common['Authorization'] = "Bearer " + res.token;
+                            $location.path("/login");
+                        }, function (err) {
+                            console.log(err);
+                        });
+                }
+            }
         }
     }]);
