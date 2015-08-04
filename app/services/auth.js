@@ -1,108 +1,115 @@
-angular.module('myApp').factory('authService', ['$http', 'config', '$q',
+angular.module('myApp.services')
+    .factory('authService', ['$http', 'config', '$q',
+        function($http, config, $q) {
 
-    function($http, config, $q) {
+            return {
 
-        return {
+                login: function(username, password) {
 
-            login: function(username, password) {
-
-                var defer = $q.defer();
-
-                $http({
-                    method: 'POST',
-                    url: config.baseUrl + 'auth/login',
-                    data: $.param({
+                    var defer = $q.defer();
+                    var send =  {
                         username: username,
                         password: password
-                    })
-                }).success(function(res) {
-                    defer.resolve(res);
-                }).error(function(err, data, status, config) {
-                    defer.reject(err)
-                });
+                    };
 
-                return defer.promise;
+                    $http({
+                        method: 'POST',
+                        url: config.baseUrl + 'auth/login',
+                        transformRequest: function(obj) {
+                            var str = [];
+                            for(var p in obj)
+                                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                            return str.join("&");
+                        },
+                        data: send
+                    }).success(function(res) {
+                        defer.resolve(res);
+                    }).error(function(err, data, status, config) {
+                        defer.reject(err)
+                    });
 
-            },
+                    return defer.promise;
 
-            loginWithFacebook: function() {
-                // Redirect to backend login
-                window.location.href = config.baseUrl + 'auth/facebook/login';
-            },
+                },
 
-            logout: function() {
+                loginWithFacebook: function() {
+                    // Redirect to backend login
+                    window.location.href = config.baseUrl + 'auth/facebook/login';
+                },
 
-                var defer = $q.defer();
+                logout: function() {
 
-                $http({
-                    method: 'POST',
-                    url: config.baseUrl + 'auth/logout'
-                }).success(function(res) {
-                    defer.resolve(res);
-                }).error(function(err, data, status, config) {
-                    defer.reject(err)
-                });
+                    var defer = $q.defer();
 
-                return defer.promise;
-            },
+                    $http({
+                        method: 'POST',
+                        url: config.baseUrl + 'auth/logout'
+                    }).success(function(res) {
+                        defer.resolve(res);
+                    }).error(function(err, data, status, config) {
+                        defer.reject(err)
+                    });
 
-            register: function(username, password) {
+                    return defer.promise;
+                },
 
-                var defer = $q.defer();
+                register: function(username, password) {
 
-                $http({
-                    method: 'POST',
-                    url: config.baseUrl + 'user',
-                    data: $.param({
-                        username: username,
-                        password: password
-                    })
-                }).success(function(res) {
-                    defer.resolve(res);
-                }).error(function(err, data, status, config) {
-                    defer.reject(err)
-                });
+                    var defer = $q.defer();
 
-                return defer.promise;
-            },
+                    $http({
+                        method: 'POST',
+                        url: config.baseUrl + 'user',
+                        data: $.param({
+                            username: username,
+                            password: password
+                        })
+                    }).success(function(res) {
+                        defer.resolve(res);
+                    }).error(function(err, data, status, config) {
+                        defer.reject(err)
+                    });
 
-            forgotten_password: function(email) {
+                    return defer.promise;
+                },
 
-                var defer = $q.defer();
+                forgotten_password: function(email) {
 
-                $http({
-                    method: 'POST',
-                    url: config.baseUrl + 'auth/forgotten_password',
-                    data: $.param({
-                        email: email
-                    })
-                }).success(function(res) {
-                    defer.resolve(res);
-                }).error(function(err, data, status, config) {
-                    defer.reject(err)
-                });
+                    var defer = $q.defer();
 
-                return defer.promise;
+                    $http({
+                        method: 'POST',
+                        url: config.baseUrl + 'auth/forgotten_password',
+                        data: $.param({
+                            email: email
+                        })
+                    }).success(function(res) {
+                        defer.resolve(res);
+                    }).error(function(err, data, status, config) {
+                        defer.reject(err)
+                    });
 
-            },
+                    return defer.promise;
 
-            getCSRF: function() {
+                },
 
-                var q = $q.defer();
+                getCSRF: function() {
 
-                $http({
-                    method: 'GET',
-                    url: config.baseUrl + 'csrfToken',
-                    withCredentials: true
-                }).success(function(data) {
-                    q.resolve(data._csrf);
-                }).error(function(err) {
-                    q.reject(err);
-                });
+                    var q = $q.defer();
 
-                return q.promise;
+                    $http({
+                        method: 'GET',
+                        url: config.baseUrl + 'csrfToken',
+                        withCredentials: true
+                    }).success(function(data) {
+                        q.resolve(data._csrf);
+                    }).error(function(err) {
+                        q.reject(err);
+                    });
+
+                    return q.promise;
+                }
+
             }
-
         }
-    }
-]);
+    ]);

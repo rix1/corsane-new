@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('myApp.topics', ['ngRoute'])
 
     .config(['$routeProvider', function($routeProvider) {
