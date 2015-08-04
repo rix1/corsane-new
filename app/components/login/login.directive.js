@@ -8,14 +8,17 @@ angular.module('myApp.directives.login', [])
         };
     })
 
-    .controller('loginCtrl', ['$scope', '$http', 'authService', function($scope, $http, authService) {
+    .controller('loginCtrl', ['$scope', '$http', '$location', 'authService', function($scope, $http, $location, authService) {
         var user = {};
         var text = ['login', 'sign up', 'register'];
 
+        var registerView = ('/register' === $location.path());
+        console.log(registerView);
 
         $scope.user = user;
 
         $scope.login = false;
+
         $scope.showpw = false;
         $scope.switch = function () {
 
@@ -29,11 +32,18 @@ angular.module('myApp.directives.login', [])
         $scope.alt = text[0];
         $scope.btn = text[1];
 
+
+        if(!registerView){
+            $scope.login = !registerView;
+
+        }
+
+
         $scope.submit = function (form) {
             authService.login(form.email, form.password)
                 .then(function (res) {
                     $http.defaults.headers.common['Authorization'] = "Bearer " + res.token;
-                    $location.path("/");
+                    $location.path("/profile");
                     //console.log(res);
                 }, function (err) {
                     console.log(err);
