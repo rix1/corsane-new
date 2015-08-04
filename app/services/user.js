@@ -1,4 +1,6 @@
-angular.module('corsaneApp').factory('userService', ['$http', 'config', '$q',
+angular.module('myApp.services')
+    .factory('userService', ['$http', 'config', '$q',
+
     function($http, config, $q) {
 
         return {

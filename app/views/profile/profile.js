@@ -6,7 +6,7 @@ angular.module('myApp.profile', ['ngRoute'])
         $routeProvider.when('/profile', {
             templateUrl: 'views/profile/profile.html',
             controller: 'profileCtrl'
-        });
+        })
     }])
 
     .controller('profileCtrl', ['$scope', function($scope) {

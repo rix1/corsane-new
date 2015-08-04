@@ -8,7 +8,7 @@ angular.module('myApp.directives.login', [])
         };
     })
 
-    .controller('loginCtrl', ['$scope', 'authService', function($scope, authService) {
+    .controller('loginCtrl', ['$scope', '$http', 'authService', function($scope, $http, authService) {
         var user = {};
         var text = ['login', 'sign up', 'register'];
 
@@ -30,10 +30,11 @@ angular.module('myApp.directives.login', [])
         $scope.btn = text[1];
 
         $scope.submit = function (form) {
-            console.log(form);
             authService.login(form.email, form.password)
                 .then(function (res) {
-                    console.log(res);
+                    $http.defaults.headers.common['Authorization'] = "Bearer " + res.token;
+                    $location.path("/");
+                    //console.log(res);
                 }, function (err) {
                     console.log(err);
                 });
