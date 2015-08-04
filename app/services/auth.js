@@ -18,7 +18,7 @@ angular.module('myApp.services')
                     $http({
                         method: 'POST',
                         url: config.baseUrl + 'auth/login',
-                        transformRequest: transformReq(),
+                        transformRequest: transformReq,
                         data: {
                             username: username,
                             password: password
@@ -56,12 +56,15 @@ angular.module('myApp.services')
 
                 register: function(username, password) {
 
+                    console.log(username);
+                    console.log(password);
+
                     var defer = $q.defer();
 
                     $http({
                         method: 'POST',
                         url: config.baseUrl + 'user',
-                        transformRequest: transformReq(),
+                        transformRequest: transformReq,
                         data: {
                             username: username,
                             password: password

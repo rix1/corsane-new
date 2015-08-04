@@ -9,6 +9,13 @@ angular.module('myApp.profile', ['ngRoute'])
         })
     }])
 
-    .controller('profileCtrl', ['$scope', function($scope) {
+    .controller('profileCtrl', ['$rootScope', '$scope', '$location', function($rootScope, $scope, $location) {
         // something
+
+        $scope.user = $rootScope.user;
+
+        $scope.logout = function () {
+            $location.path("/logout");
+        };
+
     }]);

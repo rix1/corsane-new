@@ -8,7 +8,7 @@ angular.module('myApp.directives.login', [])
         };
     })
 
-    .controller('loginCtrl', ['$scope', '$http', '$location', 'authService', function($scope, $http, $location, authService) {
+    .controller('loginCtrl', ['$rootScope', '$scope', '$http', '$location', 'authService', function($rootScope, $scope, $http, $location, authService) {
         var text = ['login', 'sign up', 'register'];
         var models = [{h1: "login",alt:"sign up",btn:"login",login:true},{h1: "sign up",alt:"login",btn:"register"}];
 
@@ -36,6 +36,7 @@ angular.module('myApp.directives.login', [])
                     authService.login(form.email, form.password)
                         .then(function (res) {
                             $http.defaults.headers.common['Authorization'] = "Bearer " + res.token;
+                            $rootScope.user = res.user;
                             $location.path("/profile");
                         }, function (err) {
                             $scope.error.msg = err.message;

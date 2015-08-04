@@ -13,6 +13,7 @@ angular.module('myApp', [
     'myApp.directives.navbar',
     'myApp.directives.paragraph',
     'myApp.directives.topicBox',
+    'myApp.directives.logout',
     'myApp.services'
 ])
 
