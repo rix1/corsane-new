@@ -1,6 +1,9 @@
 # CUSTOM
 *.css
 
+# Angular local config
+app/config.js
+
 logs/*
 !.gitkeep
 node_modules/
