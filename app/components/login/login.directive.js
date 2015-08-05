@@ -13,6 +13,11 @@ angular.module('myApp.directives.login', [])
         var models = [{h1: "login",alt:"sign up",btn:"login",login:true},{h1: "sign up",alt:"login",btn:"register"}];
 
         var loginURL = ('/login' === $location.path());
+
+        if($rootScope.user) {
+            $location.path("/profile");
+        }
+
         $scope.error = {err:false, msg:""};
 
         $scope.model = loginURL ? models[0]:models[1];
