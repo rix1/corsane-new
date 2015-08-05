@@ -32,12 +32,11 @@ angular.module('myApp.directives.login', [])
             }
         };
         $scope.login = function (form) {
+            $scope.error.err = false;
 
             if (!form || !form.email || !form.password) {
                 $scope.error.err = true;
                 $scope.error.msg = "Please fill in the fields";
-
-                console.log("error");
             } else {
                 $scope.pending = true;
                 if (loginURL) {
