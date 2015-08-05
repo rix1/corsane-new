@@ -6,10 +6,10 @@
 
 
     <div class="l-content">
-        <div ng-repeat="article in topic.articles">
-            <paragraph content="article" prev="true"></paragraph>
-            <!--<hr class="hr-style"/>-->
-        </div>
+        <ul ng-repeat="article in topic.articles">
+            <li class="hoverhand" ng-click="getArticle(article.id)">{{article.title}}</li>
+        </ul>
+
         <div class="topic-box pure-g">
             <div class="pure-u-1">
                 <p>Suggest a <a style="font-weight: 600" href="">new article</a> to the {{topic.title}} topic.</p>

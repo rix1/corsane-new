@@ -9,17 +9,21 @@ angular.module('myApp.topic', ['ngRoute'])
         });
     }])
 
-    .controller('topicCtrl', ['$scope', '$routeParams', 'topicService', function($scope, $routeParams, topicService) {
+    .controller('topicCtrl', ['$scope', '$routeParams', '$location', 'topicService',
+        function($scope, $routeParams, $location, topicService) {
 
         var topicId = $routeParams.id;
         topicService.getTopic(topicId).then(
             function(topic) {
-                console.log(topic);
                 $scope.topic = topic;
             },
             function(err) {
                 console.log(err);
             }
         );
+
+        $scope.getArticle = function(id) {
+            $location.path("/article/" + id);
+        }
 
     }]);
