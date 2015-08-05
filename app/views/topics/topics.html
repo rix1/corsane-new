@@ -24,12 +24,6 @@
 
         <div ng-repeat="topic in topicC.topics" class="pure-u-1 pure-u-md-1-3">
             <topic-box ng-click="select()" selectable="false" topic="topic"></topic-box>
-            <div class="topic topic-box-free after">
-                <ul ng-repeat="article in topic.articles" class="topic-box-desc">
-                    <a href="#/article"><li>{{article.title}}</li></a>
-                </ul>
-            </div>
-            <!--<button class="button-choose pure-button">Choose</button>-->
         </div>
     </div> <!-- end topics-boxes-->
 </div> <!-- end l-content -->
