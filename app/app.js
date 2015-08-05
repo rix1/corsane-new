@@ -3,6 +3,7 @@
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
     'ngRoute',
+    'ngStorage',
     'myApp.config',
     'myApp.landing',
     'myApp.profile',
@@ -10,6 +11,8 @@ angular.module('myApp', [
     'myApp.topics',
     'myApp.topic',
     'myApp.login',
+    'myApp.lab',
+
     'myApp.directives.login',
     'myApp.directives.navbar',
     'myApp.directives.paragraph',
@@ -27,13 +30,32 @@ angular.module('myApp', [
         $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
         $httpProvider.defaults.headers.post['Content-Type'] =  'application/x-www-form-urlencoded';
 
+        $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function ($q, $location, $localStorage) {
+            return {
+                'request': function (config) {
+                    config.headers = config.headers || {};
+                    if ($localStorage.token) {
+                        config.headers.Authorization = 'Bearer ' + $localStorage.token;
+                    }
+                    return config;
+                },
+                'responseError': function (response) {
+                    if (response.status === 401 || response.status === 403) {
+                        $location.path('/login');
+                    }
+                    return $q.reject(response);
+                }
+            };
+        }]);
         //$locationProvider.html5Mode(true);
     }])
 
-    .run(['$injector', '$http', 'authService',
-        function($injector, $http, authService) {
+    .run(['$injector', '$http', '$rootScope', 'authService',
+        function($injector, $http, $rootScope, authService) {
             // Add CSRF token to header
             authService.getCSRF().then(function (token) {
                 $http.defaults.headers.common['x-csrf-token'] = token;
             });
-        }]);
+            $rootScope.user = authService.getTokenClaims();
+        }
+    ]);

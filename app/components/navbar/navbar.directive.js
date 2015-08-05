@@ -15,13 +15,7 @@ angular.module('myApp.directives.navbar', [])
         $scope.isActive = function (destination) {
             return (destination === $location.path());
         };
-
-        console.log("navbar: " );
-        console.log($rootScope.user);
-
-
         $scope.model = {};
-
         $scope.model.check = true;
 
         $scope.open = 'custom-wrapper';

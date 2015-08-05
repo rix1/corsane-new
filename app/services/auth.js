@@ -1,6 +1,38 @@
 angular.module('myApp.services')
-    .factory('authService', ['$http', 'config', '$q',
-        function($http, config, $q) {
+    .factory('authService', ['$http', 'config', '$q', '$localStorage',
+        function($http, config, $q, $localStorage) {
+
+            function urlBase64Decode(str) {
+                var output = str.replace('-', '+').replace('_', '/');
+                switch (output.length % 4) {
+                    case 0:
+                        break;
+                    case 2:
+                        output += '==';
+                        break;
+                    case 3:
+                        output += '=';
+                        break;
+                    default:
+                        throw 'Illegal base64url string!';
+                }
+                return window.atob(output);
+            }
+
+            // Reconstruct userObject from token
+            function getClaimsFromToken() {
+                var token = $localStorage.token;
+                var user = {};
+                if (typeof token !== 'undefined') {
+                    var encoded = token.split('.')[1];
+                    user = JSON.parse(urlBase64Decode(encoded));
+                }
+                //console.log("wow -  something:");
+                //console.log(user);
+                return user;
+            }
+
+            var tokenClaims = getClaimsFromToken();
 
             var transformReq = function(obj) {
                 var str = [];
@@ -11,7 +43,7 @@ angular.module('myApp.services')
 
             return {
 
-                login: function(username, password) {
+                login: function (username, password) {
 
                     var defer = $q.defer();
 
@@ -23,33 +55,33 @@ angular.module('myApp.services')
                             username: username,
                             password: password
                         }
-                    }).success(function(res) {
+                    }).success(function (res) {
                         defer.resolve(res);
-                    }).error(function(err, data, status, config) {
-                        var error = {};
-                        error.message = "Wops - Validation error. Try again!";
-                        defer.reject(error)
+                    }).error(function (err, data, status, config) {
+                        defer.reject(err)
                     });
 
                     return defer.promise;
 
                 },
 
-                loginWithFacebook: function() {
+                loginWithFacebook: function () {
                     // Redirect to backend login
                     window.location.href = config.baseUrl + 'auth/facebook/login';
                 },
 
-                logout: function() {
+                logout: function () {
 
                     var defer = $q.defer();
 
                     $http({
                         method: 'POST',
                         url: config.baseUrl + 'auth/logout'
-                    }).success(function(res) {
+                    }).success(function (res) {
+                        tokenClaims = {};
+                        delete $localStorage.token;
                         defer.resolve(res);
-                    }).error(function(err, data, status, config) {
+                    }).error(function (err, data, status, config) {
                         var error = {};
                         error.message = "Wops - validation error. Try again!";
                         defer.reject(error)
@@ -58,7 +90,7 @@ angular.module('myApp.services')
                     return defer.promise;
                 },
 
-                register: function(username, password) {
+                register: function (first, last, username, password) {
 
                     console.log(username);
                     console.log(password);
@@ -70,12 +102,14 @@ angular.module('myApp.services')
                         url: config.baseUrl + 'user',
                         transformRequest: transformReq,
                         data: {
+                            first_name: first,
+                            last_name: last,
                             username: username,
                             password: password
                         }
-                    }).success(function(res) {
+                    }).success(function (res) {
                         defer.resolve(res);
-                    }).error(function(err, data, status, config) {
+                    }).error(function (err, data, status, config) {
                         var error = {};
                         error.message = "Wops - validation error. Try again!";
                         defer.reject(error)
@@ -84,7 +118,7 @@ angular.module('myApp.services')
                     return defer.promise;
                 },
 
-                forgotten_password: function(email) {
+                forgotten_password: function (email) {
 
                     var defer = $q.defer();
 
@@ -95,9 +129,9 @@ angular.module('myApp.services')
                         data: {
                             username: email
                         }
-                    }).success(function(res) {
+                    }).success(function (res) {
                         defer.resolve(res);
-                    }).error(function(err, data, status, config) {
+                    }).error(function (err, data, status, config) {
                         defer.reject(err)
                     });
 
@@ -105,7 +139,7 @@ angular.module('myApp.services')
 
                 },
 
-                getCSRF: function() {
+                getCSRF: function () {
 
                     var q = $q.defer();
 
@@ -113,15 +147,18 @@ angular.module('myApp.services')
                         method: 'GET',
                         url: config.baseUrl + 'csrfToken',
                         withCredentials: true
-                    }).success(function(data) {
+                    }).success(function (data) {
                         q.resolve(data._csrf);
-                    }).error(function(err) {
+                    }).error(function (err) {
                         q.reject(err);
                     });
 
                     return q.promise;
-                }
+                },
 
-            }
+                getTokenClaims: function () {
+                    return tokenClaims;
+                }
+            };
         }
     ]);

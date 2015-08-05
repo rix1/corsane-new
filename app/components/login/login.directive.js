@@ -8,13 +8,17 @@ angular.module('myApp.directives.login', [])
         };
     })
 
-    .controller('loginCtrl', ['$rootScope', '$scope', '$http', '$location', 'authService', function($rootScope, $scope, $http, $location, authService) {
+    .controller('loginCtrl', ['$rootScope', '$scope', '$http', '$location', '$localStorage', 'authService',
+        function($rootScope, $scope, $http, $location, $localStorage, authService) {
+
+
         var text = ['login', 'sign up', 'register'];
         var models = [{h1: "login",alt:"sign up",btn:"login",login:true},{h1: "sign up",alt:"login",btn:"register"}];
 
         var loginURL = ('/login' === $location.path());
 
         $scope.pending = false;
+
         // Redirect logged in users to their profile
         if($rootScope.user) {
             $location.path("/profile");
@@ -42,7 +46,8 @@ angular.module('myApp.directives.login', [])
                 if (loginURL) {
                     authService.login(form.email, form.password)
                         .then(function (res) {
-                            $http.defaults.headers.common['Authorization'] = "Bearer " + res.token;
+                            $localStorage.token = res.token;
+                            //$http.defaults.headers.common['Authorization'] = "Bearer " + res.token;
                             $rootScope.user = res.user;
                             $location.path("/profile");
                         }, function (err) {
@@ -51,9 +56,10 @@ angular.module('myApp.directives.login', [])
                             $scope.error.err = true;
                         });
                 } else {
-                    authService.register(form.email, form.password)
+                    authService.register(form.firstName, form.lastName, form.email, form.password)
                         .then(function (res) {
-                            $http.defaults.headers.common['Authorization'] = "Bearer " + res.token;
+                            $localStorage.token = res.token;
+                            //$http.defaults.headers.common['Authorization'] = "Bearer " + res.token;
                             $location.path("/login");
                         }, function (err) {
                             $scope.pending = false;
@@ -64,4 +70,6 @@ angular.module('myApp.directives.login', [])
                 }
             }
         };
+        $scope.token = $localStorage.token;
+        $scope.tokenClaims = authService.getTokenClaims();
     }]);

@@ -3,6 +3,14 @@ angular.module('myApp.services')
 
     function($http, config, $q) {
 
+        var transformReq = function(obj) {
+            var str = [];
+            for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            return str.join("&");
+        };
+
+
         return {
 
             getArticle: function(id) {
@@ -41,10 +49,8 @@ angular.module('myApp.services')
                 $http({
                     method: 'POST',
                     url: config.baseUrl + 'article',
-                    data: $.param({
-                        title: article.title,
-                        topic: article.topic
-                    })
+                    transformRequest: transformReq,
+                    data: article
                 }).success(function(res) {
                     defer.resolve(res);
                 }).error(function(err, data, status, config) {

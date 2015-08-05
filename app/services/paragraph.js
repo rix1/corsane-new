@@ -1,5 +1,5 @@
 angular.module('myApp.services')
-    .factory('topicService', ['$http', 'config', '$q',
+    .factory('paragraphService', ['$http', 'config', '$q',
 
         function($http, config, $q) {
 
@@ -11,13 +11,13 @@ angular.module('myApp.services')
                 return str.join("&");
             };
 
-            return {
 
-                getTopic: function(id) {
+            return {
+                getParagraph: function(id) {
 
                     var defer = $q.defer();
 
-                    $http.get(config.baseUrl + 'topic/' + id)
+                    $http.get(config.baseUrl + 'paragraph/' + id)
                         .success(function(res) {
                             defer.resolve(res);
                         })
@@ -28,39 +28,37 @@ angular.module('myApp.services')
                     return defer.promise;
                 },
 
-                addTopic: function(formdata) {
+                getAllParagraphs: function() {
 
+                    var defer = $q.defer();
+
+                    $http.get(config.baseUrl + 'paragraph/')
+                        .success(function(res) {
+                            defer.resolve(res);
+                        })
+                        .error(function(err, status) {
+                            defer.reject(err)
+                        });
+
+                    return defer.promise;
+                },
+
+                createParagraph: function(paragraph) {
                     var defer = $q.defer();
 
                     $http({
                         method: 'POST',
-                        url: config.baseUrl + 'topic',
+                        url: config.baseUrl + 'paragraph',
                         transformRequest: transformReq,
-                        data: formdata
+                        data: paragraph
                     }).success(function(res) {
                         defer.resolve(res);
-                    })
-                        .error(function(err, status) {
-                            defer.reject(err)
-                        });
-                    return defer.promise;
-                },
-
-                getAllTopics: function() {
-
-                    var defer = $q.defer();
-
-                    $http.get(config.baseUrl + 'topic/')
-                        .success(function(res) {
-                            defer.resolve(res);
-                        })
-                        .error(function(err, status) {
-                            defer.reject(err)
-                        });
+                    }).error(function(err, data, status, config) {
+                        defer.reject(err)
+                    });
 
                     return defer.promise;
                 }
-
             }
         }
     ]);
