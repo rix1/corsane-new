@@ -10,7 +10,7 @@ angular.module('myApp.directives.topicBox', [])
             controller: 'topicBoxCtrl'
         }
     })
-    .controller('topicBoxCtrl', ['$scope','$window', function ($scope, $window) {
+    .controller('topicBoxCtrl', ['$scope','$window', '$location', function ($scope, $window, $location) {
 
         if($scope.selectable){
             $scope.topic.class = 'selectable';
@@ -30,4 +30,8 @@ angular.module('myApp.directives.topicBox', [])
                 $window.location.href = '#/topic';
             }
         };
+
+        $scope.getTopic = function(id) {
+            $location.path("/topic/" + id);
+        }
     }]);

@@ -1,9 +1,9 @@
 <div class="topic topic-box-free">
-    <div class="topic-box-header" ng-click="changeClass(topic)" ng-class="topic.class">
+    <div class="topic-box-header" ng-click="getTopic(topic.id)" ng-class="topic.class">
         <h2>{{topic.title}}</h2>
 					<span class="topic-box-icon hidden-xs">
                         <i ng-class="topic.icon_url"></i>
-						<span>{{topic.desc}}</span>
+						<span>{{topic.description}}</span>
 					</span>
     </div>
 

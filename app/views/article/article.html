@@ -1,13 +1,13 @@
-<div ng-controller="articleCtrl as ctrl">
+<div ng-controller="articleCtrl">
     <div class="default-banner center-text">
-        <h1 class="banner-head">{{ctrl.a.title}}<br/></h1>
-        <h2 id="banner-desc">{{ctrl.a.introduction}}</h2>
-        <p><small><em>By {{ctrl.a.author.first_name}} {{ctrl.a.author.last_name}} in <a href="{{}}">{{ctrl.a.topic}}</a></em></small></p>
+        <h1 class="banner-head">{{article.title}}<br/></h1>
+        <h2 id="banner-desc">{{article.introduction}}</h2>
+        <p><small><em>By {{article.author.first_name}} {{article.author.last_name}} in <a href="{{}}">{{article.topics[0].title}}</a></em></small></p>
     </div>
 
     <div class="l-content">
-        <div ng-repeat="p in ctrl.a.paragraphs">
-            <paragraph content="p" prev="false"></paragraph>
+        <div ng-repeat="paragraph in article.paragraphs">
+            <paragraph content="paragraph" prev="false"></paragraph>
             <!--<hr class="hr-style"/>-->
         </div>
         <div class="topic-box pure-g">
