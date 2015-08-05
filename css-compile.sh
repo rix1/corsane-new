@@ -1,0 +1,1 @@
+lessc --no-color app/styles/style.less > app/styles/style.css

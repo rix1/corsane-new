@@ -1,4 +1,4 @@
-This repository contains the front-end code for Corsane's new direction. 
+cThis repository contains the front-end code for Corsane's new direction. 
 
 ### Install Dependencies
 
@@ -34,6 +34,10 @@ Because this project uses the [LESS](http://lesscss.org/) CSS pre-processor, we 
 
 ```
 lessc --no-color app/styles/style.less > app/styles/style.css
+
+OR run the following bash script from project root:
+
+cat css-compile.sh | sh
 ```
 
 LESS is a prerequsite here, and can be installed with `npm install -g less`. The project is preconfigured with a simple development web server. Serve the application with the following command:
