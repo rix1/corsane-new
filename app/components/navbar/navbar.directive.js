@@ -16,6 +16,7 @@ angular.module('myApp.directives.navbar', [])
             return (destination === $location.path());
         };
 
+        console.log("navbar: " );
         console.log($rootScope.user);
 
 

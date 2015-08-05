@@ -14,6 +14,7 @@ angular.module('myApp.directives.login', [])
 
         var loginURL = ('/login' === $location.path());
 
+        // Redirect logged in users to their profile
         if($rootScope.user) {
             $location.path("/profile");
         }
@@ -29,14 +30,14 @@ angular.module('myApp.directives.login', [])
                 $location.path("/login");
             }
         };
-        $scope.submit = function (form) {
+        $scope.login = function (form) {
 
-            if(!form || !form.email || !form.password) {
+            if (!form || !form.email || !form.password) {
                 $scope.error.err = true;
                 $scope.error.msg = "Please fill in the fields";
 
                 console.log("error");
-            }else{
+            } else {
                 if (loginURL) {
                     authService.login(form.email, form.password)
                         .then(function (res) {
@@ -46,7 +47,7 @@ angular.module('myApp.directives.login', [])
                         }, function (err) {
                             $scope.error.msg = err.message;
                         });
-                }else{
+                } else {
                     authService.register(form.email, form.password)
                         .then(function (res) {
                             $http.defaults.headers.common['Authorization'] = "Bearer " + res.token;
@@ -56,5 +57,5 @@ angular.module('myApp.directives.login', [])
                         });
                 }
             }
-        }
+        };
     }]);
