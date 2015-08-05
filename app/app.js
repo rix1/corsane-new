@@ -15,21 +15,23 @@ angular.module('myApp', [
     'myApp.directives.paragraph',
     'myApp.directives.topicBox',
     'myApp.directives.logout',
+    'myApp.directives.spinner',
     'myApp.services'
 ])
 
     .config(['$httpProvider', '$routeProvider', function($httpProvider, $routeProvider) {
-        $routeProvider.otherwise({redirectTo: '/landing'});
+        $routeProvider.otherwise({redirectTo: '/'});
 
         $httpProvider.defaults.withCredentials = true;
         $httpProvider.defaults.xsrfHeaderName = 'x-csrf-token';
         $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
         $httpProvider.defaults.headers.post['Content-Type'] =  'application/x-www-form-urlencoded';
+
+        //$locationProvider.html5Mode(true);
     }])
 
     .run(['$injector', '$http', 'authService',
         function($injector, $http, authService) {
-
             // Add CSRF token to header
             authService.getCSRF().then(function (token) {
                 $http.defaults.headers.common['x-csrf-token'] = token;

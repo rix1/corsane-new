@@ -26,7 +26,9 @@ angular.module('myApp.services')
                     }).success(function(res) {
                         defer.resolve(res);
                     }).error(function(err, data, status, config) {
-                        defer.reject(err)
+                        var error = {};
+                        error.message = "Wops - Validation error. Try again!";
+                        defer.reject(error)
                     });
 
                     return defer.promise;
@@ -48,7 +50,9 @@ angular.module('myApp.services')
                     }).success(function(res) {
                         defer.resolve(res);
                     }).error(function(err, data, status, config) {
-                        defer.reject(err)
+                        var error = {};
+                        error.message = "Wops - validation error. Try again!";
+                        defer.reject(error)
                     });
 
                     return defer.promise;
@@ -72,7 +76,9 @@ angular.module('myApp.services')
                     }).success(function(res) {
                         defer.resolve(res);
                     }).error(function(err, data, status, config) {
-                        defer.reject(err)
+                        var error = {};
+                        error.message = "Wops - validation error. Try again!";
+                        defer.reject(error)
                     });
 
                     return defer.promise;

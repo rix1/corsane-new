@@ -10,7 +10,7 @@ angular.module('myApp.login', ['ngRoute'])
             .when('/register', {
                 templateUrl: 'views/login/login.html',
                 controller: 'loginCtrl'
-            });
+            })
     }])
 
     .controller('loginCtrl', ['$scope', function($scope) {

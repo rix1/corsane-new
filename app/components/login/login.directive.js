@@ -14,6 +14,7 @@ angular.module('myApp.directives.login', [])
 
         var loginURL = ('/login' === $location.path());
 
+        $scope.pending = false;
         // Redirect logged in users to their profile
         if($rootScope.user) {
             $location.path("/profile");
@@ -38,6 +39,7 @@ angular.module('myApp.directives.login', [])
 
                 console.log("error");
             } else {
+                $scope.pending = true;
                 if (loginURL) {
                     authService.login(form.email, form.password)
                         .then(function (res) {
@@ -45,7 +47,9 @@ angular.module('myApp.directives.login', [])
                             $rootScope.user = res.user;
                             $location.path("/profile");
                         }, function (err) {
+                            $scope.pending = false;
                             $scope.error.msg = err.message;
+                            $scope.error.err = true;
                         });
                 } else {
                     authService.register(form.email, form.password)
@@ -53,6 +57,9 @@ angular.module('myApp.directives.login', [])
                             $http.defaults.headers.common['Authorization'] = "Bearer " + res.token;
                             $location.path("/login");
                         }, function (err) {
+                            $scope.pending = false;
+                            $scope.error.msg = err.message;
+                            $scope.error.err = true;
                             console.log(err);
                         });
                 }
