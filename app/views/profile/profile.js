@@ -13,7 +13,6 @@ angular.module('myApp.profile', ['ngRoute'])
         // something
 
         $scope.user = $rootScope.user;
-        console.log($scope.user);
 
         // TODO: Write cookie
 

@@ -1,5 +1,5 @@
 <div id="loginInfo" class="border-round">
-    <form ng-submit="login(loginForm)" class="pure-form" id="myLogin" ng-model="loginForm">
+    <form ng-submit="submit(loginForm)" class="pure-form" id="myLogin" ng-model="loginForm">
         <div class="center-text">
             <h1>{{model.h1}}</h1>or <a ng-click="switch()">{{model.alt}}</a></span>
         </div>
@@ -7,9 +7,9 @@
         <hr class="hr-style"/>
         <br/>
         <fieldset class="pure-group">
-            <input ng-if="!model.login" ng-model="loginForm.firstName" type="text" class="pure-input-1" name="firstName" id="firstName" placeholder="First Name" tabindex=1/>
-            <input ng-if="!model.login" ng-model="loginForm.lastName" type="text" class="pure-input-1" name="lastName" id="lastName" placeholder="Last Name" tabindex=2/>
-            <input ng-model="loginForm.email" type="email" class="pure-input-1" name="email" id="email" placeholder="Email" tabindex=3/>
+            <input ng-if="!model.login" ng-model="loginForm.first_name" type="text" class="pure-input-1" name="firstName" id="firstName" placeholder="First Name" tabindex=1/>
+            <input ng-if="!model.login" ng-model="loginForm.last_name" type="text" class="pure-input-1" name="lastName" id="lastName" placeholder="Last Name" tabindex=2/>
+            <input ng-model="loginForm.username" type="email" class="pure-input-1" name="email" id="email" placeholder="Email" tabindex=3/>
             <input ng-model="loginForm.password" type="{{showpw ? 'text':'password'}}" class="pure-input-1" name="password" id="password" placeholder="Password" tabindex=4/>
         </fieldset>
         <p ng-if="error.err" class="center-text center-content error">{{error.msg}}</p>
@@ -27,3 +27,8 @@
         </div>
     </form>
 </div>
+
+<!--   first_name: first,
+                        last_name: last,
+                        username: username,
+                        password: password-->

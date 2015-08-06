@@ -1,15 +1,7 @@
 angular.module('myApp.services')
-    .factory('topicService', ['$http', 'config', '$q',
+    .factory('topicService', ['$http', 'config', '$q', 'apiService',
 
-        function($http, config, $q) {
-
-            // TODO: WARNING DRYYYYY
-            var transformReq = function(obj) {
-                var str = [];
-                for(var p in obj)
-                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            };
+        function($http, config, $q, apiService) {
 
             return {
 
@@ -35,7 +27,7 @@ angular.module('myApp.services')
                     $http({
                         method: 'POST',
                         url: config.baseUrl + 'topic',
-                        transformRequest: transformReq,
+                        transformRequest: apiService.transformRequest,
                         data: formdata
                     }).success(function(res) {
                         defer.resolve(res);

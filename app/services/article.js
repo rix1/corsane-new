@@ -1,15 +1,7 @@
 angular.module('myApp.services')
-    .factory('articleService', ['$http', 'config', '$q',
+    .factory('articleService', ['$http', 'config', '$q', 'apiService',
 
-    function($http, config, $q) {
-
-        var transformReq = function(obj) {
-            var str = [];
-            for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-            return str.join("&");
-        };
-
+    function($http, config, $q, apiService) {
 
         return {
 
@@ -49,7 +41,7 @@ angular.module('myApp.services')
                 $http({
                     method: 'POST',
                     url: config.baseUrl + 'article',
-                    transformRequest: transformReq,
+                    transformRequest: apiService.transformRequest,
                     data: article
                 }).success(function(res) {
                     defer.resolve(res);

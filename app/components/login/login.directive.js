@@ -8,68 +8,70 @@ angular.module('myApp.directives.login', [])
         };
     })
 
-    .controller('loginCtrl', ['$rootScope', '$scope', '$http', '$location', '$localStorage', 'authService',
-        function($rootScope, $scope, $http, $location, $localStorage, authService) {
+    .controller('loginCtrl', ['$rootScope', '$scope', '$http', '$location', 'authService', 'userService',
+        function($rootScope, $scope, $http, $location, authService, userService) {
 
+            var models = [{h1: "login",alt:"sign up",btn:"login",login:true},{h1: "sign up",alt:"login",btn:"register"}];
+            var loginURL = ('/login' === $location.path());
+            $scope.pending = false;
+            $scope.error = {err:false, msg:""};
 
-        var text = ['login', 'sign up', 'register'];
-        var models = [{h1: "login",alt:"sign up",btn:"login",login:true},{h1: "sign up",alt:"login",btn:"register"}];
-
-        var loginURL = ('/login' === $location.path());
-
-        $scope.pending = false;
-
-        // Redirect logged in users to their profile
-        if($rootScope.user) {
-            $location.path("/profile");
-        }
-
-        $scope.error = {err:false, msg:""};
-
-        $scope.model = loginURL ? models[0]:models[1];
-        $scope.showpw = false;
-        $scope.switch = function () {
-            if(loginURL){
-                $location.path("/register");
-            }else{
-                $location.path("/login");
+            // Redirect logged in users to their profile
+            if($rootScope.user.id) {
+                $location.path("/profile");
             }
-        };
-        $scope.login = function (form) {
-            $scope.error.err = false;
 
-            if (!form || !form.email || !form.password) {
-                $scope.error.err = true;
-                $scope.error.msg = "Please fill in the fields";
-            } else {
-                $scope.pending = true;
-                if (loginURL) {
-                    authService.login(form.email, form.password)
-                        .then(function (res) {
-                            $localStorage.token = res.token;
-                            //$http.defaults.headers.common['Authorization'] = "Bearer " + res.token;
-                            $rootScope.user = res.user;
-                            $location.path("/profile");
-                        }, function (err) {
-                            $scope.pending = false;
-                            $scope.error.msg = err.message;
-                            $scope.error.err = true;
-                        });
-                } else {
-                    authService.register(form.firstName, form.lastName, form.email, form.password)
-                        .then(function (res) {
-                            $localStorage.token = res.token;
-                            //$http.defaults.headers.common['Authorization'] = "Bearer " + res.token;
-                            $location.path("/login");
-                        }, function (err) {
-                            $scope.pending = false;
-                            $scope.error.msg = err.message;
-                            $scope.error.err = true;
-                            console.log(err);
-                        });
+            $scope.model = loginURL ? models[0]:models[1];
+            $scope.switch = function () {
+                if(loginURL){
+                    $location.path("/register");
+                }else{
+                    $location.path("/login");
                 }
-            }
-        };
-        $scope.token = $localStorage.token;
-        $scope.tokenClaims = authService.getTokenClaims();
-    }]);
+            };
+
+            $scope.submit = function (form) {
+                $scope.error.err = false;
+
+                if (!form || !form.username || !form.password) {
+                    $scope.error.err = true;
+                    $scope.error.msg = "Please fill in the fields";
+                } else {
+                    $scope.pending = true;
+
+                    if (loginURL) {
+                        login(form);
+                    } else {
+                        register(form)
+                    }
+                }
+            };
+
+            var login = function (userCred) {
+                authService.login(userCred)
+                    .then(function (res) {
+                        $rootScope.user = res.user;
+                        $location.path("/profile");
+                    }, function (err) {
+                        $scope.pending = false;
+                        $scope.error.msg = err.message;
+                        $scope.error.err = true;
+                    });
+            };
+
+            var register = function (userInfo) {
+                userService.register(userInfo)
+                    .then(function (res) {
+                        var user = {
+                            username: userInfo.username,
+                            password: userInfo.password
+                        };
+                        login(user);
+                    }, function (err) {
+                        $scope.pending = false;
+                        $scope.error.msg = err.message;
+                        $scope.error.err = true;
+                        console.log(err);
+                    });
+            };
+        }]);
