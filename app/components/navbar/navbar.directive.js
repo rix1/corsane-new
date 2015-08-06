@@ -11,15 +11,11 @@ angular.module('myApp.directives.navbar', [])
         };
     })
 
-    .controller('navCtrl', ['$scope', '$location', '$timeout', function($scope, $location, $timeout) {
-
+    .controller('navCtrl', ['$rootScope', '$scope', '$location', '$timeout', function($rootScope, $scope, $location, $timeout) {
         $scope.isActive = function (destination) {
             return (destination === $location.path());
         };
-
-
         $scope.model = {};
-
         $scope.model.check = true;
 
         $scope.open = 'custom-wrapper';

@@ -1,7 +1,7 @@
 angular.module('myApp.services')
-    .factory('articleService', ['$http', 'config', '$q',
+    .factory('articleService', ['$http', 'config', '$q', 'apiService',
 
-    function($http, config, $q) {
+    function($http, config, $q, apiService) {
 
         return {
 
@@ -41,10 +41,8 @@ angular.module('myApp.services')
                 $http({
                     method: 'POST',
                     url: config.baseUrl + 'article',
-                    data: $.param({
-                        title: article.title,
-                        topic: article.topic
-                    })
+                    transformRequest: apiService.transformRequest,
+                    data: article
                 }).success(function(res) {
                     defer.resolve(res);
                 }).error(function(err, data, status, config) {

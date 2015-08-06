@@ -10,11 +10,10 @@ angular.module('myApp.login', ['ngRoute'])
             })
             .when('/register', {
                 templateUrl: 'views/login/login.html',
-                controller: 'loginCtrl'
-            });
+                controller: 'authCtrl'
+            })
     }])
 
-    .controller('loginCtrl', ['$scope', function($scope) {
-        console.log('lol');
+    .controller('authCtrl', ['$scope', function($scope) {
         // something
     }]);

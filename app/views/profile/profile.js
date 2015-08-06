@@ -14,6 +14,8 @@ angular.module('myApp.profile', ['ngRoute'])
 
         $scope.user = $rootScope.user;
 
+        // TODO: Write cookie
+
         $scope.logout = function () {
             $location.path("/logout");
         };

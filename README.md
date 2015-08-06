@@ -24,7 +24,7 @@ Create file ```/app/config.js``` and add the following
 angular
     .module('myApp.config', [])
     .constant('config', {
-        baseUrl: 'http://your-api.com/'
+        baseUrl: 'http://your-api.com/' // NOTE: Remember http:// AND trailing slash ('/') !important
     });
 ```
 

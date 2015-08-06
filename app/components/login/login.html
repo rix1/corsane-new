@@ -1,5 +1,5 @@
 <div id="loginInfo" class="border-round">
-    <form class="pure-form" action="/" id="myLogin" ng-model="form">
+    <form ng-submit="submit(loginForm)" class="pure-form" id="myLogin" ng-model="loginForm">
         <div class="center-text">
             <h1>{{model.h1}}</h1>or <a ng-click="switch()">{{model.alt}}</a></span>
         </div>
@@ -7,20 +7,28 @@
         <hr class="hr-style"/>
         <br/>
         <fieldset class="pure-group">
-            <input ng-model="form.email" type="email" class="pure-input-1" name="email" id="email" placeholder="Email"/>
-            <input ng-model="form.password" ng- type="{{showpw ? 'text':'password'}}" class="pure-input-1" name="password" id="password" placeholder="Password"/>
+            <input ng-if="!model.login" ng-model="loginForm.first_name" type="text" class="pure-input-1" name="firstName" id="firstName" placeholder="First Name" tabindex=1/>
+            <input ng-if="!model.login" ng-model="loginForm.last_name" type="text" class="pure-input-1" name="lastName" id="lastName" placeholder="Last Name" tabindex=2/>
+            <input ng-model="loginForm.username" type="email" class="pure-input-1" name="email" id="email" placeholder="Email" tabindex=3/>
+            <input ng-model="loginForm.password" type="{{showpw ? 'text':'password'}}" class="pure-input-1" name="password" id="password" placeholder="Password" tabindex=4/>
         </fieldset>
         <p ng-if="error.err" class="center-text center-content error">{{error.msg}}</p>
         <label ng-show="!model.login" for="show-password" class="pure-checkbox">
-            <input name="show-password" id="show-password" ng-model="showpw"  type="checkbox"> Show password
+            <input name="show-password" id="show-password" ng-model="showpw"  type="checkbox" tabindex=5> Show password
         </label>
         <label ng-show="!model.login" for="terms" class="pure-checkbox">
-            <input  name="terms" id="terms" ng-checked="form.checked" type="checkbox"> I've read the <a href="">terms and conditions</a>
+            <input  name="terms" id="terms" ng-checked="loginForm.checked" type="checkbox"> I've read the <a href="">terms and conditions</a>
         </label>
         <div class="pure-g">
             <div class="pure-u-1">
-                <button type="button" class="pure-button pure-input-1 pure-button-primary blue-bg" ng-click="submit(form)">{{model.btn}}</button>
+                <spinner ng-if="pending"></spinner>
+                <button type="submit" class="pure-button pure-input-1 pure-button-primary blue-bg" tabindex=6>{{model.btn}}</button>
             </div>
         </div>
     </form>
 </div>
+
+<!--   first_name: first,
+                        last_name: last,
+                        username: username,
+                        password: password-->
