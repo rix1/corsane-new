@@ -1,8 +1,6 @@
 angular.module('myApp.services')
-    .factory('authService', ['$http', 'config', '$q', '$localStorage', 'apiService',
-        function($http, config, $q, $localStorage, apiService) {
-
-            var tokenClaims = apiService.getClaimsFromToken();
+    .factory('authService', ['$http', 'config', '$q', '$localStorage', '$rootScope', 'apiService',
+        function($http, config, $q, $localStorage, $rootScope, apiService) {
 
             return {
                 login: function (userCredentials) {
@@ -16,6 +14,7 @@ angular.module('myApp.services')
                         data: userCredentials
                     }).success(function (res) {
                         $localStorage.token = res.token;
+                        $rootScope.user = apiService.getClaimsFromToken();
                         defer.resolve(res);
                     }).error(function (err, data, status, config) {
                         defer.reject(err)
@@ -37,6 +36,7 @@ angular.module('myApp.services')
                         url: config.baseUrl + 'auth/logout'
                     }).success(function (res) {
                         tokenClaims = {};
+                        $rootScope.user = {};
                         delete $localStorage.token;
                         defer.resolve(res);
                     }).error(function (err, data, status, config) {
@@ -61,10 +61,6 @@ angular.module('myApp.services')
                         q.reject(err);
                     });
                     return q.promise;
-                },
-
-                getTokenClaims: function () {
-                    return tokenClaims;
                 }
             };
         }

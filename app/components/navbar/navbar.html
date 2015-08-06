@@ -24,6 +24,7 @@
             <ul class="pure-menu-list">
                 <li  data-ng-hide="$root.user.id" class="pure-menu item"><a tabindex="-1" href="#/login" class="pure-menu-link">Login</a></li>
                 <li  data-ng-hide="$root.user.id" class="pure-menu item"><a tabindex="-1" href="#/register" class="pure-menu-link">Sign up</a></li>
+                <li  data-ng-show="$root.user.id" class="pure-menu item"><a tabindex="-1" href="#/profile" class="pure-menu-link">Profile</a></li>
                 <li  data-ng-show="$root.user.id" class="pure-menu item"><a tabindex="-1" href="#/logout" class="pure-menu-link">Logout</a></li>
             </ul>
         </div>

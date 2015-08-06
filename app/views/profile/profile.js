@@ -9,15 +9,9 @@ angular.module('myApp.profile', ['ngRoute'])
         })
     }])
 
-    .controller('profileCtrl', ['$rootScope', '$scope', '$location', function($rootScope, $scope, $location) {
-        // something
-
-        $scope.user = $rootScope.user;
-
-        // TODO: Write cookie
+    .controller('profileCtrl', ['$scope', '$location', function($scope, $location) {
 
         $scope.logout = function () {
             $location.path("/logout");
         };
-
     }]);
