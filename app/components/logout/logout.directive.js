@@ -1,11 +1,5 @@
 angular.module('myApp.directives.logout', [])
 
-    /*.config(['$routeProvider', function($routeProvider) {
-     $routeProvider.when('/logout', {
-     controller: 'logoutCtrl'
-     })
-     }])*/
-
     .directive('logout', function () {
         return {
             restrict: 'E',
@@ -17,7 +11,7 @@ angular.module('myApp.directives.logout', [])
     })
 
     .controller('logoutCtrl', ['$rootScope', '$scope', '$location', 'authService', function($rootScope, $scope, $location, authService) {
-        console.log("logoutCTRL");
+
         $scope.logout = function () {
             authService.logout()
                 .then(function (res) {

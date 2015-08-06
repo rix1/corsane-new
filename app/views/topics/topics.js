@@ -7,12 +7,11 @@ angular.module('myApp.topics', ['ngRoute'])
         });
     }])
 
-    .controller('topicsCtrl', ['topicService', function(topicService) {
-        var t = this;
+    .controller('topicsCtrl', ['$scope', 'topicService', function($scope, topicService) {
 
         topicService.getAllTopics().then(
             function(topics) {
-                t.topics = topics;
+                $scope.topics = topics;
             },
 
             function(err) {

@@ -12,6 +12,7 @@ angular.module('myApp.directives.paragraph', [])
     })
 
     .controller('paraCtrl', ['$scope', function($scope) {
+
         $scope.getText = function (text) {
             if($scope.prev){
                 $scope.isIntro = 'intro';

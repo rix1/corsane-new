@@ -3,8 +3,7 @@ angular.module('myApp.directives.login', [])
         return {
             restrict: 'E',
             scope: '',
-            templateUrl: "components/login/login.html",
-            controller: 'loginCtrl'
+            templateUrl: "components/login/login.html"
         };
     })
 

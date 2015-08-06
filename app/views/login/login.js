@@ -3,10 +3,11 @@
 angular.module('myApp.login', ['ngRoute'])
 
     .config(['$routeProvider', function($routeProvider) {
-        $routeProvider.when('/login', {
-            templateUrl: 'views/login/login.html',
-            controller: 'loginCtrl'
-        })
+        $routeProvider
+            .when('/login', {
+                templateUrl: 'views/login/login.html',
+                controller: 'loginCtrl'
+            })
             .when('/register', {
                 templateUrl: 'views/login/login.html',
                 controller: 'loginCtrl'
@@ -14,5 +15,6 @@ angular.module('myApp.login', ['ngRoute'])
     }])
 
     .controller('loginCtrl', ['$scope', function($scope) {
+        console.log('lol');
         // something
     }]);
