@@ -60,22 +60,33 @@
   font-weight: normal;
 
   @media (max-width: @screen-xs-max) {
+
   }
 }
 
 .topic-box-icon {
   font-size: 6em;
-  margin: 0.2em 0 0;
   font-weight: 100;
-}
-.topic-box-icon span {
-  margin-top: 1em;
-  display: block;
-  font-size: 0.15em;
-  padding-bottom: 2em;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.5);
-  *color: #fff;
+
+  i {
+    //font-size: 10px;
+  }
+
+  span {
+    margin-top: 1em;
+    display: block;
+    font-size: 0.15em;
+    padding-bottom: 2em;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.5);
+    *color: #fff;
+  }
+
+  @media (max-width: @screen-xs-max) {
+    i{
+      font-size: 10px;
+    }
+  }
 }
 
 /*

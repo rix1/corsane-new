@@ -3,7 +3,8 @@ angular.module('myApp.directives.login', [])
         return {
             restrict: 'E',
             scope: '',
-            templateUrl: "components/login/login.html"
+            templateUrl: "components/login/login.html",
+            controller: 'loginCtrl'
         };
     })
 
@@ -21,6 +22,9 @@ angular.module('myApp.directives.login', [])
             }
 
             $scope.model = loginURL ? models[0]:models[1];
+
+            console.log($scope.model);
+
             $scope.switch = function () {
                 if(loginURL){
                     $location.path("/register");

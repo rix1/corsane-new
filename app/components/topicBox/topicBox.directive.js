@@ -32,6 +32,9 @@ angular.module('myApp.directives.topicBox', [])
         };
 
         $scope.getTopic = function(id) {
-            $location.path("/topic/" + id);
+            if(id) {
+                $location.path("/topic/" + id);
+            }
+            console.log("TopicBoxCtrl: Topic is not defined");
         }
     }]);

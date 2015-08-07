@@ -6,7 +6,7 @@ angular.module('myApp.login', ['ngRoute'])
         $routeProvider
             .when('/login', {
                 templateUrl: 'views/login/login.html',
-                controller: 'loginCtrl'
+                controller: 'authCtrl'
             })
             .when('/register', {
                 templateUrl: 'views/login/login.html',
