@@ -53,7 +53,6 @@ angular.module('myApp.directives.login', [])
             var login = function (userCred) {
                 authService.login(userCred)
                     .then(function (res) {
-                        $rootScope.user = res.user;
                         $location.path("/profile");
                     }, function (err) {
                         $scope.pending = false;

@@ -13,7 +13,7 @@
         <div ng-class="list" class="pure-menu pure-menu-horizontal">
             <ul class="pure-menu-list">
                 <li  class="pure-menu-item" ng-class="{active: isActive('/landing')}"><a tabindex="-1" href="#/landing" class="pure-menu-link">Home</a></li>
-                <li  class="pure-menu-item" ng-class="{active: isActive('/topicList')}"><a tabindex="-1" href="#/topicList" class="pure-menu-link">Overview</a></li>
+                <li  class="pure-menu-item" ng-class="{active: isActive('/topics')}"><a tabindex="-1" href="#/topics" class="pure-menu-link">Overview</a></li>
                 <li  class="pure-menu-item" ng-class="{active: isActive('/topic')}"><a tabindex="-1" href="#/topic" class="pure-menu-link">Example topic</a></li>
                 <li  class="pure-menu-item" ng-class="{active: isActive('/article')}"><a tabindex="-1" href="#/article" class="pure-menu-link">Example article</a></li>
             </ul>
@@ -22,10 +22,10 @@
     <div class="pure-u-1 pure-u-md-1-3">
         <div ng-class="list" class="pure-menu pure-menu-horizontal custom-menu-3">
             <ul class="pure-menu-list">
-                <li  data-ng-show="token" class="pure-menu item"><a tabindex="-1" href="#/restricted" class="pure-menu-link">Restricted Area</a></li>
-                <li  data-ng-hide="token" class="pure-menu item"><a tabindex="-1" href="#/login" class="pure-menu-link">Login</a></li>
-                <li  data-ng-hide="token" class="pure-menu item"><a tabindex="-1" href="#/register" class="pure-menu-link">Sign up</a></li>
-                <li  data-ng-show="token" class="pure-menu item"><a tabindex="-1" href="#/logout" class="pure-menu-link">Logout</a></li>
+                <li  data-ng-hide="$root.user.id" class="pure-menu item"><a tabindex="-1" href="#/login" class="pure-menu-link">Login</a></li>
+                <li  data-ng-hide="$root.user.id" class="pure-menu item"><a tabindex="-1" href="#/register" class="pure-menu-link">Sign up</a></li>
+                <li  data-ng-show="$root.user.id" class="pure-menu item"><a tabindex="-1" href="#/profile" class="pure-menu-link">Profile</a></li>
+                <li  data-ng-show="$root.user.id" class="pure-menu item"><a tabindex="-1" href="#/logout" class="pure-menu-link">Logout</a></li>
             </ul>
         </div>
     </div>
