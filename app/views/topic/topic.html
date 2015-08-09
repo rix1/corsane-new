@@ -1,5 +1,9 @@
     <div class="default-banner center-text">
-        <h1 class="banner-head tag-topic">{{topic.title}}</h1>
+        <h1 class="banner-head">{{topic.title}}</h1>
+        <p class="tag-topic">angular</p>
+        
+        <p style="background: yellow;">RIKARD ER PIKK</p>
+
         <h2 id="banner-desc">{{topic.description}}</h2>
     </div>
 
@@ -8,6 +12,17 @@
         <ul ng-repeat="article in topic.articles">
             <li class="hoverhand" ng-click="getArticle(article.id)">{{article.title}}</li>
         </ul>
+
+        <div ng-repeat="article in topic.articles">
+            <a href="#/article/{{article.id}}"><h1 class="quote">{{article.title}}</h1></a>
+            <p>{{article.introduction}}</p>
+            <div class="icon-row">
+                <p class="fa fa-heart"></p>
+                <p class="fa fa-comment"></p>
+            </div>
+
+        </div>
+
 
         <div class="topic-box pure-g">
             <div class="pure-u-1">

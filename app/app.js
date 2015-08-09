@@ -8,7 +8,7 @@ angular.module('myApp', [
     'myApp.landing',
     'myApp.profile',
     'myApp.article',
-    'myApp.topics',
+    'myApp.topicList',
     'myApp.topic',
     'myApp.login',
     'myApp.lab',
