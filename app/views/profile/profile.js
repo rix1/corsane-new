@@ -9,15 +9,16 @@ angular.module('myApp.profile', ['ngRoute'])
         })
     }])
 
-    .controller('profileCtrl', ['$rootScope', '$scope', '$location', function($rootScope, $scope, $location) {
-        // something
+    .controller('profileCtrl', ['$scope', function($scope) {
 
-        $scope.user = $rootScope.user;
+        $scope.resetPw = function () {
+            console.log('Reset  ');
 
-        // TODO: Write cookie
-
-        $scope.logout = function () {
-            $location.path("/logout");
+            // TODO: Send reset instructions by email.
         };
 
+        $scope.deleteAccount = function () {
+            console.log('Delete');
+            // TODO: Delete account
+        };
     }]);

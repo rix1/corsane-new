@@ -19,6 +19,7 @@ angular.module('myApp', [
     'myApp.directives.topicBox',
     'myApp.directives.logout',
     'myApp.directives.spinner',
+    'myApp.directives.ngReallyClick',
     'myApp.services'
 ])
 
@@ -50,12 +51,12 @@ angular.module('myApp', [
         //$locationProvider.html5Mode(true);
     }])
 
-    .run(['$injector', '$http', '$rootScope', 'authService',
-        function($injector, $http, $rootScope, authService) {
+    .run(['$injector', '$http', '$rootScope', 'authService', 'apiService',
+        function($injector, $http, $rootScope, authService, apiService) {
             // Add CSRF token to header
             authService.getCSRF().then(function (token) {
                 $http.defaults.headers.common['x-csrf-token'] = token;
             });
-            $rootScope.user = authService.getTokenClaims();
+            $rootScope.user = apiService.getClaimsFromToken();
         }
     ]);
