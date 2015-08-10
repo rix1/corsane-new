@@ -18,15 +18,7 @@ folders in your project.
 
 ### Example config
 
-Create file ```/app/config.js``` and add the following
-
-```
-angular
-    .module('myApp.config', [])
-    .constant('config', {
-        baseUrl: 'http://your-api.com/' // NOTE: Remember http:// AND trailing slash ('/') !important
-    });
-```
+Put a copy of `dummy_config.js` in ```/app/config.js``` and change `baseUrl` to the API URL. Remember to specify protocol (HTTP or HTTPS), and to add a trailing slash at the end. 
 
 ### Run the Application
 
