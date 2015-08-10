@@ -17,7 +17,7 @@ angular.module('myApp.directives.login', [])
             $scope.error = {err:false, msg:""};
 
             // Redirect logged in users to their profile
-            if($rootScope.user.id) {
+            if($rootScope.user) {
                 $location.path("/profile");
             }
 

@@ -1,7 +1,7 @@
 angular.module('myApp.topicList', ['ngRoute'])
 
     .config(['$routeProvider', function($routeProvider) {
-        $routeProvider.when('/topicList', {
+        $routeProvider.when('/topics', {
             templateUrl: 'views/topicList/topicList.html',
             controller: 'topicListCtrl'
         });

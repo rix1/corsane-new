@@ -10,6 +10,7 @@ angular.module('myApp.directives.logout', [])
     .controller('logoutCtrl', ['$rootScope', '$scope', '$location', 'authService', function($rootScope, $scope, $location, authService) {
         authService.logout()
             .then(function (res) {
+                delete $rootScope.user;
                 $location.path('/landing');
             }, function (err) {
                 console.log(err);

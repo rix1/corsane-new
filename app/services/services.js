@@ -30,8 +30,9 @@ angular.module('myApp.services', [])
                 // Reconstruct userObject from token
                 getClaimsFromToken: function() {
                     var token = $localStorage.token;
-                    var user = {};
+
                     if (typeof token !== 'undefined') {
+                        var user = {};
                         var encoded = token.split('.')[1];
                         user = JSON.parse(urlBase64Decode(encoded));
                     }
