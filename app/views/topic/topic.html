@@ -1,33 +1,26 @@
-    <div class="default-banner center-text">
-        <h1 class="banner-head">{{topic.title}}</h1>
-        <h2 id="banner-desc">{{topic.description}}</h2>
-        <span class="tag">
-            <p class="tag">AngularJS</p>
-            <p class="tag">AngularJS</p>
-            <p class="tag">AngularJS</p>
-        </span>
-    </div>
+<div class="default-banner center-text">
+    <h1 class="banner-head">{{topic.title}}</h1>
+    <h2 id="banner-desc">{{topic.description}}</h2>
+</div>
 
-
-    <div class="l-content">
-        <ul ng-repeat="article in topic.articles">
-            <li class="hoverhand" ng-click="getArticle(article.id)">{{article.title}}</li>
-        </ul>
-
-        <div ng-repeat="article in topic.articles">
-            <a href="#/article/{{article.id}}"><h1 class="quote">{{article.title}}</h1></a>
-            <p>{{article.introduction}}</p>
-            <div class="icon-row">
-                <p class="fa fa-heart"></p>
-                <p class="fa fa-comment"></p>
+<div class="l-content">
+    <div class="pure-g">
+        <div ng-repeat="article in topic.articles" class="pure-u-1 pure-u-sm-3-4 center-content">
+            <div class="article-preview">
+                <div class="pure-u-2-24">
+                    <img class="pure-img clip-circle" src="{{article.author.profile_image}}" alt="Profile Image"/>
+                </div>
+                <div class="pure-u-7-8">
+                    <h1 ng-click="getArticle(article.id)" class="hoverhand"><!--<span>{{$index+1}}</span>--> {{article.title}}</h1>
+                    <p>By: Rikard Eide</p>
+                </div>
             </div>
-
         </div>
+    </div>
+</div>
 
-
-        <div class="topic-box pure-g">
-            <div class="pure-u-1">
-                <p>Suggest a <a style="font-weight: 600" href="">new article</a> to the {{topic.title}} topic.</p>
-            </div>
-        </div> <!-- end topics-boxes-->
-    </div> <!-- end l-content -->
+<div class="topic-box pure-g">
+    <div class="pure-u-1 help-text">
+        <p>Suggest a <a style="font-weight: 500" href="">new article</a> to the {{topic.title}} topic.</p>
+    </div>
+</div>

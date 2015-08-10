@@ -15,10 +15,12 @@ angular.module('myApp.directives.topicBox', [])
         if($scope.selectable){
             $scope.topic.class = 'selectable';
         }else{
-            $scope.topic.class = 'hoverhand';
+            $scope.topic.class = 'hoverhand selectable';
         }
+        //$scope.topic.class.concat(' selectable')
 
-        $scope.changeClass = function (topic) {
+
+        var changeClass = function (topic) {
             if($scope.selectable) {
                 topic.selected = !topic.selected;
                 if (topic.selected) {
@@ -31,10 +33,12 @@ angular.module('myApp.directives.topicBox', [])
             }
         };
 
-        $scope.getTopic = function(id) {
-            if(id) {
-                $location.path("/topic/" + id);
+        $scope.getTopic = function(topic) {
+            if($scope.selectable){
+                changeClass(topic)
+            }else{
+                $location.path("/topic/" + topic.id);
+                console.log("TopicBoxCtrl: Topic is not defined");
             }
-            console.log("TopicBoxCtrl: Topic is not defined");
         }
     }]);

@@ -23,8 +23,6 @@ angular.module('myApp.directives.login', [])
 
             $scope.model = loginURL ? models[0]:models[1];
 
-            console.log($scope.model);
-
             $scope.switch = function () {
                 if(loginURL){
                     $location.path("/register");
@@ -35,6 +33,10 @@ angular.module('myApp.directives.login', [])
 
             $scope.submit = function (form) {
                 $scope.error.err = false;
+
+                console.log("Let's register! ");
+                console.log(form);
+                console.log("see?");
 
                 if (!form || !form.username || !form.password) {
                     $scope.error.err = true;
@@ -65,6 +67,7 @@ angular.module('myApp.directives.login', [])
                 userService.register(userInfo)
                     .then(function (res) {
                         var user = {
+
                             username: userInfo.username,
                             password: userInfo.password
                         };

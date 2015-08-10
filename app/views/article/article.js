@@ -10,10 +10,10 @@ angular.module('myApp.article', ['ngRoute'])
     }])
 
     .controller('articleCtrl', ['$scope', '$routeParams', 'articleService', function($scope, $routeParams, articleService) {
-
         var articleId = $routeParams.id;
         articleService.getArticle(articleId).then(
             function(article) {
+                console.log(article);
                 $scope.article = article;
             },
             function(err) {

@@ -33,18 +33,50 @@ h2, h3 {
 }
 
 .readable {
-  font-size: 2vmax;
+  font-size: 22px;
   font-weight: 200;
 
-  @media (min-width: @screen-lg-min) {
-    font-size: 2vmin;
+  @media (max-width: @screen-xs) {
+    font-size: 16px;
+  }
+}
+
+.clip-circle {
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  border: solid 2px white;
+}
+
+.article-preview{
+  
+  margin-bottom: 1em;
+
+  img{
+    .clip-circle;
+    width: 80%;
+  }
+
+  h1 {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  p {
+    margin: 0;
+    font-style: italic;
+    font-size: 100%;
+    //padding-left: 20px;
+  }
+
+  span {
+    color: gainsboro;
   }
 }
 
 .intro{
   .readable;
   transition: font-weight 0.5s;
-
 
   &::after{
     content: ' – continue reading';
@@ -62,7 +94,7 @@ h2, h3 {
 }
 
 .quote{
-  margin-bottom: 1.4em;
+  //margin-bottom: 1.4em;
   font-weight: 200;
   color: dimgrey;
 }
@@ -112,7 +144,7 @@ h2, h3 {
   padding: 0.5em 2em;
 }
 
-.banner{
+.banner {
   text-align: center;
   background-size: cover;
   height: 10vh;
@@ -122,29 +154,31 @@ h2, h3 {
   position: relative;
   top: 0;
 
-
-  h1{
+  h1 {
     font-size: 3em;
-    padding-left: 10px;
     margin: 4em auto 0;
     max-width: 980px;
     color: white;
-    font-family: "Avenir",'Open Sans', sans-serif;
+    font-family: "Avenir", 'Open Sans', sans-serif;
     font-weight: 600;
     letter-spacing: .05em;
   }
 
-  h2{
+  h2 {
     font-size: 1.8em;
     max-width: 980px;
-    padding-left: 10px;
     margin: 10px auto 0;
     color: white;
     font-weight: 200;
-    font-family:'Open Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     text-transform: none;
     letter-spacing: 0;
   }
+
+  @media (max-width: @screen-xs-max) {
+    font-size: 80%;
+  }
+
 }
 
 .img-banner {
@@ -176,7 +210,7 @@ h2, h3 {
   h2{
     color: @blue-light;
     margin-top: 0;
-    margin-bottom:0;
+    margin-bottom:2em;
   }
 
   p{
@@ -216,34 +250,34 @@ h2, h3 {
 
 .tag {
   display: inline;
-
   letter-spacing: 1px;
 
   position:relative;
-  top: 0;
-  margin-left:auto;
-  margin-right:auto;
-  margin-bottom: 1em;
+  top: -2em;
 
   text-transform: uppercase;
-  background-color: @green-bright;
+  background-color: @green-grey;
 
   color: white;
   font-weight: 600;
   padding: 4px .8em;
   font-size: .7em;
-
-
 }
 
-.tag-round{
+.tag-round {
   .tag;
+  content: 'heisann!';
+
+  background-color: @blue-light;
+
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
+
+  &:hover {
+    background-color: @green-dark;
+  }
 }
-
-
 
 /*
  * -- BUTTON --

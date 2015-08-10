@@ -6,7 +6,6 @@ angular.module('myApp.services')
             return {
 
                 register: function (user) {
-
                     var defer = $q.defer();
 
                     $http({
@@ -80,7 +79,6 @@ angular.module('myApp.services')
                 },
 
                 unfollow: function(id) {
-
                     var defer = $q.defer();
 
                     $http({

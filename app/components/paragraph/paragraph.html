@@ -4,12 +4,12 @@
         <div class="l-box">
             <h1 ng-if="!prev" class="quote">{{content.headline}}</h1>
             <a ng-if="prev" href="#/article"><h1 class="quote">{{content.headline}}: {{content.favorites}}</h1></a>
-            <p ng-class="isIntro">
+            <p ng-class="isIntro" class="readable">
                 {{getText(content.text)}}
             </p>
             <div class="icon-row" ng-if="!prev">
                 <p class="fa fa-heart"> {{content.favorites}}</p>
-                <p class="fa fa-comment"> {{content.favorites}}</p>
+                <p class="fa fa-thumbs-up"> {{content.favorites}}</p>
             </div>
         </div>
     </div>
