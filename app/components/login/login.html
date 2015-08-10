@@ -23,13 +23,14 @@
             <div class="pure-u-1">
                 <spinner ng-if="pending"></spinner>
                 <button type="submit" class="pure-button pure-input-1 pure-button-primary blue-bg" tabindex=6>{{model.btn}}</button>
+                <hr class="hr-style" style="margin-top: 1em"/> <!--TODO: Bad practice... -->
+                <button ng-if="model.login" ng-click="loginWithFacebook()" class="pure-button pure-input-1 pure-button-primary facebook" tabindex=7>Login with Facebook</button>
+
             </div>
         </div>
     </form>
 </div>
 
-    <br/>
-    <button ng-if="model.login" ng-click="loginWithFacebook()" class="pure-button pure-input-1 pure-button-primary facebook" tabindex=7>Login with Facebook</button>
 
 
 </div>

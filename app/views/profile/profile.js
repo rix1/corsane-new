@@ -17,11 +17,10 @@ angular.module('myApp.profile', ['ngRoute'])
 
         $scope.logout = function () {
             $location.path("/logout");
-        }
+        };
 
         $scope.resetPw = function () {
             console.log('Reset  ');
-
             // TODO: Send reset instructions by email.
         };
 
