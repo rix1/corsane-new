@@ -8,8 +8,8 @@
                 {{getText(content.text)}}
             </p>
             <div class="icon-row" ng-if="!prev">
-                <p class="fa fa-heart"> {{content.favorites}}</p>
-                <p class="fa fa-thumbs-up"> {{content.favorites}}</p>
+                <p ng-click="heart_selected = !heart_selected" ng-class="heart_selected ? 'fa fa-heart':'fa fa-heart-o'">12</p>
+                <p ng-click="like_selected = !like_selected" ng-class="like_selected ? 'fa fa-thumbs-up':'fa fa-thumbs-o-up'">44</p>
             </div>
         </div>
     </div>
