@@ -19,6 +19,7 @@ angular.module('myApp', [
     'myApp.directives.topicBox',
     'myApp.directives.logout',
     'myApp.directives.spinner',
+    'myApp.directives.ngReallyClick',
     'myApp.services'
 ])
 
