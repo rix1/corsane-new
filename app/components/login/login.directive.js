@@ -57,6 +57,10 @@ angular.module('myApp.directives.login', [])
                     });
             };
 
+            $scope.loginWithFacebook = function() {
+                authService.loginWithFacebook();
+            };
+
             var register = function (userInfo) {
                 userService.register(userInfo)
                     .then(function (res) {
@@ -69,7 +73,6 @@ angular.module('myApp.directives.login', [])
                         $scope.pending = false;
                         $scope.error.msg = err.message;
                         $scope.error.err = true;
-                        console.log(err);
                     });
             };
         }]);
