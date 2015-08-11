@@ -14,11 +14,10 @@
                 <h1>{{$root.user.first_name}} {{$root.user.last_name}}</h1>
                 <p>{{$root.user.username}}</p>
                 <p class="help-text"><em>{{$root.user.id}}</em></p>
-                <button class="button-error pure-button pure-u-3-5" type="button" ng-click="logout()" ng-confirm-click="Log out?">Log out</button>
+                <button ng-if="$root.user.id" class="button-error pure-button pure-u-3-5" type="button" ng-click="logout()" ng-confirm-click="Log out?">Log out</button>
             </div>
         </div>
     </div>
-
 
     <div class="pure-u-1 pure-u-sm-3-4 center-content center-text account-settings">
         <div class="v-space-2"></div>
@@ -29,5 +28,8 @@
             <button class="pure-button pure-button-primary blue-bg pure-u-1-2" ng-click="resetPw()" ng-confirm-click="We'll send you an email with instructions on how to reset your password">Reset password</button>
             <button class="button-error pure-button pure-u-1-2" type="button" ng-click="deleteAccount()" ng-confirm-click="Are you sure? This will delete your account forever!">Delete account</button>
         </div>
+        <div class="v-space-2"></div>
+        <hr class="hr-style"/>
+        <p>Visit the <strong><a href="#/lab">lab...</a></strong></p>
     </div>
 </div>
