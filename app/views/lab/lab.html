@@ -1,7 +1,8 @@
 <div ng-controller="labCtrl as ctrl">
     <div class="default-banner center-text">
-        <h1 class="banner-head">Rix1's lab"<br/></h1>
-        <h2 id="banner-desc">Welcome to my lab, use the form below to add data to the database.</h2>
+        <h1 class="banner-head">Rix1's lab</h1>
+        <h2 id="banner-desc">Welcome to my lab, use the form below to add data to the database. <small><br/><br/><strong>NEW:</strong> Check out the new <b><a
+                href="#/new/article">article editor!</a></b></small> </h2>
         <p><small><em>Note: No hacking allowed (plz)</em></small></p>
     </div>
 
@@ -33,7 +34,7 @@
             <div class="pure-u-1">
                 <h1>Add paragraph form</h1>
                 <form ng-submit="addParagraph(paragraph)" ng-model="paragraph">
-                    <label for="paraArticle"><input placeholder="paragraph.articleID" ng-model="paragraph.article" type="text" id="paraArticle" tabindex=8/></label>
+                    <label for="paraArticle"><input placeholder="paragraph.article" ng-model="paragraph.article" type="text" id="paraArticle" tabindex=8/></label>
                     <label for="paragraphTitle"><input placeholder="paragraph.headline" ng-model="paragraph.headline" type="text" id="paragraphTitle" tabindex=9/></label>
                     <label for="paragraphDesc"><input placeholder="paragraph.text" ng-model="paragraph.text" type="text" id="paragraphDesc" tabindex=10/></label>
                     <button type="submit" class="pure-button pure-input-1 pure-button-primary blue-bg margin-10">Add paragraph</button>
