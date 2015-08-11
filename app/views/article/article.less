@@ -1,0 +1,23 @@
+//
+
+*[contentEditable]:empty:not(:focus):after{
+  content: attr(data-ph);
+  font-style: italic;
+  color: @grey-light;
+}
+
+*[conentEditable]:focus {
+  outline: 0;
+}
+
+*:focus {
+  outline: 0;
+}
+
+#super {
+  content: attr(data-ph);
+}
+
+div[data-line]:after {
+  content: attr(data-line);
+}
