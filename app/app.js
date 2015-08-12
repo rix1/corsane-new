@@ -13,11 +13,11 @@ angular.module('myApp', [
     'myApp.login',
     'myApp.lab',
 
+    'myApp.directives.editable',
     'myApp.directives.login',
     'myApp.directives.navbar',
     'myApp.directives.paragraph',
     'myApp.directives.topicBox',
-    'myApp.directives.logout',
     'myApp.directives.spinner',
     'myApp.directives.ngReallyClick',
     'myApp.services'

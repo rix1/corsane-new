@@ -1,5 +1,5 @@
 angular.module('myApp.directives.paragraph', [])
-    .directive('paragraph', function () {
+    .directive('paragraph', [function () {
         return {
             restrict: 'E',
             scope: {
@@ -9,7 +9,7 @@ angular.module('myApp.directives.paragraph', [])
             templateUrl: "components/paragraph/paragraph.html",
             controller: 'paraCtrl'
         };
-    })
+    }])
 
     .controller('paraCtrl', ['$scope', function($scope) {
 

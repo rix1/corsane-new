@@ -1,5 +1,5 @@
 angular.module('myApp.directives.topicBox', [])
-    .directive('topicBox', function () {
+    .directive('topicBox', [function () {
         return {
             restrict: 'E',
             scope: {
@@ -9,7 +9,8 @@ angular.module('myApp.directives.topicBox', [])
             templateUrl: "components/topicBox/topicBox.html",
             controller: 'topicBoxCtrl'
         }
-    })
+    }])
+
     .controller('topicBoxCtrl', ['$scope','$window', '$location', function ($scope, $window, $location) {
 
         if($scope.selectable){

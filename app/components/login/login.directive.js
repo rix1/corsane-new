@@ -1,12 +1,12 @@
 angular.module('myApp.directives.login', [])
-    .directive('login', function () {
+    .directive('login', [function () {
         return {
             restrict: 'E',
             scope: '',
             templateUrl: "components/login/login.html",
             controller: 'loginCtrl'
         };
-    })
+    }])
 
     .controller('loginCtrl', ['$rootScope', '$scope', '$http', '$location', 'authService', 'userService',
         function($rootScope, $scope, $http, $location, authService, userService) {
