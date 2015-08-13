@@ -4,6 +4,8 @@
 angular.module('myApp', [
     'ngRoute',
     'ngStorage',
+    'ngSanitize',
+
     'myApp.config',
     'myApp.landing',
     'myApp.profile',
@@ -20,6 +22,7 @@ angular.module('myApp', [
     'myApp.directives.topicBox',
     'myApp.directives.spinner',
     'myApp.directives.ngReallyClick',
+
     'myApp.services'
 ])
 

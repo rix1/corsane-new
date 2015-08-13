@@ -29,11 +29,14 @@ angular.module('myApp.article', ['ngRoute'])
     }])
 
 
-    .controller('newArticleCtrl', ['$scope', '$rootScope', function ($scope, $rootScope) {
+    .controller('newArticleCtrl', ['$scope', '$rootScope', 'topicService', function ($scope, $rootScope, topicService) {
         var first = true;
         $scope.signedIn = false;
-
+        $scope.content = [];
+        var con = [];
         $scope.helptext = '';
+        $scope.newParagraph = {};
+        $scope.para = {};
 
         $scope.article = {
             title: '',
@@ -45,20 +48,9 @@ angular.module('myApp.article', ['ngRoute'])
         };
 
         var paragraph = {
-            article: '',
             headline: '',
             text: ''
         };
-
-        $scope.$watch(function ($scope) {
-            return $scope.article.title;
-        }, function (newval, oldval) {
-            console.log(newval);
-            console.log(oldval);
-        });
-
-        $scope.content = [];
-        console.log($rootScope.user);
 
 
         if($rootScope.user){
@@ -66,11 +58,26 @@ angular.module('myApp.article', ['ngRoute'])
             $scope.article.author = $rootScope.user.id;
         }
 
-        $scope.addParagraph = function (test) {
-            console.log(test);
+        $scope.click = function (par) {
+            console.log(par);
+            if($scope.content.length < 1){
+                $scope.content.push(paragraph);
+            }else{
+                $scope.para = {};
+                con.push(par);
+                $scope.content = con.reverse(); // <---- LAST: TRIED REVERSING....
+
+            }
+            console.log($scope.content);
+        };
+
+
+        $scope.submit = function () {
+            console.log($scope.article);
+            console.log($scope.content);
+
             var a = $scope.article;
 
-            //console.log($scope.article);
             if(!$scope.signedIn) {
                 $scope.helptext = 'Please sign in to create a new article';
             }else if((a.title && a.introduction && a.topics)){
@@ -83,4 +90,16 @@ angular.module('myApp.article', ['ngRoute'])
                 $scope.content.push(paragraph);
             }
         };
+
+        /**
+         * Service functions
+         * Functions passing data to the API through Angular services
+         * **/
+
+        topicService.getAllTopics().then(
+            function (res) {
+                $scope.topics = res;
+            }, function (err) {
+                console.log(err);
+            });
     }]);

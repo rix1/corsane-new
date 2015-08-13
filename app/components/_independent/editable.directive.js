@@ -3,16 +3,30 @@ angular.module('myApp.directives.editable', [])
         return {
             restrict: 'A',
             require: '?ngModel',
-            link: function(scope, element, attrs) {
-                element.bind('click', function() {
-                    var message = attrs.ngConfirmClick;
-                    if (message && !confirm(message)) {
-                        scope.$apply(attrs.ngConfirmClick);
-                    }
-                    else {
-                        scope.$apply();
-                    }
+            link: function (scope, element, attrs, ngModel) {
+                if (!ngModel) return;
+
+                ngModel.$render = function () {
+                    element.html($sce.getTrustedHtml(ngModel.$viewValue || ''));
+                    //element.html($sce.getTrustedHtml(ngModel.$modelValue || ''));
+                };
+
+                // Listen to events to enable binding
+                element.on('blur keyup change', function () {
+                    scope.$evalAsync(read);
                 });
+
+                // Initialize
+                read();
+
+                function read() {
+                    var html = element.html();
+
+                    if(attrs.strpBr && html == '<br>') {
+                        html = '';
+                    }
+                    ngModel.$setViewValue(html);
+                }
             }
-        }
+        };
     }]);
