@@ -32,11 +32,10 @@ angular.module('myApp.article', ['ngRoute'])
     .controller('newArticleCtrl', ['$scope', '$rootScope', 'topicService', function ($scope, $rootScope, topicService) {
         var first = true;
         $scope.signedIn = false;
-        $scope.content = [];
-        var con = [];
+        $scope.content = {};
         $scope.helptext = '';
-        $scope.newParagraph = {};
         $scope.para = {};
+        $scope.addNew = false;
 
         $scope.article = {
             title: '',
@@ -47,28 +46,49 @@ angular.module('myApp.article', ['ngRoute'])
             approved: false
         };
 
-        var paragraph = {
-            headline: '',
-            text: ''
-        };
-
-
         if($rootScope.user){
             $scope.signedIn = true;
             $scope.article.author = $rootScope.user.id;
         }
 
-        $scope.click = function (par) {
-            console.log(par);
-            if($scope.content.length < 1){
-                $scope.content.push(paragraph);
-            }else{
-                $scope.para = {};
-                con.push(par);
-                $scope.content = con.reverse(); // <---- LAST: TRIED REVERSING....
+        $scope.$watch('content', function (neu, old) {
+            console.log(neu);
+            console.log(old);
+        });
 
+        $scope.click = function () {
+            var paragraph = {
+                headline: '',
+                text: ''
+            };
+            $scope.content.push(paragraph);
+        };
+
+        $scope.save = function () {
+            console.log($scope.content);
+        };
+/*
+        $scope.click = function () {
+            if(!$scope.addNew){
+                // First time... TODO: Save article and receive ID.
+                $scope.addNew = true;
+            }else{
+                // Add new paragraph to the content array
+                var newElement = {
+                    headline: $scope.para.headline,
+                    text: $scope.para.text
+                };
+
+                $scope.content.push(newElement);
+                $scope.para.reset();
             }
             console.log($scope.content);
+        };
+*/
+
+        $scope.para.reset = function () {
+            $scope.para.headline = '';
+            $scope.para.text = '';
         };
 
 

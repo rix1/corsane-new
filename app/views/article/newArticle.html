@@ -8,22 +8,31 @@
 
 </div>
 <div class="l-content">
-    <form ng-model="para">
-        <div ng-repeat="p in content track by $index">
-            <div class="information pure-g">
-                <div class="pure-u-1 pure-u-md-1-8"></div>
-                <div class="pure-u-1 pure-u-md-3-4 center">
-                    <div class="l-box">
-                        {{$index}} {{p}}
-                        <h1 contenteditable="{{signedIn}}" data-ph="Section title" class="quote" ng-model="para.headline">{{p.headline}}</h1>
-                        <p contenteditable="{{signedIn}}" data-ph="Your great story" class="readable" ng-model="para.text">{{p.text}}</p>
-                    </div>
+    <div ng-repeat="p in content track by $index">
+        <div class="information pure-g">
+            <div class="pure-u-1 pure-u-md-1-8"></div>
+            <div class="pure-u-1 pure-u-md-3-4 center">
+                <div class="l-box">
+                    <h1 contentEditable="{{signedIn}}" data-ph="Section title" class="quote">{{p.headline}}</h1>
+                    <p contentEditable="{{signedIn}}" data-ph="Your great story" class="readable">{{p.text}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form>
+        <div ng-if="addNew"  class="information pure-g blue-bg">
+            <div class="pure-u-1 pure-u-md-1-8"></div>
+            <div class="pure-u-1 pure-u-md-3-4 center">
+                <div class="l-box">
+                    <h1 contenteditable="{{signedIn}}" data-ph="Section title" class="quote" ng-model="para.headline"></h1>
+                    <p contenteditable="{{signedIn}}" data-ph="Your great story" class="readable" ng-model="para.text"></p>
                 </div>
             </div>
         </div>
         <div class="center-text">
-            <button class="pure-button pure-button-primary blue-bg" ng-click="click(para)">
+            <button class="pure-button pure-button-primary blue-bg" ng-click="click()">
                 <i class="fa fa-plus"></i> New Section</button>
+            <button class="pure-button pure-button-primary blue-bg" ng-click="save()">Save</button>
         </div>
     </form>
     <div class="topic-box pure-g">
