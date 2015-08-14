@@ -61,6 +61,6 @@ angular.module('myApp', [
                 $http.defaults.headers.common['x-csrf-token'] = token;
             });
             $rootScope.user = apiService.getClaimsFromToken();
-            console.log($rootScope.user);
+            //console.log($rootScope.user);
         }
     ]);

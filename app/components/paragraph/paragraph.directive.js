@@ -12,6 +12,7 @@ angular.module('myApp.directives.paragraph', [])
     }])
 
     .controller('paraCtrl', ['$scope', function($scope) {
+        //console.log($scope.content);
 
         $scope.getText = function (text) {
             if($scope.prev){
