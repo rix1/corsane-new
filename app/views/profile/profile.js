@@ -20,7 +20,7 @@ angular.module('myApp.profile', ['ngRoute'])
         };
 
         $scope.resetPw = function () {
-            console.log('Reset  ');
+            console.log('Reset');
             // TODO: Send reset instructions by email.
         };
 
@@ -28,5 +28,4 @@ angular.module('myApp.profile', ['ngRoute'])
             console.log('Delete');
             // TODO: Delete account
         };
-
     }]);

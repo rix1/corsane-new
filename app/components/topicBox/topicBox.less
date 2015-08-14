@@ -110,6 +110,25 @@
   margin: 0 auto;
 }
 
+.deleteButton{
+  position: relative;
+  bottom: -62px;
+  right: 20px;
+  width: 20px;
+  opacity: 0;
+  color: @blue-dark;
+  padding: 10px;
+  transition: visibility 0.4s ease-in-out;
+}
+
+.paragraph{
+  &:hover{
+    .deleteButton{
+      opacity: 100;
+    }
+  }
+}
+
 .help-text{
   color: @green-grey;
   a{

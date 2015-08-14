@@ -1,5 +1,5 @@
 angular.module('myApp.directives.ngReallyClick', [])
-    .directive('ngConfirmClick', function () {
+    .directive('ngConfirmClick', [function () {
         return {
             priority: -1,
             restrict: 'A',
@@ -15,4 +15,4 @@ angular.module('myApp.directives.ngReallyClick', [])
                 });
             }
         }
-    });
+    }]);

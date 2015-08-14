@@ -1,5 +1,5 @@
 angular.module('myApp.directives.navbar', [])
-    .directive('navbar', function () {
+    .directive('navbar', [function () {
         return {
             restrict: 'E',
             scope: {
@@ -9,7 +9,7 @@ angular.module('myApp.directives.navbar', [])
             templateUrl: "components/navbar/navbar.html",
             controller: 'navCtrl'
         };
-    })
+    }])
 
     .controller('navCtrl', ['$rootScope', '$scope', '$location', '$timeout', function($rootScope, $scope, $location, $timeout) {
         $scope.isActive = function (destination) {
