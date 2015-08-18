@@ -9,6 +9,10 @@ angular.module('myApp.feed', ['ngRoute'])
         });
     }])
 
-    .controller('feedCtrl', ['$scope', '$window', function($scope) {
-        console.log('Andreas Var her');
+    .controller('feedCtrl', ['$scope', 'feedService', function($scope, feedService) {
+        feedService.getFeed().then(function(res) {
+            $scope.articles = res;
+        }, function(err) {
+            console.log('Error  while getting feed');
+        });
     }]);

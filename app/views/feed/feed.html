@@ -1,8 +1,20 @@
 <div class="default-banner">
     <h1>Latest articles</h1>
-    <!--<h2>Collecting the best advice from experts in one place</h2>-->
 </div>
 
 <div class="l-content">
-
+    <div class="pure-g">
+        <div ng-repeat="article in articles" class="pure-u-1 pure-u-sm-3-4 center-content">
+            <div class="pure-u-1-4"></div>
+            <div class="article-preview pure-u-lg-1-2">
+                <div class="pure-u-2-24">
+                    <img class="pure-img clip-circle" src="{{article.author.profile_image}}" alt="Profile Image"/>
+                </div>
+                <div class="pure-u-7-8">
+                    <h1 ng-click="getArticle(article.id)" class="hoverhand">{{article.title}}</h1>
+                    <p>By: {{article.author.name}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div> <!-- end l-content -->
