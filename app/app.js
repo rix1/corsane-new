@@ -14,6 +14,7 @@ angular.module('myApp', [
     'myApp.topic',
     'myApp.login',
     'myApp.lab',
+    'myApp.feed',
 
     'myApp.directives.editable',
     'myApp.directives.login',
