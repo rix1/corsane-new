@@ -2,14 +2,11 @@
 
 angular.module('myApp.register', ['ngRoute'])
 
-    /* SIGN IN */
-
     .config(['$routeProvider', function($routeProvider) {
-        $routeProvider
-            .when('/register', {
+        $routeProvider.when('/register', {
                 templateUrl: 'views/register/register.html',
                 controller: 'registerCtrl'
-            })
+            });
     }])
 
     .controller('registerCtrl', ['$scope', '$rootScope', '$location', 'userService', 'authService',
