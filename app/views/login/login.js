@@ -5,12 +5,7 @@ angular.module('myApp.login', ['ngRoute'])
     /* SIGN IN */
 
     .config(['$routeProvider', function($routeProvider) {
-        $routeProvider
-            .when('/login', {
-                templateUrl: 'views/login/login.html',
-                controller: 'authCtrl'
-            })
-            .when('/register', {
+        $routeProvider.when('/login', {
                 templateUrl: 'views/login/login.html',
                 controller: 'authCtrl'
             })

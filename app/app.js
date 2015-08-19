@@ -13,6 +13,7 @@ angular.module('myApp', [
     'myApp.topicList',
     'myApp.topic',
     'myApp.login',
+    'myApp.register',
     'myApp.lab',
 
     'myApp.directives.editable',
