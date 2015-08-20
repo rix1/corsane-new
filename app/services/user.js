@@ -10,7 +10,7 @@ angular.module('myApp.services')
 
                     $http({
                         method: 'POST',
-                        url: config.baseUrl + 'user',
+                        url: config.baseUrl + '/user',
                         transformRequest: apiService.transformRequest,
                         data: user
                     }).success(function (res) {
@@ -31,7 +31,7 @@ angular.module('myApp.services')
 
                     $http({
                         method: 'POST',
-                        url: config.baseUrl + 'auth/forgotten_password',
+                        url: config.baseUrl + '/auth/forgotten_password',
                         transformRequest: apiService.transformRequest,
                         data: {
                             username: email
@@ -50,7 +50,7 @@ angular.module('myApp.services')
 
                     var defer = $q.defer();
 
-                    $http.get(config.baseUrl + 'user/' + id)
+                    $http.get(config.baseUrl + '/user/' + id)
                         .success(function(res) {
                             defer.resolve(res);
                         })
@@ -83,7 +83,7 @@ angular.module('myApp.services')
 
                     $http({
                         method: 'POST',
-                        url: config.baseUrl + 'user/' + id + '/unfollow'
+                        url: config.baseUrl + '/user/' + id + '/unfollow'
                     }).success(function(res) {
                         defer.resolve(res);
                     }).error(function(err, data, status, config) {
@@ -99,7 +99,7 @@ angular.module('myApp.services')
 
                     $http({
                         method: 'POST',
-                        url: config.baseUrl + 'auth/change_password',
+                        url: config.baseUrl + '/auth/change_password',
                         transformRequest: apiService.transformRequest,
                         data: {
                             password: newpass

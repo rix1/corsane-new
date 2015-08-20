@@ -18,7 +18,7 @@ folders in your project.
 
 ### Example config
 
-Put a copy of `dummy_config.js` in ```/app/config.js``` and change `baseUrl` to the API URL. Remember to specify protocol (HTTP or HTTPS), and to add a trailing slash at the end. 
+Put a copy of `dummy_config.js` in ```/app/config.js``` and change `baseUrl` to the API URL. Remember to specify protocol (HTTP or HTTPS).  
 
 ### Run the Application
 

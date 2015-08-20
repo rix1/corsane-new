@@ -9,7 +9,7 @@ angular.module('myApp.services')
 
                     $http({
                         method: 'POST',
-                        url: config.baseUrl + 'auth/login',
+                        url: config.baseUrl + '/auth/login',
                         transformRequest: apiService.transformRequest,
                         data: userCredentials
                     }).success(function (res) {
@@ -24,7 +24,7 @@ angular.module('myApp.services')
 
                 loginWithFacebook: function () {
                     // Redirect to backend login
-                    window.location.href = config.baseUrl + 'auth/facebook/login';
+                    window.location.href = config.baseUrl + '/auth/facebook/login';
                 },
 
                 logout: function () {
@@ -33,7 +33,7 @@ angular.module('myApp.services')
 
                     $http({
                         method: 'POST',
-                        url: config.baseUrl + 'auth/logout'
+                        url: config.baseUrl + '/auth/logout'
                     }).success(function (res) {
                         tokenClaims = {};
                         $rootScope.user = {};
@@ -53,7 +53,7 @@ angular.module('myApp.services')
 
                     $http({
                         method: 'GET',
-                        url: config.baseUrl + 'csrfToken',
+                        url: config.baseUrl + '/csrfToken',
                         withCredentials: true
                     }).success(function (data) {
                         q.resolve(data._csrf);

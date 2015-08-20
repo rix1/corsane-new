@@ -9,7 +9,7 @@ angular.module('myApp.services')
 
                     var defer = $q.defer();
 
-                    $http.get(config.baseUrl + 'topic/' + id)
+                    $http.get(config.baseUrl + '/topic/' + id)
                         .success(function(res) {
                             defer.resolve(res);
                         })
@@ -26,7 +26,7 @@ angular.module('myApp.services')
 
                     $http({
                         method: 'POST',
-                        url: config.baseUrl + 'topic',
+                        url: config.baseUrl + '/topic',
                         transformRequest: apiService.transformRequest,
                         data: formdata
                     }).success(function(res) {
@@ -42,7 +42,7 @@ angular.module('myApp.services')
 
                     var defer = $q.defer();
 
-                    $http.get(config.baseUrl + 'topic/')
+                    $http.get(config.baseUrl + '/topic')
                         .success(function(res) {
                             defer.resolve(res);
                         })
