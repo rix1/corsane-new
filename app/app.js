@@ -55,8 +55,8 @@ angular.module('myApp', [
         //$locationProvider.html5Mode(true);
     }])
 
-    .run(['$http', '$rootScope', 'authService', 'apiService',
-        function($http, $rootScope, authService, apiService) {
+    .run(['$http', '$rootScope', '$location', 'authService', 'apiService',
+        function($http, $rootScope, $location, authService, apiService) {
 
             // Add CSRF token to header
             authService.getCSRF().then(function (token) {
@@ -65,5 +65,10 @@ angular.module('myApp', [
 
             // Set user from token
             $rootScope.user = apiService.getClaimsFromToken();
+
+            // Global function for changin view
+            $rootScope.goTo = function(route) {
+                $location.path(route);
+            }
         }
     ]);
