@@ -1,7 +1,34 @@
 angular.module('myApp.services')
     .factory('userService', ['$http', 'config', '$q', 'apiService',
-
         function($http, config, $q, apiService) {
+
+            function getErrorMessage(err) {
+                if(err.invalidAttributes) {
+
+                    // password errors
+                    if(err.invalidAttributes.password) {
+                        if(err.invalidAttributes.password[0].rule === 'required')
+                            return {message: 'Password is required'};
+
+                        else if(err.invalidAttributes.password[0].rule === 'minLength')
+                            return {message: 'Password too short. Must be minimal 6 characters long'};
+                    }
+
+                    // username errors
+                    else if(err.invalidAttributes.username) {
+
+                        if(err.invalidAttributes.username[0].rule === 'unique')
+                            return {message: 'Email address already exists'};
+
+                        else if(err.invalidAttributes.username[0].rule === 'required')
+                            return {message: 'Email is required'};
+                    }
+                }
+                else {
+
+                    return {message: err};
+                }
+            }
 
             return {
 
@@ -16,10 +43,8 @@ angular.module('myApp.services')
                     }).success(function (res) {
                         defer.resolve(res);
                     }).error(function (err, data, status, config) {
-                        var error = {};
-                        console.log(err);
-                        error.message = "Wops - validation error. Try again!";
-                        defer.reject(error)
+                        var errorMessage = getErrorMessage(err);
+                        defer.reject(errorMessage);
                     });
 
                     return defer.promise;

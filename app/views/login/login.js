@@ -25,7 +25,7 @@ angular.module('myApp.login', ['ngRoute'])
 
                 if (!form || !form.username || !form.password) {
                     $scope.error.err = true;
-                    $scope.error.msg = "Please fill in the fields";
+                    $scope.error.msg = "Please fill in both username and password";
                 } else {
                     $scope.pending = true;
                     login(form);

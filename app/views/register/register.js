@@ -22,15 +22,9 @@ angular.module('myApp.register', ['ngRoute'])
 
             $scope.submit = function (form) {
                 $scope.error.err = false;
+                $scope.pending = true;
 
-                // TODO: Switch case this B
-                if (!form || !form.username || !form.password) {
-                    $scope.error.err = true;
-                    $scope.error.msg = "Please fill in the fields";
-                } else {
-                    $scope.pending = true;
-                    register(form);
-                }
+                register(form);
             };
 
             var register = function (userInfo) {

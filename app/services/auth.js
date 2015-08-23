@@ -17,7 +17,7 @@ angular.module('myApp.services')
                         $rootScope.user = apiService.getClaimsFromToken();
                         defer.resolve(res);
                     }).error(function (err, data, status, config) {
-                        defer.reject(err)
+                        defer.reject(err);
                     });
                     return defer.promise;
                 },
