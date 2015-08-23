@@ -3,6 +3,7 @@ angular.module('myApp.services')
         function($http, config, $q, apiService) {
 
             function getErrorMessage(err) {
+
                 if(err.invalidAttributes) {
 
                     // password errors
@@ -24,10 +25,9 @@ angular.module('myApp.services')
                             return {message: 'Email is required'};
                     }
                 }
-                else {
 
-                    return {message: err};
-                }
+                // Return original error message if it did not match any of the errors above
+                return {message: err};
             }
 
             return {
