@@ -15,7 +15,7 @@
                 <fieldset class="pure-group">
                     <input ng-model="loginForm.username" type="email" class="pure-input-1" name="email" id="email" placeholder="Email" tabindex=1/>
                     <input ng-model="loginForm.password" type="{{showpw ? 'text':'password'}}" class="pure-input-1" name="password" id="password" placeholder="Password" tabindex=2/>
-                    <a href="" class="forgot-password">Forgot password</a>
+                    <a ng-click="goTo('/reset')" class="forgot-password">Forgot password</a>
                 </fieldset>
                 <p ng-if="error.err" class="center-text center-content error">{{error.msg}}</p>
                 <div class="pure-g">

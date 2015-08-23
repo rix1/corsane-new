@@ -50,7 +50,7 @@ angular.module('myApp.services')
                     return defer.promise;
                 },
 
-                forgotten_password: function (email) {
+                reset_password: function (email) {
 
                     var defer = $q.defer();
 
@@ -58,13 +58,12 @@ angular.module('myApp.services')
                         method: 'POST',
                         url: config.baseUrl + '/auth/forgotten_password',
                         transformRequest: apiService.transformRequest,
-                        data: {
-                            username: email
-                        }
+                        data: email
                     }).success(function (res) {
                         defer.resolve(res);
                     }).error(function (err, data, status, config) {
-                        defer.reject(err)
+                        var errorMessage = getErrorMessage(err);
+                        defer.reject(errorMessage);
                     });
 
                     return defer.promise;
