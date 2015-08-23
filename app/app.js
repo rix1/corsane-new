@@ -5,6 +5,7 @@ angular.module('myApp', [
     'ngRoute',
     'ngStorage',
     'ngSanitize',
+    'ngCookies',
 
     'myApp.config',
     'myApp.landing',

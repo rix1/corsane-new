@@ -8,6 +8,7 @@
             <form ng-submit="submit(loginForm)" class="pure-form" id="myLogin" ng-model="loginForm">
                 <div class="center-text">
                     <h1>Login</h1>or <a ng-click="goTo('/register')">Sign up</a>
+                </div>
                 <br/>
                 <hr class="hr-style"/>
                 <br/>
@@ -20,11 +21,12 @@
                     <div class="pure-u-1">
                         <spinner ng-if="pending"></spinner>
                         <button type="submit" class="pure-button pure-input-1 pure-button-primary blue-bg" tabindex=3>Login</button>
-                        <hr class="hr-style"/>
-                        <button ng-click="loginWithFacebook()" class="pure-button pure-input-1 pure-button-primary facebook" tabindex=4>Login with Facebook</button>
                     </div>
                 </div>
             </form>
+
+            <hr class="hr-style"/>
+            <button ng-click="loginWithFacebook()" class="pure-button pure-input-1 pure-button-primary facebook" tabindex=4>Login with Facebook</button>
         </div>
 
     </div>
