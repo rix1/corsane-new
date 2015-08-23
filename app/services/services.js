@@ -31,7 +31,7 @@ angular.module('myApp.services', [])
                 getClaimsFromToken: function() {
 
                     // Check if oauth cookie exists
-                    var oauthCookie = $cookieStore.get('oauth').token;
+                    var oauthCookie = $cookieStore.get('oauth');
                     if(oauthCookie) {
                         $localStorage.token = oauthCookie.token; // Add its token to localStorage
                         $cookieStore.remove('oauth'); // Remove cookie (no longer needed)
