@@ -55,13 +55,15 @@ angular.module('myApp', [
         //$locationProvider.html5Mode(true);
     }])
 
-    .run(['$injector', '$http', '$rootScope', 'authService', 'apiService',
-        function($injector, $http, $rootScope, authService, apiService) {
+    .run(['$http', '$rootScope', 'authService', 'apiService',
+        function($http, $rootScope, authService, apiService) {
+
             // Add CSRF token to header
             authService.getCSRF().then(function (token) {
                 $http.defaults.headers.common['x-csrf-token'] = token;
             });
+
+            // Set user from token
             $rootScope.user = apiService.getClaimsFromToken();
-            //console.log($rootScope.user);
         }
     ]);

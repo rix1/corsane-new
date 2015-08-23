@@ -4,9 +4,9 @@
     <div class="pure-u-1 pure-md-1-3"></div>
     <div class="pure-u-1 pure-md-1-3">
 
-        <!-- Start -->
+
         <div id="loginInfo" class="border-round">
-            <form ng-submit="submit(form)" class="pure-form" id="myLogin" ng-model="form">
+            <form ng-submit="submit(form)" class="pure-form" ng-model="form">
                 <div class="center-text">
                     <h1>Sign up</h1>or <a ng-href="/login">Login</a></span>
                 </div>
@@ -25,7 +25,6 @@
                 <label for="show-password" class="pure-checkbox">
                     <input name="show-password" id="show-password" ng-model="showpw"  type="checkbox" tabindex=5> Show password
                 </label>
-
                 <label for="terms" class="pure-checkbox">
                     <input  name="terms" id="terms" type="checkbox"> I've read the <a href="">terms and conditions</a>
                 </label>
@@ -34,8 +33,7 @@
                     <div class="pure-u-1">
                         <spinner ng-if="pending"></spinner>
                         <button type="submit" class="pure-button pure-input-1 pure-button-primary blue-bg" tabindex=6>Register</button>
-                        <hr class="hr-style" style="margin-top: 1em"/> <!--TODO: Bad practice... -->
-
+                        <hr class="hr-style"/>
                     </div>
                 </div>
             </form>
@@ -44,8 +42,4 @@
 
 
     </div>
-        <!-- End -->
-
-    </div>
-</div>
 </div>
