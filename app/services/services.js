@@ -2,7 +2,7 @@ angular.module('myApp.services', [])
     .factory('apiService', ['$localStorage', '$cookieStore',
         function ($localStorage, $cookieStore) {
 
-            function urlBase64Decode(str) {
+            function decodeToken(str) {
                 var output = str.replace('-', '+').replace('_', '/');
                 switch (output.length % 4) {
                     case 0:
@@ -16,7 +16,8 @@ angular.module('myApp.services', [])
                     default:
                         throw 'Illegal base64url string!';
                 }
-                return window.atob(output);
+
+                return decodeURIComponent(escape(window.atob(output)));
             }
 
             return{
@@ -42,7 +43,7 @@ angular.module('myApp.services', [])
                     if (typeof token !== 'undefined') {
                         var user = {};
                         var encoded = token.split('.')[1];
-                        user = JSON.parse(urlBase64Decode(encoded));
+                        user = JSON.parse(decodeToken(encoded));
                     }
 
                     return user;
