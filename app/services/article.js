@@ -9,7 +9,7 @@ angular.module('myApp.services')
 
                 var defer = $q.defer();
 
-                $http.get(config.baseUrl + 'article/' + id)
+                $http.get(config.baseUrl + '/article/' + id)
                     .success(function(res) {
                         defer.resolve(res);
                     })
@@ -24,7 +24,7 @@ angular.module('myApp.services')
 
                 var defer = $q.defer();
 
-                $http.get(config.baseUrl + 'article/')
+                $http.get(config.baseUrl + '/article/')
                     .success(function(res) {
                         defer.resolve(res);
                     })
@@ -40,7 +40,7 @@ angular.module('myApp.services')
 
                 $http({
                     method: 'POST',
-                    url: config.baseUrl + 'article',
+                    url: config.baseUrl + '/article',
                     transformRequest: apiService.transformRequest,
                     data: article
                 }).success(function(res) {
@@ -57,7 +57,7 @@ angular.module('myApp.services')
 
                 $http({
                     method: 'PUT',
-                    url: config.baseUrl + 'article/' + article.id,
+                    url: config.baseUrl + '/article/' + article.id,
                     transformRequest: apiService.transformRequest,
                     data: article
                 }).success(function (res) {

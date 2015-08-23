@@ -8,7 +8,7 @@ angular.module('myApp.services')
 
                     var defer = $q.defer();
 
-                    $http.get(config.baseUrl + 'paragraph/' + id)
+                    $http.get(config.baseUrl + '/paragraph/' + id)
                         .success(function (res) {
                             defer.resolve(res);
                         })
@@ -23,7 +23,7 @@ angular.module('myApp.services')
 
                     var defer = $q.defer();
 
-                    $http.get(config.baseUrl + 'paragraph/')
+                    $http.get(config.baseUrl + '/paragraph/')
                         .success(function (res) {
                             defer.resolve(res);
                         })
@@ -39,7 +39,7 @@ angular.module('myApp.services')
 
                     $http({
                         method: 'POST',
-                        url: config.baseUrl + 'paragraph',
+                        url: config.baseUrl + '/paragraph',
                         transformRequest: apiService.transformRequest,
                         data: paragraph
                     }).success(function (res) {
@@ -56,7 +56,7 @@ angular.module('myApp.services')
 
                     $http({
                         method: 'PUT',
-                        url: config.baseUrl + 'paragraph/' + paragraph.id,
+                        url: config.baseUrl + '/paragraph/' + paragraph.id,
                         transformRequest: apiService.transformRequest,
                         data: paragraph
                     }).success(function (res) {
@@ -73,7 +73,7 @@ angular.module('myApp.services')
 
                     $http({
                         method: 'DELETE',
-                        url: config.baseUrl + 'paragraph/' + paragraph.id,
+                        url: config.baseUrl + '/paragraph/' + paragraph.id,
                         transformRequest: apiService.transformRequest,
                         data: paragraph
                     }).success(function (res) {

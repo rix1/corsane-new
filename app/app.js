@@ -5,6 +5,7 @@ angular.module('myApp', [
     'ngRoute',
     'ngStorage',
     'ngSanitize',
+    'ngCookies',
 
     'myApp.config',
     'myApp.landing',
@@ -13,10 +14,11 @@ angular.module('myApp', [
     'myApp.topicList',
     'myApp.topic',
     'myApp.login',
+    'myApp.logout',
+    'myApp.register',
     'myApp.lab',
 
     'myApp.directives.editable',
-    'myApp.directives.login',
     'myApp.directives.navbar',
     'myApp.directives.paragraph',
     'myApp.directives.topicBox',
@@ -54,13 +56,20 @@ angular.module('myApp', [
         //$locationProvider.html5Mode(true);
     }])
 
-    .run(['$injector', '$http', '$rootScope', 'authService', 'apiService',
-        function($injector, $http, $rootScope, authService, apiService) {
+    .run(['$http', '$rootScope', '$location', 'authService', 'apiService',
+        function($http, $rootScope, $location, authService, apiService) {
+
             // Add CSRF token to header
             authService.getCSRF().then(function (token) {
                 $http.defaults.headers.common['x-csrf-token'] = token;
             });
+
+            // Set user from token
             $rootScope.user = apiService.getClaimsFromToken();
-            //console.log($rootScope.user);
+
+            // Global function for changin view
+            $rootScope.goTo = function(route) {
+                $location.path(route);
+            }
         }
     ]);
