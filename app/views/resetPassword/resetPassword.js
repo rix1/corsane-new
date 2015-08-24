@@ -14,6 +14,7 @@ angular.module('myApp.resetPassword', ['ngRoute'])
 
             $scope.pending = false;
             $scope.error = {err:false, msg:""};
+            $scope.emailSent = false;
 
             // Redirect logged in users to their profile
             if($rootScope.user) {
@@ -35,8 +36,8 @@ angular.module('myApp.resetPassword', ['ngRoute'])
             var resetPassword = function (form) {
                 userService.reset_password(form)
                     .then(function (res) {
-                        console.log("email sent");
                         $scope.pending = false;
+                        $scope.emailSent = true;
                     }, function (err) {
                         $scope.pending = false;
                         $scope.error.msg = err.message;
