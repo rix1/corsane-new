@@ -9,20 +9,46 @@ angular.module('myApp.profile', ['ngRoute'])
         })
     }])
 
-    .controller('profileCtrl', ['$rootScope', '$scope', '$location', function($rootScope, $scope, $location) {
+    .controller('profileCtrl', ['$rootScope', '$scope', '$location', 'userService', function($rootScope, $scope, $location, userService) {
 
         if (!$rootScope.user) {
             $location.path("/login");
         }
 
+        $scope.passwordForm = false;
+
+        $scope.togglePasswordForm = function() {
+            $scope.passwordForm = !$scope.passwordForm;
+        };
+
+        $scope.changePassword = function () {
+            console.log("Pw changed");
+            console.log(this.newPassword);
+            if(this.newPassword !== this.repeatedNewPassword) {
+
+            }
+            else {
+                userService.change_password(this.newPassword).then(
+                    function(res) {
+                        console.log("worked");
+                    },
+                    function(err) {
+                        console.log("fail");
+                        console.log(err);
+                    });
+            }
+
+
+            // Vis response
+        };
+
+
+
         $scope.logout = function () {
             $location.path("/logout");
         };
 
-        $scope.resetPw = function () {
-            console.log('Reset');
-            // TODO: Send reset instructions by email.
-        };
+
 
         $scope.deleteAccount = function () {
             console.log('Delete');
