@@ -38,7 +38,9 @@ angular.module('myApp.profile', ['ngRoute'])
 
             $scope.modalShown = false;
             $scope.toggleModal = function() {
+                console.log('before: ' + $scope.modalShown);
                 $scope.modalShown = !$scope.modalShown;
+                console.log('after: ' + $scope.modalShown);
             };
 
 
