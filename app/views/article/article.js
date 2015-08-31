@@ -12,15 +12,16 @@ angular.module('myApp.article', ['ngRoute'])
         });
     }])
 
-    .controller('articleCtrl', ['$scope', '$routeParams', 'articleService', function ($scope, $routeParams, articleService) {
+    .controller('articleCtrl', ['$rootScope', '$scope', '$routeParams', 'articleService', function ($rootScope, $scope, $routeParams, articleService) {
         var articleId = $routeParams.id;
         $scope.article = {};
 
         articleService.getArticle(articleId).then(
             function (article) {
                 $scope.article = article;
-                //console.log("article loaed");
-                //console.log($scope.article);
+                if(article.author.id === $rootScope.user.id){
+                    console.log("DU EGER");
+                }
             },
             function (err) {
                 console.log(err);

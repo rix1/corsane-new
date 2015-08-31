@@ -18,6 +18,7 @@ angular.module('myApp', [
     'myApp.resetPassword',
     'myApp.register',
     'myApp.lab',
+    'myApp.feed',
 
     'myApp.directives.editable',
     'myApp.directives.navbar',
