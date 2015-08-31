@@ -3,20 +3,25 @@
 angular.module('myApp.profile', ['ngRoute'])
 
     .config(['$routeProvider', function($routeProvider) {
-        $routeProvider.when('/profile', {
-            templateUrl: 'views/profile/profile.html',
-            controller: 'profileCtrl'
-        })
+        $routeProvider
+            .when('/profile', {
+                templateUrl: 'views/profile/profile.html',
+                controller: 'profileCtrl'
+            })
+            .when('/user/:id', {
+                templateUrl: 'views/profile/profile.html',
+                controller: 'profileCtrl'
+            })
     }])
 
-    .controller('profileCtrl', ['$rootScope', '$scope', '$location', 'userService', function($rootScope, $scope, $location, userService) {
+    .controller('profileCtrl', ['$rootScope', '$scope', 'userService', function($rootScope, $scope, userService) {
 
         if (!$rootScope.user) {
-            $location.path("/login");
+            return $rootScope.goTo("/login");
         }
 
         $scope.logout = function () {
-            $location.path("/logout");
+            $rootScope.goTo("/logout");
         };
 
         $scope.passwordForm = false;
