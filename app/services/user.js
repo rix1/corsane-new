@@ -135,6 +135,22 @@ angular.module('myApp.services')
                     });
 
                     return defer.promise;
+                },
+
+                deleteAccount: function(id) {
+                    var defer = $q.defer();
+
+                    $http({
+                        method: 'POST',
+                        url: config.baseUrl + '/user/' + id,
+                        transformRequest: apiService.transformRequest
+                    }).success(function(res) {
+                        defer.resolve(res);
+                    }).error(function(err, data, status, config) {
+                        defer.reject(err)
+                    });
+
+                    return defer.promise;
                 }
             }
         }
