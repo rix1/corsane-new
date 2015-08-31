@@ -9,8 +9,8 @@ angular.module('myApp.topic', ['ngRoute'])
         });
     }])
 
-    .controller('topicCtrl', ['$scope', '$routeParams', '$location', 'topicService', 'userService',
-        function($scope, $routeParams, $location, topicService, userService) {
+    .controller('topicCtrl', ['$scope', '$routeParams', '$location', 'topicService',
+        function($scope, $routeParams, $location, topicService) {
 
             $scope.authors = [];
 
@@ -28,4 +28,5 @@ angular.module('myApp.topic', ['ngRoute'])
             $scope.getArticle = function(id) {
                 $location.path("/article/" + id);
             }
-        }]);
+        }
+    ]);

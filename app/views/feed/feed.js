@@ -9,15 +9,11 @@ angular.module('myApp.feed', ['ngRoute'])
         });
     }])
 
-    .controller('feedCtrl', ['$scope', '$location', 'feedService', function($scope, $location, feedService) {
+    .controller('feedCtrl', ['$scope', 'feedService', function($scope, feedService) {
         feedService.getFeed().then(function(res) {
             $scope.articles = res;
         }, function(err) {
             console.log('Error  while getting feed');
         });
 
-        $scope.getArticle = function(articleId){
-            console.log(articleId);
-            $location.path('/article/'+ articleId);
-        };
     }]);
