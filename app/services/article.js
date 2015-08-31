@@ -55,6 +55,8 @@ angular.module('myApp.services')
             updateArticle: function(article){
                 var defer = $q.defer();
 
+                //delete article.id;
+
                 $http({
                     method: 'PUT',
                     url: config.baseUrl + '/article/' + article.id,

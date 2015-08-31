@@ -2,6 +2,18 @@
     <div class='ng-modal-overlay' ng-click='hideModal()'></div>
     <div class='ng-modal-dialog' ng-style='dialogStyle'>
         <div class='ng-modal-close' ng-click='hideModal()'>X</div>
-        <div class='ng-modal-dialog-content' ng-transclude></div>
+        <!--<div class='ng-modal-dialog-content' ng-transclude></div>-->
+
+
+        <div class="default-banner center-text">
+            <h1 contenteditable="{{signedIn}}" class="banner-head" data-ph="Title" ng-model="article.title"></h1>
+            <h2 contenteditable="{{signedIn}}" id="banner-desc" data-ph="Description" ng-model="article.introduction"></h2>
+            <p><small>In <select
+                    ng-model="article.topics"
+                    ng-options="topic.id as topic.title for topic in topics">
+                </select><br/>{{topicLookup[article.topics].description}}</small></p>
+        </div>
+        <button class="button-error pure-button pure-u-1-4" ng-click='createArticle()'>Create article</button>
+        <p class="error">{{error}}</p>
     </div>
 </div>
