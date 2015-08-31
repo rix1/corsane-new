@@ -1,5 +1,5 @@
-angular.module('myApp.directives.modal', [])
-    .directive('modal', function() {
+angular.module('myApp.directives.modalDialog', [])
+    .directive('modalDialog', function() {
     return {
         restrict: 'E',
         scope: {
@@ -17,6 +17,6 @@ angular.module('myApp.directives.modal', [])
                 scope.show = false;
             };
         },
-        template: '...' // See below
+        templateUrl: "components/modal/modal.html"
     };
 });

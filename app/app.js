@@ -26,7 +26,7 @@ angular.module('myApp', [
     'myApp.directives.topicBox',
     'myApp.directives.spinner',
     'myApp.directives.ngReallyClick',
-    'myApp.directives.modal',
+    'myApp.directives.modalDialog',
 
     'myApp.services'
 ])

@@ -36,6 +36,12 @@ angular.module('myApp.profile', ['ngRoute'])
                 return $rootScope.goTo("/login");
             }
 
+            $scope.modalShown = false;
+            $scope.toggleModal = function() {
+                $scope.modalShown = !$scope.modalShown;
+            };
+
+
             $scope.user = $rootScope.user;
 
             $scope.logout = function () {
