@@ -25,11 +25,32 @@
         <div class="v-space-2"></div>
         <p>Account settings:</p>
         <div class="button-group center-content">
-            <button ng-if="!$root.user.facebookId" class="pure-button pure-button-primary blue-bg pure-u-1-2" ng-click="resetPw()" ng-confirm-click="We'll send you an email with instructions on how to reset your password">Reset password</button>
+
+            <div ng-if="successMessage">
+                <h4>{{successMessage}}</h4>
+            </div>
+
+            <button ng-if="!$root.user.facebookId" class="pure-button pure-button-primary blue-bg pure-u-1-2" ng-click="togglePasswordForm()">Change password</button>
+            <div ng-show="passwordForm" id="loginInfo">
+                <form ng-submit="changePassword()" class="pure-form new-password">
+                    <div ng-if="error">
+                        <h4>{{error}}</h4>
+                    </div>
+                    <input type="password" class="pure-input-1" ng-model="newPassword" placeholder="Password" required>
+                    <input type="password" class="pure-input-1" ng-model="repeatedNewPassword" placeholder="Repeat password" required>
+                    <button type="submit" class="pure-button pure-input-1 pure-button-primary blue-bg">Update password</button>
+                </form>
+            </div>
+
+
             <button class="button-error pure-button pure-u-1-2" type="button" ng-click="deleteAccount()" ng-confirm-click="Are you sure? This will delete your account forever!">Delete account</button>
+
         </div>
         <div class="v-space-2"></div>
         <hr class="hr-style"/>
         <p>Visit the <strong><a href="#/lab">lab...</a></strong></p>
     </div>
+
+
+
 </div>

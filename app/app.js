@@ -15,6 +15,7 @@ angular.module('myApp', [
     'myApp.topic',
     'myApp.login',
     'myApp.logout',
+    'myApp.resetPassword',
     'myApp.register',
     'myApp.lab',
 
