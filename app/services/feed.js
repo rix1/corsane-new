@@ -9,7 +9,7 @@ angular.module('myApp.services')
 
                     var defer = $q.defer();
 
-                    $http.get(config.baseUrl + 'feed')
+                    $http.get(config.baseUrl + '/feed')
                         .success(function(res) {
                             console.log(res[0]);
                             defer.resolve(res);

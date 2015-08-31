@@ -8,7 +8,7 @@ angular.module('myApp', [
     'ngCookies',
 
     'myApp.config',
-    'myApp.landing',
+    'myApp.home',
     'myApp.profile',
     'myApp.article',
     'myApp.topicList',
