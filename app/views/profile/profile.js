@@ -11,11 +11,13 @@ angular.module('myApp.profile', ['ngRoute'])
 
     .controller('profileCtrl', ['$rootScope', '$scope', '$location', 'userService', function($rootScope, $scope, $location, userService) {
 
-        $scope.errorMessage = "";
-
         if (!$rootScope.user) {
             $location.path("/login");
         }
+
+        $scope.logout = function () {
+            $location.path("/logout");
+        };
 
         $scope.passwordForm = false;
 
@@ -38,14 +40,6 @@ angular.module('myApp.profile', ['ngRoute'])
                     });
             }
         };
-
-
-
-        $scope.logout = function () {
-            $location.path("/logout");
-        };
-
-
 
         $scope.deleteAccount = function () {
             userService.deleteAccount($rootScope.user.id).then(
