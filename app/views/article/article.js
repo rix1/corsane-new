@@ -19,7 +19,7 @@ angular.module('myApp.article', ['ngRoute'])
         articleService.getArticle(articleId).then(
             function (article) {
                 $scope.article = article;
-                if(article.author.id === $rootscope.user.id){
+                if(article.author.id === $rootScope.user.id){
                     console.log("DU EGER");
                 }
             },
