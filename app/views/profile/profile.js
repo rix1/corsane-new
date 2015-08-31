@@ -11,7 +11,7 @@ angular.module('myApp.profile', ['ngRoute'])
 
     .controller('profileCtrl', ['$rootScope', '$scope', '$location', 'userService', function($rootScope, $scope, $location, userService) {
 
-        $scope.error = "";
+        $scope.errorMessage = "";
 
         if (!$rootScope.user) {
             $location.path("/login");
@@ -24,24 +24,19 @@ angular.module('myApp.profile', ['ngRoute'])
         };
 
         $scope.changePassword = function () {
-            console.log("Pw changed");
-            console.log(this.newPassword);
             if(this.newPassword !== this.repeatedNewPassword) {
                 $scope.error = "Password mismatch";
             }
             else {
                 userService.change_password(this.newPassword).then(
                     function(res) {
-                        console.log("worked");
+                        $scope.successMessage = "Your password has been updated";
+                        $scope.passwordForm = false;
                     },
                     function(err) {
-                        console.log("fail");
-                        console.log(err);
+                        $scope.error = err;
                     });
             }
-
-
-            // Vis response
         };
 
 

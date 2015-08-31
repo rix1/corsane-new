@@ -26,9 +26,16 @@
         <p>Account settings:</p>
         <div class="button-group center-content">
 
+            <div ng-if="successMessage">
+                <h4>{{successMessage}}</h4>
+            </div>
+
             <button ng-if="!$root.user.facebookId" class="pure-button pure-button-primary blue-bg pure-u-1-2" ng-click="togglePasswordForm()">Change password</button>
             <div ng-show="passwordForm" id="loginInfo">
                 <form ng-submit="changePassword()" class="pure-form new-password">
+                    <div ng-if="error">
+                        <h4>{{error}}</h4>
+                    </div>
                     <input type="password" class="pure-input-1" ng-model="newPassword" placeholder="Password" required>
                     <input type="password" class="pure-input-1" ng-model="repeatedNewPassword" placeholder="Repeat password" required>
                     <button type="submit" class="pure-button pure-input-1 pure-button-primary blue-bg">Update password</button>
