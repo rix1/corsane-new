@@ -8,7 +8,7 @@ angular.module('myApp', [
     'ngCookies',
 
     'myApp.config',
-    'myApp.landing',
+    'myApp.home',
     'myApp.profile',
     'myApp.article',
     'myApp.topicList',
@@ -71,8 +71,10 @@ angular.module('myApp', [
             $rootScope.user = apiService.getClaimsFromToken();
 
             // Global function for changin view
-            $rootScope.goTo = function(route) {
-                $location.path(route);
+            $rootScope.goTo = function(route, params) {
+                var searchParams = params || {};
+                return $location.path(route).search(searchParams );
+
             }
         }
     ]);
