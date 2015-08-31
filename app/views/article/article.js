@@ -3,12 +3,18 @@
 angular.module('myApp.article', ['ngRoute'])
 
     .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/article/:id', {
-            templateUrl: 'views/article/article.html',
-            controller: 'articleCtrl'
-        }).when('/new/article/', {
+        $routeProvider
+            .when('/article/create', {
             templateUrl: 'views/article/newArticle.html',
             controller: 'newArticleCtrl'
+        })
+            .when('/article/:id', {
+            templateUrl: 'views/article/article.html',
+            controller: 'articleCtrl'
+        })
+            .when('/article/:id/edit', {
+            templateUrl: 'views/article/article.html',
+            controller: 'editArticleCtrl'
         });
     }])
 
@@ -29,6 +35,24 @@ angular.module('myApp.article', ['ngRoute'])
         );
     }])
 
+    .controller('editArticleCtrl', ['$rootScope', '$scope', '$routeParams', 'articleService', function ($rootScope, $scope, $routeParams, articleService) {
+        var articleId = $routeParams.id;
+        $scope.article = {};
+
+        articleService.getArticle(articleId).then(
+            function (article) {
+                $scope.article = article;
+                if(article.author.id === $rootScope.user.id){
+                    console.log("DU EGER");
+                }
+            },
+            function (err) {
+                console.log(err);
+            }
+        );
+    }])
+
+
 
 /**
  * "FOR THE WATCH"
@@ -46,6 +70,7 @@ angular.module('myApp.article', ['ngRoute'])
     }])
 
     .controller('newArticleCtrl', ['$scope', '$rootScope', 'topicService', 'articleService','paragraphService', function ($scope, $rootScope, topicService, articleService, paragraphService) {
+
         $scope.signedIn = false;
         $scope.helptext = '';
         $scope.topicLookup = {};
@@ -73,7 +98,6 @@ angular.module('myApp.article', ['ngRoute'])
         }else{
             // TODO: Tell user to sign in through modal or something
         }
-
 
         /**
          * Currently we're saving the article when the first paragraph is added,
@@ -164,6 +188,7 @@ angular.module('myApp.article', ['ngRoute'])
          * Functions passing data to the API through Angular services
          * **/
 
+        // CREATE ARTICLE
         topicService.getAllTopics().then(
             function (res) {
                 $scope.topics = res;
@@ -173,6 +198,7 @@ angular.module('myApp.article', ['ngRoute'])
             });
 
 
+        // CREATE ARTICLE
         var addArticle = function (articleData) {
             if(articleData.id) {
                 articleService.updateArticle(articleData)
@@ -193,22 +219,20 @@ angular.module('myApp.article', ['ngRoute'])
             }
         };
 
+        // EDIT ARTICLE
         var addParagraphs = function (paragraphs) {
             var paragraphData;
             for (var i = 0; i < paragraphs.length; i++) {
                 paragraphData = paragraphs[i];
                 if (paragraphData.changed) {
-                    //console.log("saving paragraph: ");
-                    //console.log(paragraphData);
                     addParagraph(paragraphData);
                     paragraphData.changed = false;
                 }else{
-                    //console.log("wops");
-                    //console.log(paragraphData);
                 }
             }
         };
 
+        // EDIT ARTICLE
         var deleteParagraph = function (paragraph) {
             var formData = {
                 article: article.header.id,
@@ -230,11 +254,8 @@ angular.module('myApp.article', ['ngRoute'])
             }
         };
 
+        // EDIT ARTICLE
         var addParagraph = function (paragraphData) {
-
-            //console.log("saving/updating paragraph");
-            //console.log(paragraphData);
-
             var formData = {
                 article: article.header.id,
                 headline: paragraphData.headline,
