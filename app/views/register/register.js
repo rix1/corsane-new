@@ -29,10 +29,9 @@ angular.module('myApp.register', ['ngRoute'])
 
             var register = function (userInfo) {
 
-                if($routeParams.topics) {
+                // If topics is part of GET request, add them to the user object before registration
+                if($routeParams.topics)
                     userInfo.topic_subscriptions = $routeParams.topics;
-                    delete $routeParams.topics;
-                }
 
                 userService.register(userInfo).then(
                     function (res) {
