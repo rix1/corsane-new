@@ -28,14 +28,14 @@ angular.module('myApp.home', ['ngRoute'])
 
         //
         $scope.register = function () {
-            var selected = [];
+            var selectedTopics = [];
 
             $scope.topics.forEach(function(topic) {
                 if(topic.selected)
-                    selected.push(topic);
+                    selectedTopics.push(topic.id);
             });
 
-            console.log(selected);
+            $rootScope.goTo('/register', {topics: selectedTopics});
         };
 
     }]);
