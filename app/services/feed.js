@@ -11,6 +11,7 @@ angular.module('myApp.services')
 
                     $http.get(config.baseUrl + 'feed')
                         .success(function(res) {
+                            console.log(res[0]);
                             defer.resolve(res);
                         })
                         .error(function(err, status) {
