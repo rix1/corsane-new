@@ -61,7 +61,31 @@ angular.module('myApp.services')
                         q.reject(err);
                     });
                     return q.promise;
+                },
+
+                getTokenExpirationDate: function (decodedToken) {
+
+                    if (typeof decodedToken.exp === "undefined") {
+                        return null;
+                    }
+
+                    var d = new Date(0); // The 0 here is the key, which sets the date to the epoch
+                    d.setUTCSeconds(decodedToken.exp);
+
+                    return d;
+                },
+
+                isTokenExpired: function (token) {
+                    var d = this.getTokenExpirationDate(token);
+
+                    if (d === null) {
+                        return false;
+                    }
+
+                    // Token expired?
+                    return !(d.valueOf() > new Date().valueOf());
                 }
+
             };
         }
     ]);

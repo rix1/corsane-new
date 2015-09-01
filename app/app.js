@@ -66,14 +66,23 @@ angular.module('myApp', [
                 $http.defaults.headers.common['x-csrf-token'] = token;
             });
 
-            // Set user from token
-            $rootScope.user = apiService.getClaimsFromToken();
-
             // Global function for changin view
             $rootScope.goTo = function(route, params) {
                 var searchParams = params || {};
                 return $location.path(route).search(searchParams );
+            };
 
-            }
+            // Set user from token
+            var token = apiService.getClaimsFromToken();
+
+            // TODO: REMOVE
+            console.log(authService.getTokenExpirationDate(token));
+
+            // Redirect to login if token has expired
+            if(authService.isTokenExpired(token))
+                return $rootScope.goTo('/login');
+
+            $rootScope.user = token;
+
         }
     ]);
