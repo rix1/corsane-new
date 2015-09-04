@@ -76,11 +76,12 @@ angular.module('myApp.services')
                 },
 
                 isTokenExpired: function (token) {
+                    if(!token) return true;
+
                     var d = this.getTokenExpirationDate(token);
 
-                    if (d === null) {
+                    if (d === null)
                         return false;
-                    }
 
                     // Token expired?
                     return !(d.valueOf() > new Date().valueOf());

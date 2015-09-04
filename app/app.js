@@ -61,28 +61,27 @@ angular.module('myApp', [
     .run(['$http', '$rootScope', '$location', 'authService', 'apiService',
         function($http, $rootScope, $location, authService, apiService) {
 
+            // Global function for changing view
+            $rootScope.goTo = function(route, params) {
+                var searchParams = params || {};
+                return $location.path(route).search(searchParams);
+            };
+
             // Add CSRF token to header
             authService.getCSRF().then(function (token) {
                 $http.defaults.headers.common['x-csrf-token'] = token;
             });
 
-            // Global function for changin view
-            $rootScope.goTo = function(route, params) {
-                var searchParams = params || {};
-                return $location.path(route).search(searchParams );
-            };
+            // Get user from token (if it exists)
+            var user = apiService.getClaimsFromToken();
 
-            // Set user from token
-            var token = apiService.getClaimsFromToken();
+            // Check if user was in token
+            if(user && authService.isTokenExpired(user)) {
+                // TODO: Refresh token || Refresh token regardless of exp?
+            }
 
-            // TODO: REMOVE
-            console.log(authService.getTokenExpirationDate(token));
+            $rootScope.user = user;
 
-            // Redirect to login if token has expired
-            if(authService.isTokenExpired(token))
-                return $rootScope.goTo('/login');
-
-            $rootScope.user = token;
-
+            // TODO: Set token refresh intervals (~once every hour)
         }
     ]);
