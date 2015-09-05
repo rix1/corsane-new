@@ -35,7 +35,6 @@ angular.module('myApp.services')
                         method: 'POST',
                         url: config.baseUrl + '/auth/logout'
                     }).success(function (res) {
-                        tokenClaims = {};
                         $rootScope.user = {};
                         delete $localStorage.token;
                         defer.resolve(res);
@@ -57,6 +56,22 @@ angular.module('myApp.services')
                         withCredentials: true
                     }).success(function (data) {
                         q.resolve(data._csrf);
+                    }).error(function (err) {
+                        q.reject(err);
+                    });
+                    return q.promise;
+                },
+
+                refreshToken: function() {
+                    var q = $q.defer();
+
+                    $http({
+                        method: 'POST',
+                        url: config.baseUrl + '/refresh_token'
+                    }).success(function (res) {
+                        $localStorage.token = res.token;
+                        $rootScope.user = apiService.getClaimsFromToken();
+                        q.resolve(res);
                     }).error(function (err) {
                         q.reject(err);
                     });

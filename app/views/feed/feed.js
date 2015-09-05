@@ -9,7 +9,11 @@ angular.module('myApp.feed', ['ngRoute'])
         });
     }])
 
-    .controller('feedCtrl', ['$scope', 'feedService', function($scope, feedService) {
+    .controller('feedCtrl', ['$scope', '$rootScope', 'feedService', function($scope, $rootScope, feedService) {
+
+        if(!$rootScope.user)
+            return $rootScope.goTo('/welcome');
+
         feedService.getFeed().then(function(res) {
             $scope.articles = res;
         }, function(err) {

@@ -58,8 +58,8 @@ angular.module('myApp', [
         //$locationProvider.html5Mode(true);
     }])
 
-    .run(['$http', '$rootScope', '$location', 'authService', 'apiService',
-        function($http, $rootScope, $location, authService, apiService) {
+    .run(['$http', '$rootScope', '$location', '$localStorage', 'authService', 'apiService',
+        function($http, $rootScope, $location, $localStorage, authService, apiService) {
 
             // Global function for changing view
             $rootScope.goTo = function(route, params) {
@@ -68,23 +68,36 @@ angular.module('myApp', [
             };
 
             // Add CSRF token to header
-            authService.getCSRF().then(function (token) {
+            authService.getCSRF().then(function(token) {
                 $http.defaults.headers.common['x-csrf-token'] = token;
+
+                // Get user from token (if it exists)
+                var user = apiService.getClaimsFromToken();
+
+                // If user exists, but is expired
+                if(user && authService.isTokenExpired(user)) {
+                    console.log("FUCK");
+                    delete $localStorage.token;
+                    delete $rootScope.user;
+                    return $rootScope.goTo('/login');
+                }
+
+                // If user exists, and has not expired
+                // TODO: Change to GET?
+                else if(user) {
+                    authService.refreshToken().then(
+                        function(res) {
+                            // Add token to header
+                            $http.defaults.headers.common.Authorization = 'Bearer ' + res.token;
+                        },
+                        function(err) {
+                            console.log(err);
+                            return $rootScope.goTo('/login');
+                        });
+                }
             });
 
-            // Get user from token (if it exists)
-            var user = apiService.getClaimsFromToken();
 
-            // Check if user was in token
-            if(user && authService.isTokenExpired(user)) {
-                // TODO: Refresh token regardless of exp
-                console.log("FUFUFUFUFUFUFUFUFFUU");
-                // TODO: HANDLE ERROR:
-                // - delete $rootScope.user
-                // goTo /login
-            }
-
-            $rootScope.user = user;
 
             // TODO: Set token refresh intervals (~once every hour)
         }
