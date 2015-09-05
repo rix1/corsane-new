@@ -6,11 +6,10 @@ angular.module('myApp.directives.ngReallyClick', [])
             link: function(scope, element, attrs) {
                 element.bind('click', function() {
                     var message = attrs.ngConfirmClick;
-                    if (message && !confirm(message)) {
-                        scope.$apply(attrs.ngConfirmClick);
-                    }
-                    else {
-                        scope.$apply();
+                    var confirmed = confirm(message);
+
+                    if(confirmed) {
+                        scope.$apply(attrs.ngConfirmed);
                     }
                 });
             }

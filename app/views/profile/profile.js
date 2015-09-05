@@ -67,6 +67,8 @@ angular.module('myApp.profile', ['ngRoute'])
             $scope.deleteAccount = function () {
                 userService.deleteAccount($rootScope.user.id).then(
                     function(res) {
+                        console.log("account deleted");
+                        console.log(res);
                         $scope.logout();
                     },
                     function(err) {

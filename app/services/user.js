@@ -141,7 +141,7 @@ angular.module('myApp.services')
                     var defer = $q.defer();
 
                     $http({
-                        method: 'POST',
+                        method: 'DELETE',
                         url: config.baseUrl + '/user/' + id,
                         transformRequest: apiService.transformRequest
                     }).success(function(res) {
