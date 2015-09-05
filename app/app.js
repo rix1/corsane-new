@@ -76,14 +76,12 @@ angular.module('myApp', [
 
                 // If user exists, but is expired
                 if(user && authService.isTokenExpired(user)) {
-                    console.log("FUCK");
                     delete $localStorage.token;
                     delete $rootScope.user;
                     return $rootScope.goTo('/login');
                 }
 
                 // If user exists, and has not expired
-                // TODO: Change to GET?
                 else if(user) {
                     authService.refreshToken().then(
                         function(res) {
@@ -97,8 +95,5 @@ angular.module('myApp', [
                 }
             });
 
-
-
-            // TODO: Set token refresh intervals (~once every hour)
         }
     ]);
