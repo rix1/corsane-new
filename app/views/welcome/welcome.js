@@ -1,20 +1,21 @@
 'use strict';
 
-angular.module('myApp.home', ['ngRoute'])
+angular.module('myApp.welcome', ['ngRoute'])
 
     .config(['$routeProvider', function($routeProvider) {
-        $routeProvider.when('/', {
-            templateUrl: 'views/home/landing.html',
-            controller: 'homeCtrl'
+        $routeProvider.when('/welcome', {
+            templateUrl: 'views/welcome/welcome.html',
+            controller: 'welcomeCtrl'
         });
     }])
 
-    .controller('homeCtrl', ['$rootScope', '$scope', 'topicService', function($rootScope, $scope, topicService) {
+    .controller('welcomeCtrl', ['$rootScope', '$scope', 'topicService', function($rootScope, $scope, topicService) {
 
-        // If user logged in, redirect
+        // If user logged in, display feed
         if ($rootScope.user) {
-            return $rootScope.goTo('/feed');
+            return $rootScope.goTo('/');
         }
+
 
         // Get topics and display
         topicService.getAllTopics().then(
@@ -26,7 +27,6 @@ angular.module('myApp.home', ['ngRoute'])
             });
 
 
-        //
         $scope.register = function () {
             var selectedTopics = [];
 

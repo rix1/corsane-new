@@ -3,7 +3,7 @@
 angular.module('myApp.feed', ['ngRoute'])
 
     .config(['$routeProvider', function($routeProvider) {
-        $routeProvider.when('/feed', {
+        $routeProvider.when('/', {
             templateUrl: 'views/feed/feed.html',
             controller: 'feedCtrl'
         });

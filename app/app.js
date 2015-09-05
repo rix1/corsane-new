@@ -8,7 +8,7 @@ angular.module('myApp', [
     'ngCookies',
 
     'myApp.config',
-    'myApp.home',
+    'myApp.welcome',
     'myApp.profile',
     'myApp.article',
     'myApp.topicList',
@@ -77,7 +77,11 @@ angular.module('myApp', [
 
             // Check if user was in token
             if(user && authService.isTokenExpired(user)) {
-                // TODO: Refresh token || Refresh token regardless of exp?
+                // TODO: Refresh token regardless of exp
+                console.log("FUFUFUFUFUFUFUFUFFUU");
+                // TODO: HANDLE ERROR:
+                // - delete $rootScope.user
+                // goTo /login
             }
 
             $rootScope.user = user;
