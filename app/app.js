@@ -8,7 +8,7 @@ angular.module('myApp', [
     'ngCookies',
 
     'myApp.config',
-    'myApp.home',
+    'myApp.welcome',
     'myApp.profile',
     'myApp.article',
     'myApp.topicList',
@@ -58,22 +58,42 @@ angular.module('myApp', [
         //$locationProvider.html5Mode(true);
     }])
 
-    .run(['$http', '$rootScope', '$location', 'authService', 'apiService',
-        function($http, $rootScope, $location, authService, apiService) {
+    .run(['$http', '$rootScope', '$location', '$localStorage', 'authService', 'apiService',
+        function($http, $rootScope, $location, $localStorage, authService, apiService) {
 
-            // Add CSRF token to header
-            authService.getCSRF().then(function (token) {
-                $http.defaults.headers.common['x-csrf-token'] = token;
-            });
-
-            // Set user from token
-            $rootScope.user = apiService.getClaimsFromToken();
-
-            // Global function for changin view
+            // Global function for changing view
             $rootScope.goTo = function(route, params) {
                 var searchParams = params || {};
-                return $location.path(route).search(searchParams );
+                return $location.path(route).search(searchParams);
+            };
 
-            }
+            // Add CSRF token to header
+            authService.getCSRF().then(function(token) {
+                $http.defaults.headers.common['x-csrf-token'] = token;
+
+                // Get user from token (if it exists)
+                var user = apiService.getClaimsFromToken();
+
+                // If user exists, but is expired
+                if(user && authService.isTokenExpired(user)) {
+                    delete $localStorage.token;
+                    delete $rootScope.user;
+                    return $rootScope.goTo('/login');
+                }
+
+                // If user exists, and has not expired
+                else if(user) {
+                    authService.refreshToken().then(
+                        function(res) {
+                            // Add token to header
+                            $http.defaults.headers.common.Authorization = 'Bearer ' + res.token;
+                        },
+                        function(err) {
+                            console.log(err);
+                            return $rootScope.goTo('/login');
+                        });
+                }
+            });
+
         }
     ]);

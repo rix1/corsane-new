@@ -1,4 +1,4 @@
-'use strict';
+//'use strict';
 
 angular.module('myApp.login', ['ngRoute'])
 
@@ -17,7 +17,8 @@ angular.module('myApp.login', ['ngRoute'])
 
             // Redirect logged in users to their profile
             if($rootScope.user) {
-                $location.path("/profile");
+                console.log($rootScope.user);
+                return $location.path("/profile");
             }
 
             $scope.submit = function (form) {
