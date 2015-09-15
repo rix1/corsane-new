@@ -43,6 +43,7 @@ angular.module('myApp.article', ['ngRoute'])
 
         $scope.topicLookup = {};
 
+
         $scope.article = {
             header: {
                 title: '',
@@ -183,7 +184,8 @@ angular.module('myApp.article', ['ngRoute'])
             var updateData = {
                 id: $scope.articleId,
                 title: articleData.title,
-                introduction: articleData.introduction
+                introduction: articleData.introduction,
+                published: articleData.published
             };
 
             articleService.updateArticle(updateData)
