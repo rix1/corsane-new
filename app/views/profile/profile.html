@@ -24,8 +24,9 @@
         <hr class="hr-style"/>
         <div class="v-space-2"></div>
 
-        <button class="button-error pure-button pure-u-1-4" ng-click='toggleModal()'>Create new article</button>
-        <modal-dialog show='modalShown' width='750px' height='60%'>
+        <!--<button class="button-error pure-button pure-u-1-4" ng-click='toggleModal()'>Create new article</button>-->
+        <button class="button-error pure-button pure-u-1-4" ng-click='$root.modal = !$root.modal'>Create new article</button>
+        <modal-dialog show='$root.modal' width='750px' height='60%'>
             <!--<ng-include src="'../../components/_independent/test.html'"></ng-include>-->
         </modal-dialog>
 

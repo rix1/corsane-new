@@ -8,18 +8,15 @@ angular.module('myApp.directives.modalDialog', [])
             replace: true, // Replace with the template below
             transclude: true, // we want to insert custom content inside the directive
             link: function (scope, element, attrs) {
-                console.log("modal: " + scope.show);
                 scope.dialogStyle = {};
                 if (attrs.width)
                     scope.dialogStyle.width = attrs.width;
                 if (attrs.height)
                     scope.dialogStyle.height = attrs.height;
+
                 scope.hideModal = function () {
                     scope.show = false;
                 };
-                //scope.createArticle = function (article) {
-                //    console.log("lager artikkel!");
-                //}
             },
             controller: 'modalCtrl',
             templateUrl: "components/modal/modal.html"
@@ -28,14 +25,15 @@ angular.module('myApp.directives.modalDialog', [])
 
 
     .controller('modalCtrl', ['$rootScope', '$scope', 'topicService', 'articleService', function ($rootScope, $scope, topicService, articleService) {
-        //console.log($scope.content);
 
         $scope.article = {};
         $scope.topicLookup = {};
 
+        $scope.hideModal = function () {
+        };
+
         $scope.createArticle = function () {
             var a = $scope.article;
-            console.log($scope.article);
             if(a.title === "" || a.introduction === "" || !a.topics){
                 $scope.error = "Please fill in all of the fields above";
             }else{
@@ -68,7 +66,6 @@ angular.module('myApp.directives.modalDialog', [])
         var addArticle = function (articleData) {
             articleService.createArticle(articleData)
                 .then(function (res) {
-                    console.log("Article created:");
                     console.log(res);
                     $rootScope.goTo('/article/' + res.id + '/edit');
                 }, function (err) {

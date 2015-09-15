@@ -35,8 +35,6 @@ angular.module('myApp.article', ['ngRoute'])
         );
     }])
 
-
-
 // =================================================================== // WORK BELOW THIS LINE ===================================================================
 
 
@@ -63,7 +61,6 @@ angular.module('myApp.article', ['ngRoute'])
 
         articleService.getArticle(articleId).then(
             function (res) {
-                console.log(res);
 
                 if(res.author.id === $rootScope.user.id){
 
@@ -170,8 +167,6 @@ angular.module('myApp.article', ['ngRoute'])
 
         $scope.save = function () {
 
-            //console.log($scope.article);
-
             $scope.article.state.timestamp = Date.now();
             $scope.article.state.saved = true;
 
@@ -180,14 +175,10 @@ angular.module('myApp.article', ['ngRoute'])
                 addArticle($scope.article.header);
                 addParagraphs($scope.article.paragraphs);
             }
-            // else console.log("header not validated");
         };
 
         // CREATE ARTICLE
         var addArticle = function (articleData) {
-
-            console.log("updating article");
-            console.log(articleData);
 
             var updateData = {
                 id: $scope.articleId,
@@ -197,11 +188,9 @@ angular.module('myApp.article', ['ngRoute'])
 
             articleService.updateArticle(updateData)
                 .then(function (res) {
-                    console.log("article updated");
                 }, function (err) {
                     console.log(err);
                 });
-            //console.log("something lets update");
         };
 
         // EDIT ARTICLE
@@ -210,11 +199,9 @@ angular.module('myApp.article', ['ngRoute'])
             for (var i = 0; i < paragraphs.length; i++) {
                 paragraphData = paragraphs[i];
                 if (paragraphData.changed) {
-                    console.log("saving changed paragraph");
                     addParagraph(paragraphData);
                     paragraphData.changed = false;
                 }else{
-                    console.log("nothing changed");
                 }
             }
         };
@@ -232,12 +219,10 @@ angular.module('myApp.article', ['ngRoute'])
 
                 paragraphService.deleteParagraph(formData)
                     .then(function (res) {
-                        //console.log("paragraph deleted");
                     }, function (err) {
                         console.log(err);
                     });
             }else{
-                //console.log("WOWA you mustnt do that");
             }
         };
 
@@ -254,17 +239,13 @@ angular.module('myApp.article', ['ngRoute'])
 
                 paragraphService.updateParagraph(formData)
                     .then(function (res) {
-                        console.log("paragraph updated");
-                        console.log(res);
                     }, function (err) {
                         console.log(err);
                     });
             }else{
                 paragraphService.createParagraph(formData)
                     .then(function (res) {
-                        console.log("paragraph created: check ID");
                         paragraphData.id = res.id;
-                        //console.log(paragraphData);
                     }, function (err) {
                         console.log(err);
                     });
@@ -281,7 +262,6 @@ angular.module('myApp.article', ['ngRoute'])
             if(angular.isUndefined(newVal.changed)){
                 newVal.changed = false;
             }else if(!newVal.changed){
-                // Angular $watch loooves to run so we have to check if the values ACTUALLY changed.
                 newVal.changed = !((oldVal.headline === newVal.headline) && (oldVal.text === newVal.text));
             }
         }, true);

@@ -55,11 +55,13 @@ angular.module('myApp.services')
             updateArticle: function(article){
                 var defer = $q.defer();
 
+                var id = article.id;
+
                 //delete article.id;
 
                 $http({
                     method: 'PUT',
-                    url: config.baseUrl + '/article/' + article.id,
+                    url: config.baseUrl + '/article/' + id,
                     transformRequest: apiService.transformRequest,
                     data: article
                 }).success(function (res) {
