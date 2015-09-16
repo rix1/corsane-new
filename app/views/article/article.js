@@ -5,7 +5,7 @@ angular.module('myApp.article', ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
             .when('/article/create', {
-                templateUrl: 'views/article/newArticle.html',
+                template: '..',
                 controller: 'newArticleCtrl'
             })
             .when('/article/:id', {
@@ -43,8 +43,8 @@ angular.module('myApp.article', ['ngRoute'])
         var articleId = $routeParams.id;
         $scope.topicLookup = {};
         $scope.article = {
-            header: {
-            }
+            header: {},
+            state: {}
         };
 
         articleService.getArticle(articleId).then(
@@ -256,19 +256,22 @@ angular.module('myApp.article', ['ngRoute'])
 
     .controller('newArticleCtrl', ['$scope', '$rootScope', 'topicService', 'articleService','paragraphService', function ($scope, $rootScope, topicService, articleService, paragraphService) {
 
-        $scope.signedIn = false;
-        $scope.helptext = '';
-        $scope.topicLookup = {};
 
-        var headerError = 'Please fill inn Title, Description and Topic before continuing...';
-        var article = $scope.article;
+        $rootScope.modal = true;
 
-        if($rootScope.user){
-            $scope.signedIn = true;
-            article.header.author = $rootScope.user.id;
-        }else{
-            // TODO: Tell user to sign in through modal or something
-        }
+        //$scope.signedIn = false;
+        //$scope.helptext = '';
+        //$scope.topicLookup = {};
+        //
+        //var headerError = 'Please fill inn Title, Description and Topic before continuing...';
+        //var article = $scope.article;
+        //
+        //if($rootScope.user){
+        //    $scope.signedIn = true;
+        //    article.header.author = $rootScope.user.id;
+        //}else{
+        //    // TODO: Tell user to sign in through modal or something
+        //}
     }]);
 
 

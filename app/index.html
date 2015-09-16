@@ -34,8 +34,9 @@
     <!-- ABOVE TEMPLATE -->
     <div id="content" >
         <navbar></navbar>
-
-        <div ng-click="model.check = !model.check" ng-view></div>
+        <modal-dialog show='$root.modal' width='750px' height='60%'></modal-dialog>
+        <div ng-view>
+        </div>
         <!-- BELOW TEMPLATE -->
         <div class="footer">
             <p>All rights reserved Corsane AS</p>
