@@ -54,6 +54,8 @@ angular.module('myApp.article', ['ngRoute'])
                 if($rootScope.user && res.author.id === $rootScope.user.id) {
                     $scope.article = res;
                     $scope.paragraphs = res.paragraphs;
+                    console.log($scope.article);
+
                 }else{
                     $rootScope.goTo('/article/' + res.id);
                 }
@@ -61,6 +63,8 @@ angular.module('myApp.article', ['ngRoute'])
             function (err) {
             }
         );
+
+
 
         // ========== HELPER METHODS =============
 

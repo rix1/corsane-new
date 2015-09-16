@@ -2,10 +2,10 @@
     <h1 contenteditable="true" class="banner-head" data-ph="Title" ng-model="article.title"></h1>
     <h2 contenteditable="true" id="banner-desc" data-ph="Description" ng-model="article.introduction"></h2>
     <p><small>In
-        <select ng-model="article.topics" ng-options="topic.title for topic in topics track by topic.id"></select>
+        <select ng-model="article.topics" ng-options="topic.id as topic.title for topic in topics"></select>
     </small></p>
     <p ng-show="article.state.saved">
-        <small><em>Last saved: {{article.state.timestamp | date:'medium'}}</em></small>
+        <small><em>Last saved: {{state.timestamp | date:'medium'}}</em></small>
     </p>
 </div>
 <div class="l-content">
