@@ -1,40 +1,26 @@
 <div class="default-banner center-text">
-    <h1 contenteditable="{{signedIn}}" class="banner-head" data-ph="Title" ng-model="article.header.title"></h1>
-    <h2 contenteditable="{{signedIn}}" id="banner-desc" data-ph="Description" ng-model="article.header.introduction"></h2>
+    <h1 contenteditable="true" class="banner-head" data-ph="Title" ng-model="article.title"></h1>
+    <h2 contenteditable="true" id="banner-desc" data-ph="Description" ng-model="article.introduction"></h2>
     <p><small>In
-        <select ng-model="article.header.topics" ng-options="topic.title for topic in topics track by topic.id"></select>
+        <select ng-model="article.topics" ng-options="topic.title for topic in topics track by topic.id"></select>
     </small></p>
-    <!--<br/>-->
-    <p>{{topicLookup[article.header.topics].description}}</p> <!--Does not currently work-->
     <p ng-show="article.state.saved">
         <small><em>Last saved: {{article.state.timestamp | date:'medium'}}</em></small>
     </p>
 </div>
 <div class="l-content">
-    <div class="paragraph" ng-repeat="paragraph in article.paragraphs track by $index" ng-controller="tissCtrl">
-        <p>{{faggot}}</p>
-        <p>=======================================</p>
-        <p>{{article.paragraphs[0]}}</p>
-        <p>=======================================</p>
-
-        <p>{{article.paragraphs[0].headline}}</p>
+    <div class="paragraph" ng-repeat="paragraph in paragraphs">
         <div class="information pure-g">
-            <div class="pure-u-1 pure-u-md-1-8"></div>
-            <div class="pure-u-1 pure-u-md-3-4 center">
-                <div ng-click="delete(paragraph)" class="deleteButton hoverhand"><i class="fa fa-trash-o"></i></div>
-                <div class="l-box">
-                    <h1 contentEditable="{{signedIn}}" data-ph="Section title" class="quote" ng-model="paragraph.headline"></h1>
-                    <p contentEditable="{{signedIn}}" data-ph="Your great story" class="readable" ng-model="paragraph.text"></p>
-                </div>
-            </div>
+            <div ng-click="delete(paragraph)" class="deleteButton hoverhand"><i class="fa fa-trash-o"></i></div>
+            <paragraph content="paragraph"></paragraph>
         </div>
     </div>
     <div class="center-text">
         <button class="pure-button pure-button-primary blue-bg" ng-click="newParagraph()">
             <i class="fa fa-plus"></i> New Section</button>
         <button class="pure-button pure-button-primary blue-bg" ng-click="save()">Save</button>
-        <button ng-click="article.header.published = !article.header.published" ng-show="!article.header.published" class="pure-button">Not Published</button>
-        <button ng-click="article.header.published = !article.header.published" ng-show="article.header.published" class="pure-button pure-button-primary blue-bg">Published</button>
+        <button ng-click="article.published = !article.published" ng-show="!article.published" class="pure-button">Not Published</button>
+        <button ng-click="article.published = !article.published" ng-show="article.published" class="pure-button pure-button-primary blue-bg">Published</button>
     </div>
     <div class="topic-box pure-g">
         <div class="pure-u-1">

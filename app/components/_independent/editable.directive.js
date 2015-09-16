@@ -4,11 +4,15 @@ angular.module('myApp.directives.editable', [])
             restrict: 'A',
             require: '?ngModel',
             link: function (scope, element, attrs, ngModel) {
-                if (!ngModel) return;
+
+                if (!ngModel) {
+                    return;
+                }
+
 
                 ngModel.$render = function () {
-                    element.html($sce.getTrustedHtml(ngModel.$viewValue || ''));
                     //element.html($sce.getTrustedHtml(ngModel.$modelValue || ''));
+                    element.html($sce.getTrustedHtml(ngModel.$viewValue || ''));
                 };
 
                 // Listen to events to enable binding

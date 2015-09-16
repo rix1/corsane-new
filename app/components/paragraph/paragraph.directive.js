@@ -3,8 +3,7 @@ angular.module('myApp.directives.paragraph', [])
         return {
             restrict: 'E',
             scope: {
-                content: '=',
-                prev: '='
+                content: '='
             },
             templateUrl: "components/paragraph/paragraph.html",
             controller: 'paraCtrl'
@@ -12,13 +11,25 @@ angular.module('myApp.directives.paragraph', [])
     }])
 
     .controller('paraCtrl', ['$scope', function($scope) {
-        //console.log($scope.content);
 
-        $scope.getText = function (text) {
-            if($scope.prev){
-                $scope.isIntro = 'intro';
-                return text.slice(0, 100);
-            }
-            return text;
+        $scope.a = {
+            content: $scope.content.headline
         };
+        $scope.b = {
+            content: $scope.content.text
+        };
+
+        $scope.$watch('a.content', function (newval, oldval) {
+            if(newval != oldval) {
+                $scope.content.headline = newval;
+                $scope.content.changed = true;
+            }
+        });
+
+        $scope.$watch('b.content', function (newval, oldval) {
+            if(newval != oldval) {
+                $scope.content.text = newval;
+                $scope.content.changed = true;
+            }
+        });
     }]);

@@ -73,7 +73,7 @@ angular.module('myApp.services')
 
                     $http({
                         method: 'DELETE',
-                        url: config.baseUrl + '/paragraph/' + paragraph.id,
+                        url: config.baseUrl + '/paragraph/' + paragraph,
                         transformRequest: apiService.transformRequest,
                         data: paragraph
                     }).success(function (res) {

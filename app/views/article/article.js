@@ -25,7 +25,7 @@ angular.module('myApp.article', ['ngRoute'])
         articleService.getArticle(articleId).then(
             function (article) {
                 $scope.article = article;
-                if($rootScope.user && article.author.id === $rootScope.user.id){
+                if ($rootScope.user && article.author.id === $rootScope.user.id) {
                     $rootScope.goTo('/article/' + articleId + '/edit');
                 }
             },
@@ -38,54 +38,85 @@ angular.module('myApp.article', ['ngRoute'])
 // =================================================================== // WORK BELOW THIS LINE ===================================================================
 
 
-    .controller('editArticleCtrl', ['$rootScope', '$scope', '$routeParams', 'articleService', 'topicService', 'paragraphService',  function ($rootScope, $scope, $routeParams, articleService, topicService, paragraphService) {
-        //console.log("articleCtrl callsed ");
-        var articleId = $routeParams.id;
+    .controller('editArticleCtrl', ['$rootScope', '$scope', '$routeParams', 'articleService', 'topicService', 'paragraphService', function ($rootScope, $scope, $routeParams, articleService, topicService, paragraphService) {
+        var headerError = 'Please fill inn Title, Description and Topic before continuing...';
+
+        $scope.state = {};
         $scope.topicLookup = {};
         $scope.article = {
             header: {},
             state: {}
         };
 
+        var articleId = $routeParams.id;
         articleService.getArticle(articleId).then(
             function (res) {
-                console.log(res);
                 if($rootScope.user && res.author.id === $rootScope.user.id) {
-                    $scope.article.header.title = res.title;
-                    $scope.article.header.introduction = res.introduction;
-                    $scope.articleId = res.id;
-                    $scope.article.header.topics = res.topics[0];
-                    $scope.article.header.author = res.author;
-                    $scope.article.header.published = res.published;
-                    $scope.article.header.featured = res.featured;
-                    $scope.article.header.approved = res.approved;
-                    $scope.article.paragraphs = res.paragraphs;
-                    console.log("============");
-                    console.log($scope.article.paragraphs[0].headline);
-                    $scope.faggot = $scope.article.paragraphs[0].headline;
+                    $scope.article = res;
+                    $scope.paragraphs = res.paragraphs;
                 }else{
                     $rootScope.goTo('/article/' + res.id);
                 }
             },
             function (err) {
-                console.log(err);
             }
         );
 
+        // ========== HELPER METHODS =============
 
         var createLookup = function () {
-            // Genious lookup object <-- THIS REALLY IS THE SHIT (Biased source)
-            for(var i = 0; i < $scope.topics.length; i++) {
+            for (var i = 0; i < $scope.topics.length; i++) {
                 $scope.topicLookup[$scope.topics[i].id] = $scope.topics[i];
             }
         };
+
+        var addBlank = function () {
+            $scope.paragraphs.push({
+                headline: '',
+                text: ''
+            });
+        };
+
+        var validateCoreFields = function () {
+            return !!($scope.article.title && $scope.article.introduction && $scope.article.topics);
+        };
+
+        /**
+         * Remove blank paragraph's and test length
+         * @return boolean if there is more than one not blank paragraph
+         * */
+        var stripParagraphs = function () {
+            for (var i = 0; i < $scope.paragraphs.length; i++) {
+                var title = $scope.paragraphs[i].headline.length < 1;
+                var text = $scope.paragraphs[i].text.length < 1;
+
+                if (title && text) {
+                    $scope.paragraphs.splice(i, 1);
+                }
+                if (title || text) {
+                    return false;
+                }
+            }
+            return true;
+        };
+
+
+        $scope.delete = function (paragraph) {
+            var index = $scope.article.paragraphs.indexOf(paragraph);
+            deleteParagraph(paragraph);
+            $scope.article.paragraphs.splice(index, 1);
+        };
+
+
+        // ========== SERVICE FUNCTIONS =============
 
         /**
          * Service functions
          * Functions passing data to the API through Angular services
          * **/
 
-            // CREATE ARTICLE
+
+
         topicService.getAllTopics().then(
             function (res) {
                 $scope.topics = res;
@@ -94,75 +125,39 @@ angular.module('myApp.article', ['ngRoute'])
                 console.log(err);
             });
 
+
         /**
          * Currently we're saving the article when the first paragraph is added,
          * and when the Save button is pressed. In the future this should be changed with a
          * redirect.
-         * TODO: Create article when URL is visited.
          * */
 
         $scope.newParagraph = function () {
-            if($scope.article.paragraphs.length<1) {
-                if(validateHeader()){
-                    addArticle($scope.article.header);
+            if ($scope.paragraphs.length < 1) {
+                if (validateCoreFields()) {
+                    addArticle($scope.article);
                     addBlank();
-                }else{
+                } else {
                     $scope.helptext = headerError;
                 }
-            }else {
+            } else {
                 addBlank();
             }
         };
 
-        var validateHeader = function () {
-            return !!($scope.article.header.title && $scope.article.header.introduction && $scope.article.header.topics);
-        };
-
-
-        /**
-         * Remove blank paragraph's and test length
-         * @return boolean if there is more than one not blank paragraph
-         * */
-        var stripParagraphs = function () {
-            for(var i = 0; i < $scope.article.paragraphs.length; i++) {
-
-                var title = $scope.article.paragraphs[i].headline.length === 0;
-                var text = $scope.article.paragraphs[i].text.length === 0;
-
-                if(title && text) {
-                    $scope.article.paragraphs.splice(i, 1); // Delete empty elements...
-                }
-                if(title || text) {
-                    return false;
-                }
-            }
-            return true;
-        };
-
-        var addBlank = function () {
-            $scope.article.paragraphs.push({
-                headline: '',
-                text: ''
-            });
-        };
-
-        $scope.delete = function (paragraph) {
-            var index = $scope.article.paragraphs.indexOf(paragraph);
-            deleteParagraph(paragraph);
-            $scope.article.paragraphs.splice(index, 1);
-
-        };
-
-
         $scope.save = function () {
+            console.log($scope.paragraphs);
+            $scope.state.timestamp = Date.now();
+            $scope.state.saved = true;
 
-            $scope.article.state.timestamp = Date.now();
-            $scope.article.state.saved = true;
+            console.log($scope.paragraphs.length);
 
             stripParagraphs();
-            if(validateHeader()) {
-                addArticle($scope.article.header);
-                addParagraphs($scope.article.paragraphs);
+            if (validateCoreFields()) {
+                addArticle($scope.article);
+                addParagraphs($scope.paragraphs);
+            }else{
+                console.log("Error: Core Fields not validated");
             }
         };
 
@@ -170,7 +165,7 @@ angular.module('myApp.article', ['ngRoute'])
         var addArticle = function (articleData) {
 
             var updateData = {
-                id: $scope.articleId,
+                id: $scope.article.id,
                 title: articleData.title,
                 introduction: articleData.introduction,
                 published: articleData.published
@@ -183,7 +178,10 @@ angular.module('myApp.article', ['ngRoute'])
                 });
         };
 
-        // EDIT ARTICLE
+        /**
+         * In oder to add new, and update existing paragraphs we iterate
+         * over all paragraphs and see which have the changed flag set. **/
+
         var addParagraphs = function (paragraphs) {
             var paragraphData;
             for (var i = 0; i < paragraphs.length; i++) {
@@ -191,40 +189,36 @@ angular.module('myApp.article', ['ngRoute'])
                 if (paragraphData.changed) {
                     addParagraph(paragraphData);
                     paragraphData.changed = false;
-                }else{
+                } else {
                 }
             }
         };
 
         // EDIT ARTICLE
         var deleteParagraph = function (paragraph) {
-            var formData = {
-                article: $scope.articleId,
-                headline: paragraph.headline,
-                text: paragraph.text
-            };
+            console.log(paragraph);
+            var formData = paragraph.id;
 
-            if(paragraph.id) {
-                formData.id = paragraph.id;
+            if (paragraph.id) {
 
                 paragraphService.deleteParagraph(formData)
                     .then(function (res) {
                     }, function (err) {
                         console.log(err);
                     });
-            }else{
+            } else {
             }
         };
 
         // EDIT ARTICLE
         var addParagraph = function (paragraphData) {
             var formData = {
-                article: $scope.articleId,
+                article: $scope.article.id,
                 headline: paragraphData.headline,
                 text: paragraphData.text
             };
 
-            if(paragraphData.id){
+            if (paragraphData.id) {
                 formData.id = paragraphData.id;
 
                 paragraphService.updateParagraph(formData)
@@ -232,7 +226,7 @@ angular.module('myApp.article', ['ngRoute'])
                     }, function (err) {
                         console.log(err);
                     });
-            }else{
+            } else {
                 paragraphService.createParagraph(formData)
                     .then(function (res) {
                         paragraphData.id = res.id;
@@ -240,42 +234,10 @@ angular.module('myApp.article', ['ngRoute'])
                         console.log(err);
                     });
             }
+
         };
     }])
 
-/**
- * "FOR THE WATCH"
- *
- * */
-    .controller('tissCtrl', ['$scope', function ($scope) {
-        $scope.$watch('paragraph', function (newVal, oldVal) {
-            if(angular.isUndefined(newVal.changed)){
-                newVal.changed = false;
-            }else if(!newVal.changed){
-                newVal.changed = !((oldVal.headline === newVal.headline) && (oldVal.text === newVal.text));
-            }
-        }, true);
-    }])
-
-    .controller('newArticleCtrl', ['$scope', '$rootScope', 'topicService', 'articleService','paragraphService', function ($scope, $rootScope, topicService, articleService, paragraphService) {
-
-
-        $rootScope.modal = true;
-
-        //$scope.signedIn = false;
-        //$scope.helptext = '';
-        //$scope.topicLookup = {};
-        //
-        //var headerError = 'Please fill inn Title, Description and Topic before continuing...';
-        //var article = $scope.article;
-        //
-        //if($rootScope.user){
-        //    $scope.signedIn = true;
-        //    article.header.author = $rootScope.user.id;
-        //}else{
-        //    // TODO: Tell user to sign in through modal or something
-        //}
+    .controller('newArticleCtrl', ['$scope', '$rootScope', function ($scope, $rootScope) {
+        //TODO: Add modaal thingy
     }]);
-
-
-
