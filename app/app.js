@@ -69,6 +69,10 @@ angular.module('myApp', [
 
             // Set user from token
             $rootScope.user = apiService.getClaimsFromToken();
+            if(typeof $rootScope.user == 'undefined') {
+                $rootScope.user = false;
+            }
+            console.log($rootScope.user);
 
             // Global function for changin view
             $rootScope.goTo = function(route, params) {

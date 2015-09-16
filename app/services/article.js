@@ -6,11 +6,13 @@ angular.module('myApp.services')
         return {
 
             getArticle: function(id) {
+                //console.log("GETARTICLE CALLED ");
 
                 var defer = $q.defer();
 
                 $http.get(config.baseUrl + '/article/' + id)
                     .success(function(res) {
+                        //console.log(res);
                         defer.resolve(res);
                     })
                     .error(function(err, status) {

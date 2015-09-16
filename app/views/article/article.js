@@ -5,17 +5,17 @@ angular.module('myApp.article', ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
             .when('/article/create', {
-            templateUrl: 'views/article/newArticle.html',
-            controller: 'newArticleCtrl'
-        })
+                templateUrl: 'views/article/newArticle.html',
+                controller: 'newArticleCtrl'
+            })
             .when('/article/:id', {
-            templateUrl: 'views/article/article.html',
-            controller: 'articleCtrl'
-        })
+                templateUrl: 'views/article/article.html',
+                controller: 'articleCtrl'
+            })
             .when('/article/:id/edit', {
-            templateUrl: 'views/article/newArticle.html',
-            controller: 'editArticleCtrl'
-        });
+                templateUrl: 'views/article/newArticle.html',
+                controller: 'editArticleCtrl'
+            });
     }])
 
     .controller('articleCtrl', ['$rootScope', '$scope', '$routeParams', 'articleService', function ($rootScope, $scope, $routeParams, articleService) {
@@ -25,7 +25,7 @@ angular.module('myApp.article', ['ngRoute'])
         articleService.getArticle(articleId).then(
             function (article) {
                 $scope.article = article;
-                if(article.author.id === $rootScope.user.id){
+                if($rootScope.user && article.author.id === $rootScope.user.id){
                     $rootScope.goTo('/article/' + articleId + '/edit');
                 }
             },
@@ -39,32 +39,19 @@ angular.module('myApp.article', ['ngRoute'])
 
 
     .controller('editArticleCtrl', ['$rootScope', '$scope', '$routeParams', 'articleService', 'topicService', 'paragraphService',  function ($rootScope, $scope, $routeParams, articleService, topicService, paragraphService) {
+        //console.log("articleCtrl callsed ");
         var articleId = $routeParams.id;
-
         $scope.topicLookup = {};
-
-
         $scope.article = {
             header: {
-                title: '',
-                introduction: '',
-                id: '',
-                topics: {},
-                author: {},
-                published: true,
-                featured: true,
-                approved: true
-            },
-            paragraphs: [],
-            state: {}
+            }
         };
-
 
         articleService.getArticle(articleId).then(
             function (res) {
-
-                if(res.author.id === $rootScope.user.id){
-
+                console.log("yepp");
+                //console.log($rootScope.user.id);
+                if($rootScope.user && res.author.id === $rooScope.user.id) {
                     $scope.article.header.title = res.title;
                     $scope.article.header.introduction = res.introduction;
                     $scope.articleId = res.id;
@@ -73,11 +60,13 @@ angular.module('myApp.article', ['ngRoute'])
                     $scope.article.header.published = res.published;
                     $scope.article.header.featured = res.featured;
                     $scope.article.header.approved = res.approved;
-
                     $scope.article.paragraphs = res.paragraphs;
                 }else{
-                    $rootScope.goTo('/article/')
+                    console.log("noooep");
+                    $rootScope.goTo('/article/' + res.id);
                 }
+
+
             },
             function (err) {
                 console.log(err);
