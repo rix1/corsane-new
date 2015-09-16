@@ -3,7 +3,7 @@ angular.module('myApp.directives.modalDialog', [])
         return {
             restrict: 'E',
             scope: {
-                show: '=',
+                show: '='
             },
             replace: true, // Replace with the template below
             transclude: true, // we want to insert custom content inside the directive
@@ -28,9 +28,6 @@ angular.module('myApp.directives.modalDialog', [])
 
         $scope.article = {};
         $scope.topicLookup = {};
-
-        $scope.hideModal = function () {
-        };
 
         $scope.createArticle = function () {
             var a = $scope.article;
@@ -68,6 +65,7 @@ angular.module('myApp.directives.modalDialog', [])
                 .then(function (res) {
                     console.log(res);
                     $rootScope.goTo('/article/' + res.id + '/edit');
+                    $scope.hideModal();
                 }, function (err) {
                     console.log(err);
                 })

@@ -49,9 +49,8 @@ angular.module('myApp.article', ['ngRoute'])
 
         articleService.getArticle(articleId).then(
             function (res) {
-                console.log("yepp");
-                //console.log($rootScope.user.id);
-                if($rootScope.user && res.author.id === $rooScope.user.id) {
+                console.log(res);
+                if($rootScope.user && res.author.id === $rootScope.user.id) {
                     $scope.article.header.title = res.title;
                     $scope.article.header.introduction = res.introduction;
                     $scope.articleId = res.id;
@@ -62,11 +61,8 @@ angular.module('myApp.article', ['ngRoute'])
                     $scope.article.header.approved = res.approved;
                     $scope.article.paragraphs = res.paragraphs;
                 }else{
-                    console.log("noooep");
                     $rootScope.goTo('/article/' + res.id);
                 }
-
-
             },
             function (err) {
                 console.log(err);
