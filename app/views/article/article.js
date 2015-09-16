@@ -5,7 +5,7 @@ angular.module('myApp.article', ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
             .when('/article/create', {
-                template: '..',
+                template: '',
                 controller: 'newArticleCtrl'
             })
             .when('/article/:id', {
@@ -60,6 +60,9 @@ angular.module('myApp.article', ['ngRoute'])
                     $scope.article.header.featured = res.featured;
                     $scope.article.header.approved = res.approved;
                     $scope.article.paragraphs = res.paragraphs;
+                    console.log("============");
+                    console.log($scope.article.paragraphs[0].headline);
+                    $scope.faggot = $scope.article.paragraphs[0].headline;
                 }else{
                     $rootScope.goTo('/article/' + res.id);
                 }
