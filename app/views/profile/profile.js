@@ -32,11 +32,25 @@ angular.module('myApp.profile', ['ngRoute'])
     .controller('myProfileCtrl', ['$rootScope', '$scope', 'userService',
         function($rootScope, $scope, userService) {
 
+            $scope.myArticles = {};
+
+
+
+
             if(!$rootScope.user) {
                 return $rootScope.goTo("/login");
             }
 
             $scope.user = $rootScope.user;
+
+             userService.getUser($scope.user.id).then(
+             function(res) {
+             $scope.myArticles = res.articles;
+             },
+             function(err) {
+             console.log(err);
+             });
+
 
             $scope.logout = function () {
                 $rootScope.goTo("/logout");

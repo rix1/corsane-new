@@ -56,7 +56,16 @@
         </div>
         <div class="v-space-2"></div>
         <hr class="hr-style"/>
-        <p>Visit the <strong><a href="#/lab">lab...</a></strong></p>
+        <p>Your articles:</p>
+        <div class="l-box" ng-repeat="article in myArticles">
+            <div class="tinyList">
+                <a href="#/article/{{article.id}}">
+                    <p>{{article.title}}</p>
+                    <p><small>Published: {{article.published}} | Created: {{article.date_created}}</small></p>
+                </a>
+            </div>
+        </div>
+
     </div>
 
 
