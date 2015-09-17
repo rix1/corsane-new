@@ -1,16 +1,15 @@
 <div class="default-banner center-text">
     <h1 contenteditable="true" class="banner-head" data-ph="Title" ng-model="article.title"></h1>
     <h2 contenteditable="true" id="banner-desc" data-ph="Description" ng-model="article.introduction"></h2>
-    <p><small>In <select
-            ng-model="article.topics"
+    <p><small style="font-weight: 400;">In {{article.topics[0].title}}, a
+        <!--<select
+            ng-model="article.topics[0].id"
             ng-options="topic.id as topic.title for topic in topics">
-    </select>
+    </select>-->
+        {{topicLookup[article.topics[0].id].description}}
+    </small>
         <br/>
-        {{topicLookup[article.topics].description}}
-    </small></p>
-    <p ng-show="article.state.saved">
-        <small><em>Last saved: {{article.state.timestamp | date:'medium'}}</em></small>
-    </p>
+    <small class="published"><strong ng-show="article.published">PUBLISHED</strong> <em ng-show="state.saved">Last saved: {{state.timestamp | date:'medium'}}</em></small></p>
 </div>
 <div class="l-content">
     <div class="paragraph" ng-repeat="paragraph in paragraphs">

@@ -64,12 +64,6 @@ angular.module('myApp.article', ['ngRoute'])
             }
         );
 
-
-        $scope.$watch('paragraph', function (newval, oldval) {
-            //console.log("paragraphs chaanged");
-        }, true);
-
-
         // ========== HELPER METHODS =============
 
         var createLookup = function () {
@@ -174,7 +168,8 @@ angular.module('myApp.article', ['ngRoute'])
                 id: $scope.article.id,
                 title: articleData.title,
                 introduction: articleData.introduction,
-                published: articleData.published
+                published: articleData.published,
+                //topic: articleData.topics[0].id
             };
 
             articleService.updateArticle(updateData)
