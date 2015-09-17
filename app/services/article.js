@@ -53,8 +53,7 @@ angular.module('myApp.services')
                     var defer = $q.defer();
 
                     var id = article.id;
-
-                    //delete article.id;
+                    delete article.id;
 
                     $http({
                         method: 'PUT',

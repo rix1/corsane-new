@@ -65,6 +65,10 @@ angular.module('myApp.article', ['ngRoute'])
         );
 
 
+        $scope.$watch('paragraph', function (newval, oldval) {
+            //console.log("paragraphs chaanged");
+        }, true);
+
 
         // ========== HELPER METHODS =============
 
@@ -154,8 +158,6 @@ angular.module('myApp.article', ['ngRoute'])
             $scope.state.timestamp = Date.now();
             $scope.state.saved = true;
 
-            console.log($scope.paragraphs.length);
-
             stripParagraphs();
             if (validateCoreFields()) {
                 addArticle($scope.article);
@@ -191,6 +193,7 @@ angular.module('myApp.article', ['ngRoute'])
             for (var i = 0; i < paragraphs.length; i++) {
                 paragraphData = paragraphs[i];
                 if (paragraphData.changed) {
+                    console.log("updating 1 paragraph");
                     addParagraph(paragraphData);
                     paragraphData.changed = false;
                 } else {

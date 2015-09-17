@@ -12,24 +12,37 @@ angular.module('myApp.directives.paragraph', [])
 
     .controller('paraCtrl', ['$scope', function($scope) {
 
-        $scope.a = {
-            content: $scope.content.headline
-        };
-        $scope.b = {
-            content: $scope.content.text
-        };
+        $scope.testA = false;
+        $scope.testB = false;
+
+        var latestA = "";
+        var latestB = "";
+
+        $scope.$watch('testA', function (newval, oldval) {
+            if(newval === true) {
+                $scope.content.headline = latestA;
+                $scope.content.changed = true;
+            }
+            $scope.testA = false;
+        });
+
+        $scope.$watch('testB', function (newval, oldval) {
+            if(newval === true) {
+                $scope.content.text = latestB;
+                $scope.content.changed = true;
+            }
+            $scope.testB = false;
+        });
 
         $scope.$watch('a.content', function (newval, oldval) {
             if(newval != oldval) {
-                $scope.content.headline = newval;
-                $scope.content.changed = true;
+                latestA = newval;
             }
         });
 
         $scope.$watch('b.content', function (newval, oldval) {
             if(newval != oldval) {
-                $scope.content.text = newval;
-                $scope.content.changed = true;
+                latestB = newval
             }
         });
     }]);

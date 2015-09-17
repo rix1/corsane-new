@@ -10,7 +10,10 @@
             <p><small>In <select
                     ng-model="article.topics"
                     ng-options="topic.id as topic.title for topic in topics">
-                </select><br/>{{topicLookup[article.topics].description}}</small></p>
+                </select>
+                <br/>
+                {{topicLookup[article.topics].description}}
+            </small></p>
         </div>
         <button class="button-error pure-button pure-u-1-4" ng-click='createArticle()'>Create article</button>
         <p class="error">{{error}}</p>
