@@ -3,8 +3,9 @@ angular.module('myApp.directives.paragraph', [])
         return {
             restrict: 'E',
             scope: {
-                content: '=',
-                something: '&'
+                content: '@',
+                callback: '&',
+                index: '@'
             },
             templateUrl: "components/paragraph/paragraph.html",
             controller: 'paraCtrl'
@@ -12,38 +13,47 @@ angular.module('myApp.directives.paragraph', [])
     }])
 
     .controller('paraCtrl', ['$scope', function($scope) {
+        $scope.paragraph = JSON.parse($scope.content);
 
-        $scope.testA = false;
-        $scope.testB = false;
+        var defHeadline = "{{paragraph.headline}}";
+        var defText = "{{paragraph.text}}";
 
-        var latestA = "";
-        var latestB = "";
+        var save = {
+            paragraph: $scope.paragraph,
+            head: "",
+            text: "",
+            index: $scope.index
+        };
 
-        $scope.$watch('testA', function (newval, oldval) {
-            if(newval === true) {
-                $scope.content.headline = latestA;
-                $scope.content.changed = true;
+
+        $scope.saveHeadline = function () {
+            prep();
+            $scope.callback(save);
+        };
+
+        $scope.saveText = function () {
+            prep();
+            $scope.callback(save);
+        };
+
+
+        var prep = function () {
+            if($scope.headline == defHeadline){
+                save.head = $scope.paragraph.headline;
+            }else{
+                save.head = $scope.headline;
             }
-            $scope.testA = false;
-        });
 
-        $scope.$watch('testB', function (newval, oldval) {
-            if(newval === true) {
-                $scope.content.text = latestB;
-                $scope.content.changed = true;
+            if($scope.text == defText){
+                save.text = $scope.paragraph.text;
+            }else{
+                save.text = $scope.text;
             }
-            $scope.testB = false;
-        });
 
-        $scope.$watch('a.content', function (newval, oldval) {
-            if(newval != oldval) {
-                latestA = newval;
-            }
-        });
+            save.text.trim();
+            save.head.trim();
+            console.log(save.text);
+            console.log(save.head);
+        };
 
-        $scope.$watch('b.content', function (newval, oldval) {
-            if(newval != oldval) {
-                latestB = newval
-            }
-        });
     }]);

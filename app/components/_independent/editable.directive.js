@@ -4,12 +4,14 @@ angular.module('myApp.directives.editable', [])
             restrict: 'A',
             require: '?ngModel',
             scope: {
-              somevar: '='
+                callback: '&'
             },
             link: function (scope, element, attrs, ngModel) {
 
                 if (!ngModel) {
                     return;
+                }else{
+                    console.log("receiving model");
                 }
 
                 ngModel.$render = function () {
@@ -22,7 +24,8 @@ angular.module('myApp.directives.editable', [])
                 });
 
                 element.on('blur', function () {
-                    scope.somevar = true;
+                    scope.callback();
+                    console.log("focus changed");
                 });
 
                 // Initialize

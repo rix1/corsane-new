@@ -48,6 +48,16 @@ angular.module('myApp.article', ['ngRoute'])
             state: {}
         };
 
+        $scope.callback = function (rikard) {
+            console.log("HA!");
+        };
+
+        $scope.paragraphUpdate = function (obj, hed, txt, index) {
+            $scope.paragraphs[index].headline = hed;
+            $scope.paragraphs[index].text = txt;
+            $scope.paragraphs[index].changed = true;
+        };
+
         var articleId = $routeParams.id;
         articleService.getArticle(articleId).then(
             function (res) {
