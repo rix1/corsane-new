@@ -3,7 +3,8 @@ angular.module('myApp.directives.paragraph', [])
         return {
             restrict: 'E',
             scope: {
-                content: '='
+                content: '=',
+                something: '&'
             },
             templateUrl: "components/paragraph/paragraph.html",
             controller: 'paraCtrl'
