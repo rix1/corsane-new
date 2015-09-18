@@ -1,0 +1,10 @@
+<div class="default-banner center-text">
+    <h1 contenteditable="{{signedIn}}" class="banner-head" data-ph="Title" ng-model="article.header.title"></h1>
+    <h2 contenteditable="{{signedIn}}" id="banner-desc" data-ph="Description" ng-model="article.header.introduction"></h2>
+    <p><small>In <select
+            ng-model="article.header.topics"
+            ng-options="topic.id as topic.title for topic in topics">
+    </select></small>
+        <!--</select><br/>{{topicLookup[article.header.topics].description}}</small></p>-->
+        <!--<p ng-show="article.state.saved"><small><em>Last saved: {{article.state.timestamp | date:'medium'}}</em></small></p>-->
+</div>

@@ -54,9 +54,12 @@ angular.module('myApp.services')
                 updateParagraph: function (paragraph) {
                     var defer = $q.defer();
 
+                    var id = paragraph.id;
+                    delete paragraph.id;
+
                     $http({
                         method: 'PUT',
-                        url: config.baseUrl + '/paragraph/' + paragraph.id,
+                        url: config.baseUrl + '/paragraph/' + id,
                         transformRequest: apiService.transformRequest,
                         data: paragraph
                     }).success(function (res) {
@@ -73,7 +76,7 @@ angular.module('myApp.services')
 
                     $http({
                         method: 'DELETE',
-                        url: config.baseUrl + '/paragraph/' + paragraph.id,
+                        url: config.baseUrl + '/paragraph/' + paragraph,
                         transformRequest: apiService.transformRequest,
                         data: paragraph
                     }).success(function (res) {

@@ -3,13 +3,19 @@
 angular.module('myApp.article', ['ngRoute'])
 
     .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/article/:id', {
-            templateUrl: 'views/article/article.html',
-            controller: 'articleCtrl'
-        }).when('/new/article/', {
-            templateUrl: 'views/article/newArticle.html',
-            controller: 'newArticleCtrl'
-        });
+        $routeProvider
+            .when('/article/create', {
+                template: '',
+                controller: 'newArticleCtrl'
+            })
+            .when('/article/:id', {
+                templateUrl: 'views/article/article.html',
+                controller: 'articleCtrl'
+            })
+            .when('/article/:id/edit', {
+                templateUrl: 'views/article/newArticle.html',
+                controller: 'editArticleCtrl'
+            });
     }])
 
     .controller('articleCtrl', ['$rootScope', '$scope', '$routeParams', 'articleService', function ($rootScope, $scope, $routeParams, articleService) {
@@ -19,8 +25,8 @@ angular.module('myApp.article', ['ngRoute'])
         articleService.getArticle(articleId).then(
             function (article) {
                 $scope.article = article;
-                if(article.author.id === $rootScope.user.id){
-                    console.log("DU EGER");
+                if ($rootScope.user && article.author.id === $rootScope.user.id) {
+                    $rootScope.goTo('/article/' + articleId + '/edit');
                 }
             },
             function (err) {
@@ -29,140 +35,99 @@ angular.module('myApp.article', ['ngRoute'])
         );
     }])
 
+// =================================================================== // WORK BELOW THIS LINE ===================================================================
 
-/**
- * "FOR THE WATCH"
- *
- * */
-    .controller('tissCtrl', ['$scope', function ($scope) {
-        $scope.$watch('paragraph', function (newVal, oldVal) {
-            if(angular.isUndefined(newVal.changed)){
-                newVal.changed = false;
-            }else if(!newVal.changed){
-                // Angular $watch loooves to run so we have to check if the values ACTUALLY changed.
-                newVal.changed = !((oldVal.headline === newVal.headline) && (oldVal.text === newVal.text));
-            }
-        }, true);
-    }])
 
-    .controller('newArticleCtrl', ['$scope', '$rootScope', 'topicService', 'articleService','paragraphService', function ($scope, $rootScope, topicService, articleService, paragraphService) {
-        $scope.signedIn = false;
-        $scope.helptext = '';
+    .controller('editArticleCtrl', ['$rootScope', '$scope', '$routeParams', 'articleService', 'topicService', 'paragraphService', function ($rootScope, $scope, $routeParams, articleService, topicService, paragraphService) {
+        var headerError = 'Please fill inn Title, Description and Topic before continuing...';
+
+        $scope.state = {};
         $scope.topicLookup = {};
-
         $scope.article = {
-            header: {
-                title: '',
-                introduction: '',
-                topics: '',
-                author: '',
-                published: true,
-                featured: true,
-                approved: true
-            },
-            paragraphs: [],
+            header: {},
             state: {}
         };
 
-        var headerError = 'Please fill inn Title, Description and Topic before continuing...';
-        var article = $scope.article;
+        $scope.callback = function (rikard) {
+            console.log("HA!");
+        };
 
-        if($rootScope.user){
-            $scope.signedIn = true;
-            article.header.author = $rootScope.user.id;
-        }else{
-            // TODO: Tell user to sign in through modal or something
-        }
+        $scope.paragraphUpdate = function (obj, hed, txt, index) {
+            $scope.paragraphs[index].headline = hed;
+            $scope.paragraphs[index].text = txt;
+            $scope.paragraphs[index].changed = true;
+        };
 
+        var articleId = $routeParams.id;
+        articleService.getArticle(articleId).then(
+            function (res) {
+                if($rootScope.user && res.author.id === $rootScope.user.id) {
+                    $scope.article = res;
+                    $scope.paragraphs = res.paragraphs;
+                    console.log($scope.article);
 
-        /**
-         * Currently we're saving the article when the first paragraph is added,
-         * and when the Save button is pressed. In the future this should be changed with a
-         * redirect.
-         * TODO: Create article when URL is visited.
-         * */
-
-        $scope.newParagraph = function () {
-            if(!$scope.signedIn) {
-                $scope.helptext = 'Please sign in to create a new article.';
-            }else if(article.paragraphs.length<1) {
-                if(validateHeader()){
-                    addArticle(article.header);
-                    addBlank();
                 }else{
-                    $scope.helptext = headerError;
+                    $rootScope.goTo('/article/' + res.id);
                 }
-            }else {
-                addBlank();
+            },
+            function (err) {
+            }
+        );
+
+        // ========== HELPER METHODS =============
+
+        var createLookup = function () {
+            for (var i = 0; i < $scope.topics.length; i++) {
+                $scope.topicLookup[$scope.topics[i].id] = $scope.topics[i];
             }
         };
 
-        var validateHeader = function () {
-            return !!(article.header.title && article.header.introduction && article.header.topics);
+        var addBlank = function () {
+            $scope.paragraphs.push({
+                headline: '',
+                text: ''
+            });
         };
 
+        var validateCoreFields = function () {
+            return !!($scope.article.title && $scope.article.introduction && $scope.article.topics);
+        };
 
         /**
          * Remove blank paragraph's and test length
          * @return boolean if there is more than one not blank paragraph
          * */
         var stripParagraphs = function () {
-            for(var i = 0; i < article.paragraphs.length; i++) {
+            for (var i = 0; i < $scope.paragraphs.length; i++) {
+                var title = $scope.paragraphs[i].headline.length < 1;
+                var text = $scope.paragraphs[i].text.length < 1;
 
-                var title = article.paragraphs[i].headline.length === 0;
-                var text = article.paragraphs[i].text.length === 0;
-
-                if(title && text) {
-                    article.paragraphs.splice(i, 1); // Delete empty elements...
+                if (title && text) {
+                    $scope.paragraphs.splice(i, 1);
                 }
-                if(title || text) {
+                if (title || text) {
                     return false;
                 }
             }
             return true;
         };
 
-        var addBlank = function () {
-            article.paragraphs.push({
-                headline: '',
-                text: ''
-            });
-        };
 
         $scope.delete = function (paragraph) {
-            var index = article.paragraphs.indexOf(paragraph);
+            var index = $scope.article.paragraphs.indexOf(paragraph);
             deleteParagraph(paragraph);
-            article.paragraphs.splice(index, 1);
-
+            $scope.article.paragraphs.splice(index, 1);
         };
 
 
-        $scope.save = function () {
-
-            //console.log(article);
-
-            article.state.timestamp = Date.now();
-            article.state.saved = true;
-
-            stripParagraphs();
-            if(validateHeader()) {
-                addArticle(article.header);
-                addParagraphs(article.paragraphs);
-            }
-            // else console.log("header not validated");
-        };
-
-        var createLookup = function () {
-            // Genious lookup object <-- THIS REALLY IS THE SHIT (Biased source)
-            for(var i = 0; i < $scope.topics.length; i++) {
-                $scope.topicLookup[$scope.topics[i].id] = $scope.topics[i];
-            }
-        };
+        // ========== SERVICE FUNCTIONS =============
 
         /**
          * Service functions
          * Functions passing data to the API through Angular services
          * **/
+
+
 
         topicService.getAllTopics().then(
             function (res) {
@@ -173,95 +138,118 @@ angular.module('myApp.article', ['ngRoute'])
             });
 
 
-        var addArticle = function (articleData) {
-            if(articleData.id) {
-                articleService.updateArticle(articleData)
-                    .then(function (res) {
-                        //console.log("article updated");
-                    }, function (err) {
-                        console.log(err);
-                    });
-                //console.log("something lets update");
-            }else{
+        /**
+         * Currently we're saving the article when the first paragraph is added,
+         * and when the Save button is pressed. In the future this should be changed with a
+         * redirect.
+         * */
 
-                articleService.createArticle(articleData)
-                    .then(function (res) {
-                        article.header.id = res.id;
-                    }, function (err) {
-                        console.log(err);
-                    });
+        $scope.newParagraph = function () {
+            if ($scope.paragraphs.length < 1) {
+                if (validateCoreFields()) {
+                    addArticle($scope.article);
+                    addBlank();
+                } else {
+                    $scope.helptext = headerError;
+                }
+            } else {
+                addBlank();
             }
         };
+
+        $scope.save = function () {
+            console.log($scope.paragraphs);
+            $scope.state.timestamp = Date.now();
+            $scope.state.saved = true;
+
+            stripParagraphs();
+            if (validateCoreFields()) {
+                addArticle($scope.article);
+                addParagraphs($scope.paragraphs);
+            }else{
+                console.log("Error: Core Fields not validated");
+            }
+        };
+
+        // CREATE ARTICLE
+        var addArticle = function (articleData) {
+
+            var updateData = {
+                id: $scope.article.id,
+                title: articleData.title,
+                introduction: articleData.introduction,
+                published: articleData.published,
+                //topic: articleData.topics[0].id
+            };
+
+            articleService.updateArticle(updateData)
+                .then(function (res) {
+                }, function (err) {
+                    console.log(err);
+                });
+        };
+
+        /**
+         * In oder to add new, and update existing paragraphs we iterate
+         * over all paragraphs and see which have the changed flag set. **/
 
         var addParagraphs = function (paragraphs) {
             var paragraphData;
             for (var i = 0; i < paragraphs.length; i++) {
                 paragraphData = paragraphs[i];
                 if (paragraphData.changed) {
-                    //console.log("saving paragraph: ");
-                    //console.log(paragraphData);
+                    console.log("updating 1 paragraph");
                     addParagraph(paragraphData);
                     paragraphData.changed = false;
-                }else{
-                    //console.log("wops");
-                    //console.log(paragraphData);
+                } else {
                 }
             }
         };
 
+        // EDIT ARTICLE
         var deleteParagraph = function (paragraph) {
-            var formData = {
-                article: article.header.id,
-                headline: paragraph.headline,
-                text: paragraph.text
-            };
+            console.log(paragraph);
+            var formData = paragraph.id;
 
-            if(paragraph.id) {
-                formData.id = paragraph.id;
+            if (paragraph.id) {
 
                 paragraphService.deleteParagraph(formData)
                     .then(function (res) {
-                        //console.log("paragraph deleted");
                     }, function (err) {
                         console.log(err);
                     });
-            }else{
-                //console.log("WOWA you mustnt do that");
+            } else {
             }
         };
 
+        // EDIT ARTICLE
         var addParagraph = function (paragraphData) {
-
-            //console.log("saving/updating paragraph");
-            //console.log(paragraphData);
-
             var formData = {
-                article: article.header.id,
+                article: $scope.article.id,
                 headline: paragraphData.headline,
                 text: paragraphData.text
             };
 
-            if(paragraphData.id){
+            if (paragraphData.id) {
                 formData.id = paragraphData.id;
 
                 paragraphService.updateParagraph(formData)
                     .then(function (res) {
-                        //console.log("paragraph updated");
                     }, function (err) {
                         console.log(err);
                     });
-            }else{
+            } else {
                 paragraphService.createParagraph(formData)
                     .then(function (res) {
-                        //console.log("paragraph created: check ID");
                         paragraphData.id = res.id;
-                        //console.log(paragraphData);
                     }, function (err) {
                         console.log(err);
                     });
             }
+
         };
+    }])
+
+    .controller('newArticleCtrl', ['$scope', '$rootScope', function ($scope, $rootScope) {
+        //TODO: Add modaal thingy
     }]);
-
-
-

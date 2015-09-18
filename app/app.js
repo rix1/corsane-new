@@ -26,6 +26,7 @@ angular.module('myApp', [
     'myApp.directives.topicBox',
     'myApp.directives.spinner',
     'myApp.directives.ngReallyClick',
+    'myApp.directives.modalDialog',
 
     'myApp.services'
 ])
@@ -73,6 +74,13 @@ angular.module('myApp', [
 
                 // Get user from token (if it exists)
                 var user = apiService.getClaimsFromToken();
+
+                // Set user from token
+                $rootScope.user = apiService.getClaimsFromToken();
+                if(typeof $rootScope.user == 'undefined') {
+                    $rootScope.user = false;
+                }
+                console.log($rootScope.user);
 
                 // If user exists, but is expired
                 if(user && authService.isTokenExpired(user)) {

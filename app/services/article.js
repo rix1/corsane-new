@@ -1,86 +1,86 @@
 angular.module('myApp.services')
     .factory('articleService', ['$http', 'config', '$q', 'apiService',
 
-    function($http, config, $q, apiService) {
+        function($http, config, $q, apiService) {
 
-        return {
+            return {
 
-            getArticle: function(id) {
+                getArticle: function(id) {
+                    var defer = $q.defer();
+                    $http.get(config.baseUrl + '/article/' + id)
+                        .success(function(res) {
+                            defer.resolve(res);
+                        })
+                        .error(function(err, status) {
+                            defer.reject(err)
+                        });
+                    return defer.promise;
+                },
 
-                var defer = $q.defer();
+                getAllArticles: function() {
 
-                $http.get(config.baseUrl + '/article/' + id)
-                    .success(function(res) {
+                    var defer = $q.defer();
+
+                    $http.get(config.baseUrl + '/article/')
+                        .success(function(res) {
+                            defer.resolve(res);
+                        })
+                        .error(function(err, status) {
+                            defer.reject(err)
+                        });
+
+                    return defer.promise;
+                },
+
+                createArticle: function(article) {
+                    var defer = $q.defer();
+
+                    $http({
+                        method: 'POST',
+                        url: config.baseUrl + '/article',
+                        transformRequest: apiService.transformRequest,
+                        data: article
+                    }).success(function(res) {
                         defer.resolve(res);
-                    })
-                    .error(function(err, status) {
+                    }).error(function(err, data, status, config) {
                         defer.reject(err)
                     });
 
-                return defer.promise;
-            },
+                    return defer.promise;
+                },
 
-            getAllArticles: function() {
+                updateArticle: function(article){
+                    var defer = $q.defer();
 
-                var defer = $q.defer();
+                    var id = article.id;
+                    delete article.id;
 
-                $http.get(config.baseUrl + '/article/')
-                    .success(function(res) {
+                    $http({
+                        method: 'PUT',
+                        url: config.baseUrl + '/article/' + id,
+                        transformRequest: apiService.transformRequest,
+                        data: article
+                    }).success(function (res) {
                         defer.resolve(res);
-                    })
-                    .error(function(err, status) {
-                        defer.reject(err)
+                    }).error(function (err, data, status,config) {
+                        defer.reject(err);
                     });
+                    return defer.promise;
+                },
 
-                return defer.promise;
-            },
+                addIntroduction: function(id, introduction) {
 
-            createArticle: function(article) {
-                var defer = $q.defer();
+                },
 
-                $http({
-                    method: 'POST',
-                    url: config.baseUrl + '/article',
-                    transformRequest: apiService.transformRequest,
-                    data: article
-                }).success(function(res) {
-                    defer.resolve(res);
-                }).error(function(err, data, status, config) {
-                    defer.reject(err)
-                });
+                addBackgroundImage: function(id, image) {
 
-                return defer.promise;
-            },
+                },
 
-            updateArticle: function(article){
-                var defer = $q.defer();
+                editTitle: function(newTitle) {
 
-                $http({
-                    method: 'PUT',
-                    url: config.baseUrl + '/article/' + article.id,
-                    transformRequest: apiService.transformRequest,
-                    data: article
-                }).success(function (res) {
-                    defer.resolve(res);
-                }).error(function (err, data, status,config) {
-                    defer.reject(err);
-                });
-                return defer.promise;
-            },
+                }
 
-            addIntroduction: function(id, introduction) {
-
-            },
-
-            addBackgroundImage: function(id, image) {
-
-            },
-
-            editTitle: function(newTitle) {
 
             }
-
-
         }
-    }
-]);
+    ]);

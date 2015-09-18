@@ -3,17 +3,29 @@ angular.module('myApp.directives.editable', [])
         return {
             restrict: 'A',
             require: '?ngModel',
+            scope: {
+                callback: '&'
+            },
             link: function (scope, element, attrs, ngModel) {
-                if (!ngModel) return;
+
+                if (!ngModel) {
+                    return;
+                }else{
+                    console.log("receiving model");
+                }
 
                 ngModel.$render = function () {
                     element.html($sce.getTrustedHtml(ngModel.$viewValue || ''));
-                    //element.html($sce.getTrustedHtml(ngModel.$modelValue || ''));
                 };
 
                 // Listen to events to enable binding
                 element.on('blur keyup change', function () {
                     scope.$evalAsync(read);
+                });
+
+                element.on('blur', function () {
+                    scope.callback();
+                    console.log("focus changed");
                 });
 
                 // Initialize
