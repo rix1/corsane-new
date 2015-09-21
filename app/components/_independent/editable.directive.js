@@ -11,7 +11,6 @@ angular.module('myApp.directives.editable', [])
                 if (!ngModel) {
                     return;
                 }else{
-                    console.log("receiving model");
                 }
 
                 ngModel.$render = function () {
@@ -25,7 +24,6 @@ angular.module('myApp.directives.editable', [])
 
                 element.on('blur', function () {
                     scope.callback();
-                    console.log("focus changed");
                 });
 
                 // Initialize

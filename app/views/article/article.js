@@ -21,6 +21,7 @@ angular.module('myApp.article', ['ngRoute'])
     .controller('articleCtrl', ['$rootScope', '$scope', '$routeParams', 'articleService', function ($rootScope, $scope, $routeParams, articleService) {
         var articleId = $routeParams.id;
         $scope.article = {};
+        $scope.owner = false;
 
         articleService.getArticle(articleId).then(
             function (article) {
@@ -47,10 +48,7 @@ angular.module('myApp.article', ['ngRoute'])
             header: {},
             state: {}
         };
-
-        $scope.callback = function (rikard) {
-            console.log("HA!");
-        };
+        $scope.owner = true;
 
         $scope.paragraphUpdate = function (obj, hed, txt, index) {
             $scope.paragraphs[index].headline = hed;
@@ -64,7 +62,7 @@ angular.module('myApp.article', ['ngRoute'])
                 if($rootScope.user && res.author.id === $rootScope.user.id) {
                     $scope.article = res;
                     $scope.paragraphs = res.paragraphs;
-                    console.log($scope.article);
+                    $scope.owner = true;
 
                 }else{
                     $rootScope.goTo('/article/' + res.id);

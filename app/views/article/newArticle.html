@@ -15,7 +15,7 @@
     <div class="paragraph" ng-repeat="paragraph in paragraphs">
         <div class="information pure-g">
             <div ng-click="delete(paragraph)" class="deleteButton hoverhand"><i class="fa fa-trash-o"></i></div>
-            <paragraph content="{{paragraph}}" index="{{$index}}" callback="paragraphUpdate(paragraph, head, text, index)" ></paragraph>
+            <paragraph content="{{paragraph}}" index="{{$index}}" callback="paragraphUpdate(paragraph, head, text, index)" owner="owner"></paragraph>
         </div>
     </div>
     <div class="center-text">

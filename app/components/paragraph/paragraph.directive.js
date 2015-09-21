@@ -5,7 +5,8 @@ angular.module('myApp.directives.paragraph', [])
             scope: {
                 content: '@',
                 callback: '&',
-                index: '@'
+                index: '@',
+                owner: '='
             },
             templateUrl: "components/paragraph/paragraph.html",
             controller: 'paraCtrl'
@@ -14,6 +15,8 @@ angular.module('myApp.directives.paragraph', [])
 
     .controller('paraCtrl', ['$scope', function($scope) {
         $scope.paragraph = JSON.parse($scope.content);
+
+        console.log($scope.owner);
 
         var defHeadline = "{{paragraph.headline}}";
         var defText = "{{paragraph.text}}";
@@ -52,8 +55,5 @@ angular.module('myApp.directives.paragraph', [])
 
             save.text.trim();
             save.head.trim();
-            console.log(save.text);
-            console.log(save.head);
         };
-
     }]);

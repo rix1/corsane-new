@@ -7,7 +7,9 @@
 
 <div class="l-content">
     <div ng-repeat="paragraph in article.paragraphs">
-        <paragraph content="paragraph" prev="false"></paragraph>
+        <!-- <paragraph content="paragraph" prev="false"></paragraph> -->
+
+        <paragraph content="{{paragraph}}" index="{{$index}}" callback="paragraphUpdate(paragraph, head, text, index)" owner="owner"></paragraph>
         <!--<hr class="hr-style"/>-->
     </div>
     <div class="topic-box pure-g">
