@@ -56,18 +56,18 @@ angular.module('myApp.directives.modalDialog', [])
                 $scope.topics = res;
                 createLookup();
             }, function (err) {
-                console.log(err);
+               // console.log(err);
             });
 
         // CREATE ARTICLE
         var addArticle = function (articleData) {
             articleService.createArticle(articleData)
                 .then(function (res) {
-                    console.log(res);
+                 
                     $rootScope.goTo('/article/' + res.id + '/edit');
                     $scope.hideModal();
                 }, function (err) {
-                    console.log(err);
+                    //console.log(err);
                 })
         }
     }]);

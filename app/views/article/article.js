@@ -31,7 +31,7 @@ angular.module('myApp.article', ['ngRoute'])
                 }
             },
             function (err) {
-                console.log(err);
+                //console.log(err);
             }
         );
     }])
@@ -132,7 +132,7 @@ angular.module('myApp.article', ['ngRoute'])
                 $scope.topics = res;
                 createLookup();
             }, function (err) {
-                console.log(err);
+                //console.log(err);
             });
 
 
@@ -156,7 +156,7 @@ angular.module('myApp.article', ['ngRoute'])
         };
 
         $scope.save = function () {
-            console.log($scope.paragraphs);
+            
             $scope.state.timestamp = Date.now();
             $scope.state.saved = true;
 
@@ -165,7 +165,7 @@ angular.module('myApp.article', ['ngRoute'])
                 addArticle($scope.article);
                 addParagraphs($scope.paragraphs);
             }else{
-                console.log("Error: Core Fields not validated");
+                //console.log("Error: Core Fields not validated");
             }
         };
 
@@ -183,7 +183,7 @@ angular.module('myApp.article', ['ngRoute'])
             articleService.updateArticle(updateData)
                 .then(function (res) {
                 }, function (err) {
-                    console.log(err);
+                    //console.log(err);
                 });
         };
 
@@ -196,7 +196,7 @@ angular.module('myApp.article', ['ngRoute'])
             for (var i = 0; i < paragraphs.length; i++) {
                 paragraphData = paragraphs[i];
                 if (paragraphData.changed) {
-                    console.log("updating 1 paragraph");
+                    //console.log("updating 1 paragraph");
                     addParagraph(paragraphData);
                     paragraphData.changed = false;
                 } else {
@@ -206,7 +206,6 @@ angular.module('myApp.article', ['ngRoute'])
 
         // EDIT ARTICLE
         var deleteParagraph = function (paragraph) {
-            console.log(paragraph);
             var formData = paragraph.id;
 
             if (paragraph.id) {
@@ -214,7 +213,7 @@ angular.module('myApp.article', ['ngRoute'])
                 paragraphService.deleteParagraph(formData)
                     .then(function (res) {
                     }, function (err) {
-                        console.log(err);
+                        //console.log(err);
                     });
             } else {
             }
@@ -234,14 +233,14 @@ angular.module('myApp.article', ['ngRoute'])
                 paragraphService.updateParagraph(formData)
                     .then(function (res) {
                     }, function (err) {
-                        console.log(err);
+                        //console.log(err);
                     });
             } else {
                 paragraphService.createParagraph(formData)
                     .then(function (res) {
                         paragraphData.id = res.id;
                     }, function (err) {
-                        console.log(err);
+                        //console.log(err);
                     });
             }
 

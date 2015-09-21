@@ -11,12 +11,11 @@ angular.module('myApp.topicList', ['ngRoute'])
 
         topicService.getAllTopics().then(
             function(topics) {
-                console.log(topics);
                 $scope.topicList = topics;
             },
 
             function(err) {
-                console.log(err);
+                //console.log(err);
             });
 
     }]);

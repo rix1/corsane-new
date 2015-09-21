@@ -16,8 +16,6 @@ angular.module('myApp.directives.paragraph', [])
     .controller('paraCtrl', ['$scope', function($scope) {
         $scope.paragraph = JSON.parse($scope.content);
 
-        console.log($scope.owner);
-
         var defHeadline = "{{paragraph.headline}}";
         var defText = "{{paragraph.text}}";
 

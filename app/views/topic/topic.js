@@ -17,11 +17,10 @@ angular.module('myApp.topic', ['ngRoute'])
             var topicId = $routeParams.id;
             topicService.getTopic(topicId).then(
                 function(topic) {
-                    console.log(topic);
                     $scope.topic = topic;
                 },
                 function(err) {
-                    console.log(err);
+                    //console.log(err);
                 }
             );
 

@@ -80,7 +80,7 @@ angular.module('myApp', [
                 if(typeof $rootScope.user == 'undefined') {
                     $rootScope.user = false;
                 }
-                console.log($rootScope.user);
+                //console.log($rootScope.user);
 
                 // If user exists, but is expired
                 if(user && authService.isTokenExpired(user)) {
@@ -97,7 +97,7 @@ angular.module('myApp', [
                             $http.defaults.headers.common.Authorization = 'Bearer ' + res.token;
                         },
                         function(err) {
-                            console.log(err);
+                            //console.log(err);
                             return $rootScope.goTo('/login');
                         });
                 }
