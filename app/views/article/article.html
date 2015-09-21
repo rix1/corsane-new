@@ -5,16 +5,21 @@
     <p><small><em>By <a href="#/user/{{article.author.id}}">{{article.author.first_name}} {{article.author.last_name}}</a> in <a href="#/topic/{{article.topics[0].id}}">{{article.topics[0].title}}</a></em></small></p>
 </div>
 
-<div class="l-content">
-    <div ng-repeat="paragraph in article.paragraphs">
-        <!-- <paragraph content="paragraph" prev="false"></paragraph> -->
-
-        <paragraph content="{{paragraph}}" index="{{$index}}" callback="paragraphUpdate(paragraph, head, text, index)" owner="owner"></paragraph>
-        <!--<hr class="hr-style"/>-->
+<div class="pure-g">
+    <div class="l-content">
+        <div ng-repeat="paragraph in article.paragraphs">
+            <div class="pure-u-1 pure-u-md-1-4"></div>
+            <div class="pure-u-1 pure-u-md-1-2">
+                <paragraph content="{{paragraph}}" index="{{$index}}" callback="paragraphUpdate(paragraph, head, text, index)" owner="owner"></paragraph>
+                <!-- <hr class="hr-style"/> -->
+            </div>
+        </div>
     </div>
-    <div class="topic-box pure-g">
+</div> <!-- end l-content -->
+<div class="pure-g">
+    <div class="topic-box">
         <div class="pure-u-1">
             <p>Inspired by this article? Write your own <a style="font-weight: 600" href="#/profile">now</a>.</p>
         </div>
     </div> <!-- end topics-boxes-->
-</div> <!-- end l-content -->
+</div>

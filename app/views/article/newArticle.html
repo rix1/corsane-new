@@ -9,23 +9,33 @@
         {{topicLookup[article.topics[0].id].description}}
     </small>
         <br/>
-    <small class="published"><strong ng-show="article.published">PUBLISHED</strong> <em ng-show="state.saved">Last saved: {{state.timestamp | date:'medium'}}</em></small></p>
+        <small class="published"><strong ng-show="article.published">PUBLISHED</strong> <em ng-show="state.saved">Last saved: {{state.timestamp | date:'medium'}}</em></small></p>
 </div>
-<div class="l-content">
-    <div class="paragraph" ng-repeat="paragraph in paragraphs">
-        <div class="information pure-g">
-            <div ng-click="delete(paragraph)" class="deleteButton hoverhand"><i class="fa fa-trash-o"></i></div>
-            <paragraph content="{{paragraph}}" index="{{$index}}" callback="paragraphUpdate(paragraph, head, text, index)" owner="owner"></paragraph>
+
+
+<div class="pure-g">
+    <div class="l-content">
+        <div class="paragraph" ng-repeat="paragraph in paragraphs">
+            <div class="pure-u-1 pure-u-md-1-4"></div>
+            <div class="pure-u-1 pure-u-md-1-2">
+                <div ng-click="delete(paragraph)" class="deleteButton hoverhand"><i class="fa fa-trash-o"></i></div>
+                <div class="l-box">
+                    <paragraph content="{{paragraph}}" index="{{$index}}" callback="paragraphUpdate(paragraph, head, text, index)" owner="owner"></paragraph>
+                </div>
+            </div>
         </div>
+        <div class="pure-u-1">
+            <div class="center-text">
+                <button class="pure-button pure-button-primary blue-bg" ng-click="newParagraph()">
+                    <i class="fa fa-plus"></i> New Section</button>
+                <button class="pure-button pure-button-primary blue-bg" ng-click="save()">Save</button>
+                <button ng-click="article.published = !article.published" ng-show="!article.published" class="pure-button">Not Published</button>
+                <button ng-click="article.published = !article.published" ng-show="article.published" class="pure-button pure-button-primary blue-bg">Published</button>
+            </div>
+        </div>
+
     </div>
-    <div class="center-text">
-        <button class="pure-button pure-button-primary blue-bg" ng-click="newParagraph()">
-            <i class="fa fa-plus"></i> New Section</button>
-        <button class="pure-button pure-button-primary blue-bg" ng-click="save()">Save</button>
-        <button ng-click="article.published = !article.published" ng-show="!article.published" class="pure-button">Not Published</button>
-        <button ng-click="article.published = !article.published" ng-show="article.published" class="pure-button pure-button-primary blue-bg">Published</button>
-    </div>
-    <div class="topic-box pure-g">
+    <div class="topic-box">
         <div class="pure-u-1">
             <p class="error" ng-bind="helptext"></p>
         </div>
