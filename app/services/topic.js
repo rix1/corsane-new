@@ -38,6 +38,23 @@ angular.module('myApp.services')
                     return defer.promise;
                 },
 
+                deleteTopic: function(formdata) {
+
+                    var defer = $q.defer();
+
+                    $http({
+                        method: 'DELETE',
+                        url: config.baseUrl + '/topic/' + formdata.id,
+                        transformRequest: apiService.transformRequest,
+                    }).success(function(res) {
+                        defer.resolve(res);
+                    })
+                        .error(function(err, status) {
+                            defer.reject(err)
+                        });
+                    return defer.promise;
+                },
+
                 getAllTopics: function() {
 
                     var defer = $q.defer();

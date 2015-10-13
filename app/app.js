@@ -79,6 +79,7 @@ angular.module('myApp', [
                 $rootScope.user = apiService.getClaimsFromToken();
                 if(typeof $rootScope.user == 'undefined') {
                     $rootScope.user = false;
+                }else{
                 }
                 //console.log($rootScope.user);
 

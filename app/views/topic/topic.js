@@ -23,7 +23,7 @@ angular.module('myApp.topic', ['ngRoute'])
                     //console.log(err);
                 }
             );
-
+            
             $scope.getArticle = function(id) {
                 $location.path("/article/" + id);
             }

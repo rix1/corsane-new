@@ -1,48 +1,32 @@
 <div ng-controller="labCtrl as ctrl">
-    <div class="default-banner center-text">
-        <h1 class="banner-head">Rix1's lab</h1>
-        <h2 id="banner-desc">Welcome to my lab, use the form below to add data to the database. <small><br/><br/><strong>NEW:</strong> Check out the new <b><a
-                href="#/article/new">article editor!</a></b></small> </h2>
-        <p><small><em>Note: No hacking allowed (plz)</em></small></p>
-    </div>
+	<div class="default-banner center-text">
+		<h1 class="banner-head">Admin Panel</h1>
+		<h2 id="banner-desc">This is the admin panel v0.1. The changes you make here are irreversible!</h2>
+			<p><small><em>Note: No hacking allowed (plz)</em></small></p>
+		</div>
+		
 
-    <div class="l-content">
-        <div class="topic-box pure-g">
-            <div class="pure-u-1">
-                <h1>Add topic form</h1>
-                <form ng-submit="addTopic(topic)" ng-model="topic">
-                    <label for="title"><input placeholder="topic.title" ng-model="topic.title" type="text" id="title" tabindex=1/></label>
-                    <label for="description"><input placeholder="topic.desc" ng-model="topic.description" type="text" id="description" tabindex=2/></label>
-                    <button type="submit" class="pure-button pure-input-1 pure-button-primary blue-bg margin-10">Add topic</button>
-                </form>
-                    <input type="text" ng-model="topic.res" placeholder="results come hereee.." tabindex=3/>
-            </div>
-            <hr class="hr-style"/>
-
-            <div class="pure-u-1">
-                <h1>Add article form</h1>
-                <form ng-submit="addArticle(article)" ng-model="article">
-                    <label for="articletitle"><input placeholder="article.title" ng-model="article.title" type="text" id="articletitle" tabindex=4/></label>
-                    <label for="introduction"><input placeholder="article.introduction" ng-model="article.introduction" type="text" id="introduction" tabindex=5/></label>
-                    <label for="articleTopic"><input placeholder="article.topicID" ng-model="article.topic" type="text" id="articleTopic" tabindex=6/></label>
-                    <button type="submit" class="pure-button pure-input-1 pure-button-primary blue-bg margin-10" tabindex=3>Add article</button>
-                </form>
-                    <input type="text" ng-model="article.res" placeholder="results come hereee.." tabindex=7/>
-            </div>
-            <hr class="hr-style"/>
-
-            <div class="pure-u-1">
-                <h1>Add paragraph form</h1>
-                <form ng-submit="addParagraph(paragraph)" ng-model="paragraph">
-                    <label for="paraArticle"><input placeholder="paragraph.article" ng-model="paragraph.article" type="text" id="paraArticle" tabindex=8/></label>
-                    <label for="paragraphTitle"><input placeholder="paragraph.headline" ng-model="paragraph.headline" type="text" id="paragraphTitle" tabindex=9/></label>
-                    <label for="paragraphDesc"><input placeholder="paragraph.text" ng-model="paragraph.text" type="text" id="paragraphDesc" tabindex=10/></label>
-                    <button type="submit" class="pure-button pure-input-1 pure-button-primary blue-bg margin-10">Add paragraph</button>
-                </form>
-                <input type="text" ng-model="paragraph.res" placeholder="results come hereee.." tabindex=11/>
-            </div>
-            <hr class="hr-style"/>
-
-        </div>
-    </div>
+		<div class="pure-g">
+			<div class="pure-u-1 pure-u-md-1-2 l-content adminPanel">
+				<h1>Edit topics</h1>
+				<div class="pure-u-md-1-3" ng-repeat="topic in topics">
+					<div class="tinyList" >
+						<div class="l-box">
+							<p>{{topic.title}}</p>
+							<button class="button-error pure-button" type="button" ng-click="deleteTopic(topic)">Delete {{topic.title}}</button>
+						</div>
+					</div>
+				</div>
+				<hr class="hr-style"/>
+				<h1>Add topic form</h1>
+				<div>
+					<form ng-submit="addTopic(topic)" ng-model="topic">
+						<label for="title"><input placeholder="topic.title" ng-model="topic.title" type="text" id="title" tabindex=1/></label>
+						<label for="description"><input placeholder="topic.desc" ng-model="topic.description" type="text" id="description" tabindex=2/></label>
+						<button type="submit" class="pure-button pure-input-1 pure-button-primary blue-bg margin-10">Add topic</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
