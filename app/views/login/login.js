@@ -17,7 +17,6 @@ angular.module('myApp.login', ['ngRoute'])
 
             // Redirect logged in users to their profile
             if($rootScope.user) {
-                console.log($rootScope.user);
                 return $location.path("/profile");
             }
 

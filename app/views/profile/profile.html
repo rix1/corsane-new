@@ -12,7 +12,7 @@
             <div class="pure-u-7-12 center-content pull-right">
                 <h1>{{user.first_name}} {{user.last_name}}</h1>
                 <p>{{user.username}}</p>
-                <p class="help-text"><em>{{$root.user.id}}</em></p>
+                <!-- <p class="help-text"><em>{{$root.user.id}}</em></p> -->
                 <button ng-if="$root.user.id" class="button-error pure-button pure-u-3-5" type="button" ng-click="logout()" ng-confirm-click="Log out?">Log out</button>
             </div>
         </div>
@@ -62,6 +62,8 @@
                     <p>{{article.title}}</p>
                     <p><small>Published: {{article.published}} | Created: {{article.date_created}}</small></p>
                 </a>
+                <button class="button-error pure-button pure-u-1-2" type="button" ng-confirm-click="Are you sure? This will delete your article forever!" ng-confirmed="deleteArticle(article)">Delete article</button>
+                
             </div>
         </div>
     </div>

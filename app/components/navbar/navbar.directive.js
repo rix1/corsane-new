@@ -6,12 +6,13 @@ angular.module('myApp.directives.navbar', [])
                 user: '='
             },
             replace: true,
-            templateUrl: "components/navbar/navbar.html",
+            templateUrl: "components/navbar/navbar_new.html",
             controller: 'navCtrl'
         };
     }])
 
     .controller('navCtrl', ['$rootScope', '$scope', '$location', '$timeout', function($rootScope, $scope, $location, $timeout) {
+
         $scope.isActive = function (destination) {
             return (destination === $location.path());
         };

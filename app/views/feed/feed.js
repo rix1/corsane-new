@@ -17,7 +17,7 @@ angular.module('myApp.feed', ['ngRoute'])
         feedService.getFeed().then(function(res) {
             $scope.articles = res;
         }, function(err) {
-            console.log('Error  while getting feed');
+            console.log('Error while getting feed');
         });
 
     }]);

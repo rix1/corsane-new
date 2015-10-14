@@ -68,6 +68,21 @@ angular.module('myApp.services')
                     return defer.promise;
                 },
 
+                deleteArticle: function(article){
+                    var defer = $q.defer();
+
+                    $http({
+                        method: 'DELETE',
+                        url: config.baseUrl + '/article/' + article.id,
+                        transformRequest: apiService.transformRequest,
+                    }).success(function (res) {
+                        defer.resolve(res);
+                    }).error(function (err, data, status,config) {
+                        defer.reject(err);
+                    });
+                    return defer.promise;
+                },
+
                 addIntroduction: function(id, introduction) {
 
                 },

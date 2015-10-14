@@ -34,6 +34,26 @@ angular.module('myApp.lab', ['ngRoute'])
 		});
 	};
 
+
+	$scope.updateTopic = function (topic) {
+
+		var update = {
+			id: topic.id,
+			description: topic.description
+		};
+
+		console.log(update);
+
+		topicService.updateTopic(update)
+		.then(function (res) {
+			console.log("topic updated");
+			console.log(res);
+			allTopics();
+		}, function (err) {
+			console.log(err);
+		});
+	};
+
 	var allTopics = function(){
 		topicService.getAllTopics().then(
 			function(topics){

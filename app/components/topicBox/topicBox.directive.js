@@ -39,7 +39,6 @@ angular.module('myApp.directives.topicBox', [])
                 changeClass(topic)
             }else{
                 $location.path("/topic/" + topic.id);
-                console.log("TopicBoxCtrl: Topic is not defined");
             }
         }
     }]);
