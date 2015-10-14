@@ -13,6 +13,10 @@ angular.module('myApp.directives.navbar', [])
 
     .controller('navCtrl', ['$rootScope', '$scope', '$location', '$timeout', function($rootScope, $scope, $location, $timeout) {
 
+        $scope.checked = function(){
+            $scope.check = false;
+        }
+
         $scope.isActive = function (destination) {
             return (destination === $location.path());
         };
