@@ -16,6 +16,17 @@ angular.module('myApp.directives.paragraph', [])
     .controller('paraCtrl', ['$scope', function($scope) {
         $scope.paragraph = JSON.parse($scope.content);
 
+        var a = $scope.paragraph.text;
+        var b = $scope.paragraph.headline;
+
+        $scope.paragraph.text = a.replace(/<\/?[^>]+(>|$)/g, "");
+        $scope.paragraph.headline= b.replace(/<\/?[^>]+(>|$)/g, "");
+
+        //$scope.paragraph.text ? String($scope.paragraph.text).replace(/<[^>]+>/gm, '') : '';
+        //$scope.paragraph.headline ? String($scope.paragraph.headline).replace(/<[^>]+>/gm, '') :
+        // $scope.paragraph.text ? String($scope.paragraph.text).replace(/<[^>]+>/gm, '') : '';
+        //$scope.paragraph.headline ? String($scope.paragraph.headline).replace(/<[^>]+>/gm, '') :
+
         var defHeadline = "{{paragraph.headline}}";
         var defText = "{{paragraph.text}}";
 
@@ -50,6 +61,9 @@ angular.module('myApp.directives.paragraph', [])
             }else{
                 save.text = $scope.text;
             }
+
+            //save.text ? String(save.text).replace(/<[^>]+>/gm, '') : '';
+            //save.head ? String(save.head).replace(/<[^>]+>/gm, '') : '';
 
             save.text.trim();
             save.head.trim();

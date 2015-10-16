@@ -34,6 +34,8 @@ angular.module('myApp.services')
 
                 createArticle: function(article) {
                     var defer = $q.defer();
+                    article.approved = true;
+                    article.featured = true;
 
                     $http({
                         method: 'POST',
