@@ -42,7 +42,6 @@ angular.module('myApp.services')
                     });
                     return defer.promise;
                 },
-
                 getCSRF: function () {
                     var q = $q.defer();
 

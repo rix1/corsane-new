@@ -86,7 +86,8 @@ angular.module('myApp', [
                 if(token === null){
                     // No token exist...
                 }else{
-                    if(jwtHelper.isTokenExpired(token)) {       // Token is expired
+                    if(jwtHelper.isTokenExpired(token)) {       // Token is expired.
+                        AuthStore.remove('jwt');
                         // todo: go to login
                     }else{                                      // Token is valid. Refresh token and continue
                         authService.refreshToken()
