@@ -13,7 +13,7 @@
     "fontawesome": "~4.4.0",
     "pure": "~0.6.0",
     "angular-sanitize": "~1.4.3",
-    "angular-cookies": "~1.4.4",
-    "a0-angular-storage": "~0.0.13"
+    "a0-angular-storage": "~0.0.13",
+    "angular-jwt": "~0.0.9"
   }
 }

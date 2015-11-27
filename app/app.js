@@ -6,7 +6,6 @@ angular.module('myApp', [
     //'ngStorage',
     'angular-storage',
     'ngSanitize',
-    'ngCookies',
 
     'myApp.config',
     'myApp.welcome',
