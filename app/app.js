@@ -4,6 +4,7 @@
 angular.module('myApp', [
     'ngRoute',
     //'ngStorage',
+    'angular-storage',
     'ngSanitize',
     'ngCookies',
 
@@ -31,13 +32,13 @@ angular.module('myApp', [
     'myApp.services'
 ])
 
-    .config(['$httpProvider', '$routeProvider', function($httpProvider, $routeProvider) {
+    .config(['$httpProvider', '$routeProvider', function ($httpProvider, $routeProvider) {
         $routeProvider.otherwise({redirectTo: '/'});
 
         $httpProvider.defaults.withCredentials = true;
         $httpProvider.defaults.xsrfHeaderName = 'x-csrf-token';
         $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
-        $httpProvider.defaults.headers.post['Content-Type'] =  'application/x-www-form-urlencoded';
+        $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
         //$httpProvider.interceptors.push(['$q', '$location', '$localStorage', function ($q, $location, $localStorage) {
         //    return {
@@ -60,10 +61,10 @@ angular.module('myApp', [
     }])
 
     .run(['$http', '$rootScope', '$location', 'authService', 'apiService',
-        function($http, $rootScope, $location, authService, apiService) {
+        function ($http, $rootScope, $location, authService, apiService) {
 
             // Global function for changing view
-            $rootScope.goTo = function(route, params) {
+            $rootScope.goTo = function (route, params) {
                 var searchParams = params || {};
                 return $location.path(route).search(searchParams);
             };
@@ -75,38 +76,42 @@ angular.module('myApp', [
             });
 
 
-                // DEPRECATED 2015-11-27 -rix1
+            // DEPRECATED 2015-11-27 -rix1
 
-                // Get user from token (if it exists)
-                //var user = apiService.getClaimsFromToken();
+            // Get user from token (if it exists)
+            //var user = apiService.getClaimsFromToken();
 
-                // Set user from token
-                //$rootScope.user = apiService.getClaimsFromToken();
-                //if(typeof $rootScope.user == 'undefined') {
-                //    $rootScope.user = false;
-                //}else{
-                //}
-                //console.log($rootScope.user);
+            // Set user from token
+            //$rootScope.user = apiService.getClaimsFromToken();
+            //if(typeof $rootScope.user == 'undefined') {
+            //    $rootScope.user = false;
+            //}else{
+            //}
+            //console.log($rootScope.user);
 
-                // If user exists, but is expired
-                //if(user && authService.isTokenExpired(user)) {
-                //    delete $localStorage.token;
-                //    delete $rootScope.user;
-                //    return $rootScope.goTo('/login');
-                //}
+            // If user exists, but is expired
+            //if(user && authService.isTokenExpired(user)) {
+            //    delete $localStorage.token;
+            //    delete $rootScope.user;
+            //    return $rootScope.goTo('/login');
+            //}
 
-                // If user exists, and has not expired
-                //else if(user) {
-                //    authService.refreshToken().then(
-                //        function(res) {
-                //            // Add token to header
-                //            $http.defaults.headers.common.Authorization = 'Bearer ' + res.token;
-                //        },
-                //        function(err) {
-                //            //console.log(err);
-                //            return $rootScope.goTo('/login');
-                //        });
-                //}
+            // If user exists, and has not expired
+            //else if(user) {
+            //    authService.refreshToken().then(
+            //        function(res) {
+            //            // Add token to header
+            //            $http.defaults.headers.common.Authorization = 'Bearer ' + res.token;
+            //        },
+            //        function(err) {
+            //            //console.log(err);
+            //            return $rootScope.goTo('/login');
+            //        });
+            //}
             //});
         }
-    ]);
+    ])
+
+    .factory('AuthStore', ['store', function (store) {
+        return store.getNamespacedStore('authStorage');
+    }]);
