@@ -1,6 +1,6 @@
 angular.module('myApp.services')
-    .factory('authService', ['$http', 'config', '$q', '$localStorage', '$rootScope', 'apiService',
-        function($http, config, $q, $localStorage, $rootScope, apiService) {
+    .factory('authService', ['$http', 'config', '$q', '$rootScope', 'apiService',
+        function($http, config, $q, $rootScope, apiService) {
 
             return {
                 login: function (userCredentials) {
@@ -13,8 +13,8 @@ angular.module('myApp.services')
                         transformRequest: apiService.transformRequest,
                         data: userCredentials
                     }).success(function (res) {
-                        $localStorage.token = res.token;
-                        $rootScope.user = apiService.getClaimsFromToken();
+                        //$localStorage.token = res.token;
+                        //$rootScope.user = apiService.getClaimsFromToken();
                         defer.resolve(res);
                     }).error(function (err, data, status, config) {
                         defer.reject(err);
@@ -35,13 +35,14 @@ angular.module('myApp.services')
                         method: 'POST',
                         url: config.baseUrl + '/auth/logout'
                     }).success(function (res) {
-                        $rootScope.user = {};
-                        delete $localStorage.token;
+                        //$rootScope.user = {};
+                        //delete $localStorage.token;
                         defer.resolve(res);
                     }).error(function (err, data, status, config) {
-                        var error = {};
-                        error.message = "Wops - validation error. Try again!";
-                        defer.reject(error)
+                        //var error = {};
+                        console.log(err);
+                        //error.message = "Wops - validation error. Try again!";
+                        defer.reject(err)
                     });
                     return defer.promise;
                 },
@@ -60,47 +61,50 @@ angular.module('myApp.services')
                         q.reject(err);
                     });
                     return q.promise;
-                },
-
-                refreshToken: function() {
-                    var q = $q.defer();
-
-                    $http({
-                        method: 'POST',
-                        url: config.baseUrl + '/refresh_token'
-                    }).success(function (res) {
-                        $localStorage.token = res.token;
-                        $rootScope.user = apiService.getClaimsFromToken();
-                        q.resolve(res);
-                    }).error(function (err) {
-                        q.reject(err);
-                    });
-                    return q.promise;
-                },
-
-                getTokenExpirationDate: function (decodedToken) {
-
-                    if (typeof decodedToken.exp === "undefined") {
-                        return null;
-                    }
-
-                    var d = new Date(0); // The 0 here is the key, which sets the date to the epoch
-                    d.setUTCSeconds(decodedToken.exp);
-
-                    return d;
-                },
-
-                isTokenExpired: function (token) {
-                    if(!token) return true;
-
-                    var d = this.getTokenExpirationDate(token);
-
-                    if (d === null)
-                        return false;
-
-                    // Token expired?
-                    return !(d.valueOf() > new Date().valueOf());
                 }
+
+
+                // DEPRECATED 2015-11-27 -rix1
+
+                //refreshToken: function() {
+                //    var q = $q.defer();
+                //
+                //    $http({
+                //        method: 'POST',
+                //        url: config.baseUrl + '/refresh_token'
+                //    }).success(function (res) {
+                //        $localStorage.token = res.token;
+                //        $rootScope.user = apiService.getClaimsFromToken();
+                //        q.resolve(res);
+                //    }).error(function (err) {
+                //        q.reject(err);
+                //    });
+                //    return q.promise;
+                //},
+                //
+                //getTokenExpirationDate: function (decodedToken) {
+                //
+                //    if (typeof decodedToken.exp === "undefined") {
+                //        return null;
+                //    }
+                //
+                //    var d = new Date(0); // The 0 here is the key, which sets the date to the epoch
+                //    d.setUTCSeconds(decodedToken.exp);
+                //
+                //    return d;
+                //},
+                //
+                //isTokenExpired: function (token) {
+                //    if(!token) return true;
+                //
+                //    var d = this.getTokenExpirationDate(token);
+                //
+                //    if (d === null)
+                //        return false;
+                //
+                //    // Token expired?
+                //    return !(d.valueOf() > new Date().valueOf());
+                //}
 
             };
         }

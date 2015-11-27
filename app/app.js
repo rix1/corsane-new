@@ -3,7 +3,7 @@
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
     'ngRoute',
-    'ngStorage',
+    //'ngStorage',
     'ngSanitize',
     'ngCookies',
 
@@ -39,28 +39,28 @@ angular.module('myApp', [
         $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
         $httpProvider.defaults.headers.post['Content-Type'] =  'application/x-www-form-urlencoded';
 
-        $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function ($q, $location, $localStorage) {
-            return {
-                'request': function (config) {
-                    config.headers = config.headers || {};
-                    if ($localStorage.token) {
-                        config.headers.Authorization = 'Bearer ' + $localStorage.token;
-                    }
-                    return config;
-                },
-                'responseError': function (response) {
-                    if (response.status === 401 || response.status === 403) {
-                        $location.path('/login');
-                    }
-                    return $q.reject(response);
-                }
-            };
-        }]);
+        //$httpProvider.interceptors.push(['$q', '$location', '$localStorage', function ($q, $location, $localStorage) {
+        //    return {
+        //        'request': function (config) {
+        //            config.headers = config.headers || {};
+        //            if ($localStorage.token) {
+        //                config.headers.Authorization = 'Bearer ' + $localStorage.token;
+        //            }
+        //            return config;
+        //        },
+        //        'responseError': function (response) {
+        //            if (response.status === 401 || response.status === 403) {
+        //                $location.path('/login');
+        //            }
+        //            return $q.reject(response);
+        //        }
+        //    };
+        //}]);
         //$locationProvider.html5Mode(true);
     }])
 
-    .run(['$http', '$rootScope', '$location', '$localStorage', 'authService', 'apiService',
-        function($http, $rootScope, $location, $localStorage, authService, apiService) {
+    .run(['$http', '$rootScope', '$location', 'authService', 'apiService',
+        function($http, $rootScope, $location, authService, apiService) {
 
             // Global function for changing view
             $rootScope.goTo = function(route, params) {
@@ -69,40 +69,44 @@ angular.module('myApp', [
             };
 
             // Add CSRF token to header
-            authService.getCSRF().then(function(token) {
+            authService.getCSRF().then(function (token) {
                 $http.defaults.headers.common['x-csrf-token'] = token;
+                $http.defaults.headers.common.Authorization = 'Bearer ' + token;
+            });
+
+
+                // DEPRECATED 2015-11-27 -rix1
 
                 // Get user from token (if it exists)
-                var user = apiService.getClaimsFromToken();
+                //var user = apiService.getClaimsFromToken();
 
                 // Set user from token
-                $rootScope.user = apiService.getClaimsFromToken();
-                if(typeof $rootScope.user == 'undefined') {
-                    $rootScope.user = false;
-                }else{
-                }
+                //$rootScope.user = apiService.getClaimsFromToken();
+                //if(typeof $rootScope.user == 'undefined') {
+                //    $rootScope.user = false;
+                //}else{
+                //}
                 //console.log($rootScope.user);
 
                 // If user exists, but is expired
-                if(user && authService.isTokenExpired(user)) {
-                    delete $localStorage.token;
-                    delete $rootScope.user;
-                    return $rootScope.goTo('/login');
-                }
+                //if(user && authService.isTokenExpired(user)) {
+                //    delete $localStorage.token;
+                //    delete $rootScope.user;
+                //    return $rootScope.goTo('/login');
+                //}
 
                 // If user exists, and has not expired
-                else if(user) {
-                    authService.refreshToken().then(
-                        function(res) {
-                            // Add token to header
-                            $http.defaults.headers.common.Authorization = 'Bearer ' + res.token;
-                        },
-                        function(err) {
-                            //console.log(err);
-                            return $rootScope.goTo('/login');
-                        });
-                }
-            });
-
+                //else if(user) {
+                //    authService.refreshToken().then(
+                //        function(res) {
+                //            // Add token to header
+                //            $http.defaults.headers.common.Authorization = 'Bearer ' + res.token;
+                //        },
+                //        function(err) {
+                //            //console.log(err);
+                //            return $rootScope.goTo('/login');
+                //        });
+                //}
+            //});
         }
     ]);

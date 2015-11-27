@@ -1,6 +1,8 @@
+// DEPRECATED 2015-11-27 -rix1
+
 angular.module('myApp.services', [])
-    .factory('apiService', ['$localStorage', '$cookieStore',
-        function ($localStorage, $cookieStore) {
+    .factory('apiService', ['$cookieStore',
+        function ($cookieStore) {
 
             function decodeToken(str) {
                 var output = str.replace('-', '+').replace('_', '/');
