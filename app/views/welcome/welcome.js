@@ -9,15 +9,7 @@ angular.module('myApp.welcome', ['ngRoute'])
         });
     }])
 
-    .controller('welcomeCtrl', ['$rootScope', '$scope', 'topicService', 'AuthStore', function($rootScope, $scope, topicService, AuthStore) {
-
-
-        // DEMO:
-        var myObj1 = {name: 'FAEN', pw:'gunnar'};
-        AuthStore.set('user', myObj1);
-        var frank = AuthStore.get('user');
-        console.log(frank);
-        // DEMO END
+    .controller('welcomeCtrl', ['$rootScope', '$scope', 'topicService', function($rootScope, $scope, topicService) {
 
 
         // If user logged in, display feed

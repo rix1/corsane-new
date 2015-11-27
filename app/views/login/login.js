@@ -9,8 +9,8 @@ angular.module('myApp.login', ['ngRoute'])
         })
     }])
 
-    .controller('authCtrl', ['$scope', '$rootScope', '$location', 'authService',
-        function($scope, $rootScope, $location, authService) {
+    .controller('authCtrl', ['$scope', '$rootScope', '$location', 'authService', 'jwtHelper',
+        function($scope, $rootScope, $location, authService, jwtHelper) {
 
             $scope.pending = false;
             $scope.error = {err:false, msg:""};
@@ -35,7 +35,11 @@ angular.module('myApp.login', ['ngRoute'])
             var login = function (credentials) {
                 authService.login(credentials)
                     .then(function (res) {
-                        $location.path("/profile");
+                        //$location.path("/profile");
+                        console.log("login successful");
+                        var tokenPayload = jwtHelper.decodeToken(res.token);
+
+                        console.log(tokenPayload);
                     }, function (err) {
                         $scope.pending = false;
                         $scope.error.msg = err.message;

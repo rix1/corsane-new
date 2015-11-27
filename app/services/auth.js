@@ -1,20 +1,17 @@
 angular.module('myApp.services')
-    .factory('authService', ['$http', 'config', '$q', '$rootScope', 'apiService',
-        function($http, config, $q, $rootScope, apiService) {
+    .factory('authService', ['$http', 'config', '$q', '$rootScope', 'apiService', 'AuthStore',
+        function($http, config, $q, $rootScope, apiService, AuthStore) {
 
             return {
                 login: function (userCredentials) {
-
                     var defer = $q.defer();
-
                     $http({
                         method: 'POST',
                         url: config.baseUrl + '/auth/login',
                         transformRequest: apiService.transformRequest,
                         data: userCredentials
                     }).success(function (res) {
-                        //$localStorage.token = res.token;
-                        //$rootScope.user = apiService.getClaimsFromToken();
+                        AuthStore.set('jwt', res.token);
                         defer.resolve(res);
                     }).error(function (err, data, status, config) {
                         defer.reject(err);
@@ -35,8 +32,7 @@ angular.module('myApp.services')
                         method: 'POST',
                         url: config.baseUrl + '/auth/logout'
                     }).success(function (res) {
-                        //$rootScope.user = {};
-                        //delete $localStorage.token;
+                        AuthStore.remove('jwt');
                         defer.resolve(res);
                     }).error(function (err, data, status, config) {
                         //var error = {};
@@ -48,7 +44,6 @@ angular.module('myApp.services')
                 },
 
                 getCSRF: function () {
-
                     var q = $q.defer();
 
                     $http({
@@ -61,27 +56,27 @@ angular.module('myApp.services')
                         q.reject(err);
                     });
                     return q.promise;
+                },
+
+
+                refreshToken: function() {
+                    var q = $q.defer();
+
+                    $http({
+                        method: 'POST',
+                        url: config.baseUrl + '/refresh_token'
+                    }).success(function (res) {
+                        AuthStore.set('jwt', res.token);
+                        q.resolve(res);
+                    }).error(function (err) {
+                        q.reject(err);
+                    });
+                    return q.promise;
                 }
 
 
                 // DEPRECATED 2015-11-27 -rix1
 
-                //refreshToken: function() {
-                //    var q = $q.defer();
-                //
-                //    $http({
-                //        method: 'POST',
-                //        url: config.baseUrl + '/refresh_token'
-                //    }).success(function (res) {
-                //        $localStorage.token = res.token;
-                //        $rootScope.user = apiService.getClaimsFromToken();
-                //        q.resolve(res);
-                //    }).error(function (err) {
-                //        q.reject(err);
-                //    });
-                //    return q.promise;
-                //},
-                //
                 //getTokenExpirationDate: function (decodedToken) {
                 //
                 //    if (typeof decodedToken.exp === "undefined") {

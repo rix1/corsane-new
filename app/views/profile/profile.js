@@ -40,15 +40,15 @@ angular.module('myApp.profile', ['ngRoute'])
 
 		$scope.user = $rootScope.user;
 
-		var getArticles = function(){
+		var getArticles = function () {
 			userService.getUser($scope.user.id).then(
-				function(res) {
+				function (res) {
 					$scope.myArticles = res.articles;
 				},
-				function(err) {
+				function (err) {
 					console.log(err);
 				});
-		}
+		};
 
 		getArticles();
 
