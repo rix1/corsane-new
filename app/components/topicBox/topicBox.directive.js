@@ -40,7 +40,7 @@ angular.module('myApp.directives.topicBox', [])
             if($scope.selectable){
                 changeClass(topic)
             }else{
-                //$state.path("/topic/" + topic.id);
+                console.log("do i crash here?");
                 $state.go('topic', {id: topic.id});
             }
         }

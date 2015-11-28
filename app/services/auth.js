@@ -1,8 +1,9 @@
 angular.module('myApp.services')
-    .factory('authService', ['$http', 'config', '$q', '$rootScope', 'apiService', 'AuthStore',
-        function($http, config, $q, $rootScope, apiService, AuthStore) {
+    .factory('authService', ['$http', 'config', '$q', '$rootScope', 'apiService', 'AuthStore', 'userService', 'jwtHelper',
+        function($http, config, $q, $rootScope, apiService, AuthStore, User, jwtHelper) {
 
             return {
+
                 login: function (userCredentials) {
                     var defer = $q.defer();
                     $http({
@@ -11,7 +12,11 @@ angular.module('myApp.services')
                         transformRequest: apiService.transformRequest,
                         data: userCredentials
                     }).success(function (res) {
-                        AuthStore.set('jwt', res.token);
+
+                        User.currentUser().setAuthenticated(true);
+                        User.currentUser().setUser(jwtHelper.decodeToken(res.token));
+                        AuthStore.set('jwt', res.token);                    // Save userToken
+
                         defer.resolve(res);
                     }).error(function (err, data, status, config) {
                         defer.reject(err);
@@ -32,7 +37,11 @@ angular.module('myApp.services')
                         method: 'POST',
                         url: config.baseUrl + '/auth/logout'
                     }).success(function (res) {
+
+                        User.currentUser().setAuthenticated(false);
+                        User.currentUser().setUser(null);
                         AuthStore.remove('jwt');
+
                         defer.resolve(res);
                     }).error(function (err, data, status, config) {
                         //var error = {};
@@ -42,6 +51,7 @@ angular.module('myApp.services')
                     });
                     return defer.promise;
                 },
+
                 getCSRF: function () {
                     var q = $q.defer();
 
@@ -65,41 +75,17 @@ angular.module('myApp.services')
                         method: 'POST',
                         url: config.baseUrl + '/refresh_token'
                     }).success(function (res) {
+
+                        User.currentUser().setUser(jwtHelper.decodeToken(res.token));
+                        User.currentUser().setAuthenticated(true);
                         AuthStore.set('jwt', res.token);
+
                         q.resolve(res);
                     }).error(function (err) {
                         q.reject(err);
                     });
                     return q.promise;
                 }
-
-
-                // DEPRECATED 2015-11-27 -rix1
-
-                //getTokenExpirationDate: function (decodedToken) {
-                //
-                //    if (typeof decodedToken.exp === "undefined") {
-                //        return null;
-                //    }
-                //
-                //    var d = new Date(0); // The 0 here is the key, which sets the date to the epoch
-                //    d.setUTCSeconds(decodedToken.exp);
-                //
-                //    return d;
-                //},
-                //
-                //isTokenExpired: function (token) {
-                //    if(!token) return true;
-                //
-                //    var d = this.getTokenExpirationDate(token);
-                //
-                //    if (d === null)
-                //        return false;
-                //
-                //    // Token expired?
-                //    return !(d.valueOf() > new Date().valueOf());
-                //}
-
             };
         }
     ]);

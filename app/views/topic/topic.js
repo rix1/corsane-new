@@ -8,7 +8,11 @@ angular.module('myApp.topic', ['ui.router'])
             .state('topic', {
                 url: "/topic/{id}",
                 templateUrl: 'views/topic/topic.html',
-                controller: 'topicCtrl'
+                controller: 'topicCtrl',
+                data: {
+                    login: false,
+                    admin: false
+                }
             });
     }])
 
@@ -18,17 +22,20 @@ angular.module('myApp.topic', ['ui.router'])
             $scope.authors = [];
 
             var topicId = $stateParams.id;
+            console.log("or here?");
             topicService.getTopic(topicId).then(
                 function(topic) {
+                    console.log("or after its received?");
                     $scope.topic = topic;
                 },
                 function(err) {
-                    //console.log(err);
+                    console.log("or after its received?");
+                    console.log(err);
                 }
             );
             
             $scope.getArticle = function(id) {
-                $state.go('article', {id: id});
+                $state.go('showArticle', {id: id});
             }
         }
     ]);

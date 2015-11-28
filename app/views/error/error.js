@@ -1,9 +1,9 @@
-angular.module('myApp.topicList', ['ui.router'])
+angular.module('myApp.error', ['ui.router'])
 
     .config(['$stateProvider', function($stateProvider) {
 
         $stateProvider
-            .state('topics', {
+            .state('error_404', {
                 url: "/topics",
                 templateUrl: 'views/topicList/topicList.html',
                 controller: 'topicListCtrl',

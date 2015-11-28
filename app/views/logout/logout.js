@@ -8,7 +8,11 @@ angular.module('myApp.logout', ['ui.router'])
             .state('logout', {
                 url: "/logout",
                 controller: 'logoutCtrl',
-                template: ''
+                template: '',
+                data: {
+                    login: true,
+                    admin: false
+                }
             });
     }])
 
@@ -17,7 +21,6 @@ angular.module('myApp.logout', ['ui.router'])
 
             authService.logout()
                 .then(function (res) {
-                    delete $rootScope.user;
                     $state.go('welcome');
                 }, function (err) {
                     console.log(err);

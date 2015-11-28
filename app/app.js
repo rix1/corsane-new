@@ -33,71 +33,65 @@ angular.module('myApp', [
     'myApp.services'
 ])
 
-    .config(['$httpProvider', '$urlRouterProvider', 'jwtInterceptorProvider', function ($httpProvider, $urlRouterProvider, jwtInterceptorProvider) {
-        //$routeProvider.otherwise({redirectTo: '/'});
-        $urlRouterProvider.otherwise('welcome');
+    .config(['$httpProvider', '$urlRouterProvider', 'jwtInterceptorProvider',
+        function ($httpProvider, $urlRouterProvider, jwtInterceptorProvider) {
+            $urlRouterProvider.otherwise('welcome');
 
-        $httpProvider.defaults.withCredentials = true;
-        $httpProvider.defaults.xsrfHeaderName = 'x-csrf-token';
-        $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
-        $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+            $httpProvider.defaults.withCredentials = true;
+            $httpProvider.defaults.xsrfHeaderName = 'x-csrf-token';
+            $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
+            $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
-        jwtInterceptorProvider.tokenGetter = ['AuthStore', function (AuthStore) {
-            return AuthStore.get('jwt');
-        }];
+            jwtInterceptorProvider.tokenGetter = ['AuthStore', function (AuthStore) {
+                return AuthStore.get('jwt');
+            }];
 
-        $httpProvider.interceptors.push('jwtInterceptor');
+            $httpProvider.interceptors.push('jwtInterceptor');
 
 
-        $httpProvider.interceptors.push(['$q', function ($q) {
-            return {
-                'request': function (config) {              // Is run once per request
-                    return config;
-                },
+            $httpProvider.interceptors.push(['$q', function ($q) {
+                return {
+                    'request': function (config) {              // Is run once per request
+                        return config;
+                    },
 
-                'responseError': function (response) {
-                    console.log("Response error: " + response.status);
+                    'responseError': function (response) {
+                        console.log("Response error: " + response.status);
+                        console.log(response);
 
-                    if(response.status === 401 || response.status === 403){
-                        // Go login failed...
+                        if(response.status === 401 || response.status === 403){
+                            // Go login failed...
+                        }
+                        return $q.reject(response);
                     }
-                    return $q.reject(response);
-                }
 
-            };
-        }]);
-        //$locationProvider.html5Mode(true);
-    }])
+                };
+            }]);
+            //$locationProvider.html5Mode(true);
+        }])
 
-    .run(['$http', '$rootScope', '$state', 'authService', 'jwtHelper', 'AuthStore',
-        function ($http, $rootScope, $state, authService, jwtHelper, AuthStore) {
-
-            // @deprecated and should be changed
-            $rootScope.goTo = function (route, params) {        // Global function for changing view
-                console.log("@deprecated goTo: HVEM KALLER MEG?? " + route);
-                //var searchParams = params || {};
-                //return $location.path(route).search(searchParams);
-                //return $state.go('feilURLnavn!');
-            };
-
+    .run(['$http', '$rootScope', '$state', 'authService', 'jwtHelper', 'AuthStore', 'userService',
+        function ($http, $rootScope, $state, authService, jwtHelper, AuthStore, User) {
 
             authService.getCSRF().then(function (token) {       // Add CSRF token to header
                 $http.defaults.headers.common['x-csrf-token'] = token;
 
+                console.log(token);
+
                 // The token should be refreshed each time the user opens the app
                 var token = AuthStore.get('jwt');
 
-                if(token === null){
-                    // No token exist...
+                if(!token){                                     // No token exist...
+
                 }else{
                     if(jwtHelper.isTokenExpired(token)) {       // Token is expired.
                         AuthStore.remove('jwt');
-                        // todo: go to login
+                        User.currentUser().setAuthenticated(false); // This should maybe be done in service?
+                        $state.go('login');
                     }else{                                      // Token is valid. Refresh token and continue
                         authService.refreshToken()
                             .then(function (res) {
                                 console.log("token refreshed");
-
                                 jwtHelper.decodeToken(res.token);
                             }, function (err) {
                                 console.log(err);
@@ -105,18 +99,38 @@ angular.module('myApp', [
                             });
                     }
                 }
+
             });
             $rootScope.$on('$stateChangeStart', function (event, to, from) {
-                console.log("APP.js: trying to change state");
-            });
 
-            // somewhere else
-            $rootScope.$on('$stateNotFound',
-                function (event, unfoundState, fromState, fromParams) {
-                    console.log(unfoundState.to); // "lazy.state"
-                    console.log(unfoundState.toParams); // {a:1, b:2}
-                    console.log(unfoundState.options); // {inherit:false} + default options
-                });
+                console.log("==== ROUTE IS CHANGING FROM: ");
+                console.log(from);
+                console.log(to);
+                console.log("==== ROUTE HAS CHANGED: ");
+
+                console.log("APP.js: trying to change state");
+                var requireLogin = to.data.login;
+                var admin = to.data.admin;
+
+                var userAuth = User.currentUser().isAuthenticated();
+                var userAdmin = userAuth ? User.currentUser().getUser().is_admin:false;
+
+                if(userAuth){
+                    //$urlRouterProvider.otherwise('feed');
+                }
+
+                if(requireLogin && !userAuth){
+                    event.preventDefault();
+                    //event.preventDefault();
+                    // Redirect to login
+                    $state.go('login');
+                }
+
+                if(admin && !userAdmin){
+                    console.log("NO PERMISSION HERE");
+                    event.preventDefault();
+                }
+            });
         }
     ])
 

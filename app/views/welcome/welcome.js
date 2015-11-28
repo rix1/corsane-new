@@ -8,22 +8,18 @@ angular.module('myApp.welcome', ['ui.router'])
             .state('welcome', {
                 url: "/welcome",
                 templateUrl: 'views/welcome/welcome.html',
-                controller: 'welcomeCtrl'
+                controller: 'welcomeCtrl',
+                data: {
+                    login: false,
+                    admin: false
+                }
             });
     }])
 
-    .controller('welcomeCtrl', ['$rootScope', '$scope', 'topicService', '$state',
-        function($rootScope, $scope, topicService, $state) {
+    .controller('welcomeCtrl', ['$scope', 'topicService', '$state',
+        function($scope, topicService, $state) {
 
             console.log("WelcomeWelcomeWelcome!");
-
-            // If user logged in, display feed
-            if ($rootScope.user) {
-                //return $rootScope.goTo('/');
-                $state.go('feed');
-
-            }
-
 
             // Get topics and display
             topicService.getAllTopics().then(
@@ -43,7 +39,6 @@ angular.module('myApp.welcome', ['ui.router'])
                         selectedTopics.push(topic.id);
                 });
 
-                //$rootScope.goTo('/register', {topics: selectedTopics});
                 $state.go('register', {topics: selectedTopics});
             };
 

@@ -1,6 +1,16 @@
 angular.module('myApp.services')
-    .factory('userService', ['$http', 'config', '$q', 'apiService',
-        function($http, config, $q, apiService) {
+    .factory('userService', ['$http', 'config', '$q', 'apiService', 'AuthStore', 'jwtHelper',
+        function($http, config, $q, apiService, AuthStore, jwtHelper) {
+
+            var localUser = {};
+            var token = AuthStore.get('jwt');
+            if(!token){
+                localUser.authenticated = false;
+                localUser.userObject = null;
+            }else{
+                localUser.authenticated = true;
+                localUser.userObject = jwtHelper.decodeToken(token);
+            }
 
             function getErrorMessage(err) {
 
@@ -70,54 +80,75 @@ angular.module('myApp.services')
 
                 },
 
-                getUser: function(id) {
+                currentUser: function () {
+                    //return localUser.userObject;
+                    return {
+                        getUser: function () {
+                            return localUser.userObject;
+                        },
 
+                        setUser: function (user) {
+                            localUser.userObject = user;
+                        },
+
+                        setAuthenticated: function (bool) {
+                            localUser.authenticated = bool;
+                        },
+
+                        isAuthenticated: function () {
+                            return localUser.authenticated;
+                        }
+                    };
+                },
+
+                // GET any userObject from the server.
+                getUser: function (id) {
                     var defer = $q.defer();
 
                     $http.get(config.baseUrl + '/user/' + id)
-                        .success(function(res) {
+                        .success(function (res) {
+
+                            localUser.userObject = res;
                             defer.resolve(res);
                         })
-                        .error(function(err, status) {
+                        .error(function (err, status) {
                             defer.reject(err)
                         });
-
                     return defer.promise;
                 },
 
-
-                follow: function(id) {
+                follow: function (id) {
 
                     var defer = $q.defer();
 
                     $http({
                         method: 'POST',
                         url: config.baseUrl + 'user/' + id + '/follow'
-                    }).success(function(res) {
+                    }).success(function (res) {
                         defer.resolve(res);
-                    }).error(function(err, data, status, config) {
+                    }).error(function (err, data, status, config) {
                         defer.reject(err)
                     });
 
                     return defer.promise;
                 },
 
-                unfollow: function(id) {
+                unfollow: function (id) {
                     var defer = $q.defer();
 
                     $http({
                         method: 'POST',
                         url: config.baseUrl + '/user/' + id + '/unfollow'
-                    }).success(function(res) {
+                    }).success(function (res) {
                         defer.resolve(res);
-                    }).error(function(err, data, status, config) {
+                    }).error(function (err, data, status, config) {
                         defer.reject(err)
                     });
 
                     return defer.promise;
                 },
 
-                change_password: function(newpass) {
+                change_password: function (newpass) {
 
                     var defer = $q.defer();
 
@@ -128,30 +159,35 @@ angular.module('myApp.services')
                         data: {
                             password: newpass
                         }
-                    }).success(function(res) {
+                    }).success(function (res) {
                         defer.resolve(res);
-                    }).error(function(err, data, status, config) {
+                    }).error(function (err, data, status, config) {
                         defer.reject(err)
                     });
 
                     return defer.promise;
                 },
 
-                deleteAccount: function(id) {
+                deleteAccount: function (id) {
                     var defer = $q.defer();
 
                     $http({
                         method: 'DELETE',
                         url: config.baseUrl + '/user/' + id,
                         transformRequest: apiService.transformRequest
-                    }).success(function(res) {
+                    }).success(function (res) {
+
+                        // The user is deleted. We should log out
+                        this.currentUser().setUser(null);
+                        AuthStore.remove('jwt');
+
                         defer.resolve(res);
-                    }).error(function(err, data, status, config) {
+                    }).error(function (err, data, status, config) {
                         defer.reject(err)
                     });
 
                     return defer.promise;
                 }
-            }
+            };
         }
     ]);

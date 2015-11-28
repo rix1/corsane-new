@@ -8,19 +8,22 @@ angular.module('myApp.register', ['ui.router'])
             .state('register', {
                 url: "/register?topics",
                 templateUrl: 'views/register/register.html',
-                controller: 'registerCtrl'
+                controller: 'registerCtrl',
+                data: {
+                    login: false,
+                    admin: false
+                }
             });
     }])
 
-    .controller('registerCtrl', ['$scope', '$rootScope', '$stateParams', 'userService', 'authService', '$state',
-        function($scope, $rootScope, $stateParams, userService, authService, $state) {
+    .controller('registerCtrl', ['$scope', '$stateParams', 'userService', 'authService', '$state',
+        function($scope, $stateParams, userService, authService, $state) {
 
             $scope.pending = false;
             $scope.error = {err:false, msg:""};
 
             // Redirect logged in users to their profile
-            if($rootScope.user) {
-                //$rootScope.goTo('/profile');
+            if(userService.currentUser().isAuthenticated()) {
                 $state.go('myProfile');
             }
 
@@ -46,7 +49,6 @@ angular.module('myApp.register', ['ui.router'])
 
                         authService.login(user).then(
                             function (res) {
-                                //$rootScope.goTo("/feed");
                                 $scope.go('feed')
                             },
                             function (err) {

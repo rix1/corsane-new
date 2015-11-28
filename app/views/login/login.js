@@ -8,19 +8,26 @@ angular.module('myApp.login', ['ui.router'])
             .state('login', {
                 url: "/login",
                 templateUrl: 'views/login/login.html',
-                controller: 'authCtrl'
+                controller: 'authCtrl',
+                data: {
+                    login: false,
+                    admin: false
+                }
             });
     }])
 
-    .controller('authCtrl', ['$scope', '$rootScope', '$state', 'authService', 'jwtHelper',
-        function($scope, $rootScope, $state, authService, jwtHelper) {
+    .controller('authCtrl', ['$scope', '$rootScope', '$state', 'authService', 'jwtHelper', 'userService',
+        function($scope, $rootScope, $state, authService, jwtHelper, userService) {
 
             $scope.pending = false;
             $scope.error = {err:false, msg:""};
 
             // Redirect logged in users to their profile
-            if($rootScope.user) {
-                $state.go('profile');
+            if(userService.currentUser().isAuthenticated()) {
+                console.log("LOGINCTRL: user is authenticated");
+                $state.go('myProfile');
+            }else{
+                console.log("LOGINCTRL: user is NOT authenticated");
             }
 
             $scope.submit = function (form) {
@@ -38,10 +45,9 @@ angular.module('myApp.login', ['ui.router'])
             var login = function (credentials) {
                 authService.login(credentials)
                     .then(function (res) {
-                        //$state.path("/profile");
+                        $state.go('myProfile');
                         console.log("login successful");
                         var tokenPayload = jwtHelper.decodeToken(res.token);
-
                         console.log(tokenPayload);
                     }, function (err) {
                         $scope.pending = false;

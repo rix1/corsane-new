@@ -9,41 +9,53 @@ angular.module('myApp.profile', ['ui.router'])
 			.state('pubProfile', {
 				url: "/user/{id}",
 				templateUrl: 'views/profile/profile.html',
-				controller: 'profileCtrl'
+				controller: 'profileCtrl',
+				data: {
+					login: false,
+					admin: false
+				}
 			})
 			.state('myProfile',{
 				url: "/profile",
 				templateUrl: 'views/profile/profile.html',
-				controller: 'myProfileCtrl'
+				controller: 'myProfileCtrl',
+				data: {
+					login: true,
+					admin: false
+				}
 			});
 	}])
 
-	.controller('profileCtrl', ['$scope', '$stateParams', 'userService',
-		function($scope, $stateParams, userService) {
+	.controller('profileCtrl', ['$scope', '$stateParams', 'userService', '$state',
+		function($scope, $stateParams, userService, $state) {
 
 			var userId = $stateParams.id;
+			$scope.owner = false;
 
-			userService.getUser(userId).then(
-				function(res) {
-					$scope.user = res;
-				},
-				function(err) {
-					console.log(err);
-				});
+			// If we ever want to show people a "public" profile, remove this redirect.
+			if(userService.currentUser().isAuthenticated()
+				&& userService.currentUser().getUser().id == userId){
+				$state.go('myProfile');
+			}else {
+				userService.getUser(userId).then(
+					function (res) {
+						$scope.user = res;
+					},
+					function (err) {
+						console.log(err);
+					});
+			}
 		}
 	])
 
-	.controller('myProfileCtrl', ['$state', '$rootScope', '$scope', 'userService', 'articleService',
-		function($state, $rootScope, $scope, userService, articleService) {
-
+	.controller('myProfileCtrl', ['$state', '$scope', 'userService', 'articleService',
+		function($state, $scope, userService, articleService) {
+			console.log("myProfileCtrol");
 			$scope.myArticles = {};
 
-			if(!$rootScope.user) {
-				$state.go('login');
-				//return $rootScope.goTo("/login");
-			}
+			$scope.user = userService.currentUser().getUser();
+			$scope.owner = true;
 
-			$scope.user = $rootScope.user;
 
 			var getArticles = function () {
 				userService.getUser($scope.user.id).then(
@@ -59,7 +71,6 @@ angular.module('myApp.profile', ['ui.router'])
 
 			$scope.logout = function () {
 				$state.go('logout');
-				//$rootScope.goTo("/logout");
 			};
 
 			$scope.passwordForm = false;
@@ -85,18 +96,18 @@ angular.module('myApp.profile', ['ui.router'])
 			};
 
 
-			$scope.deleteArticle = function(article){
+			$scope.deleteArticle = function (article) {
 				articleService.deleteArticle(article)
-					.then(function(res){
+					.then(function (res) {
 						getArticles();
 					},
-					function(err){
+					function (err) {
 						console.log(err);
 					});
-			}
+			};
 
 			$scope.deleteAccount = function () {
-				userService.deleteAccount($rootScope.user.id).then(
+				userService.deleteAccount($scope.user.id).then(
 					function(res) {
 						$scope.logout();
 					},

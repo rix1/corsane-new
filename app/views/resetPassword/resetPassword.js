@@ -8,7 +8,11 @@ angular.module('myApp.resetPassword', ['ui.router'])
             .state('resetPw', {
                 url: "/reset",
                 templateUrl: 'views/resetPassword/resetPassword.html',
-                controller: 'resetPasswordCtrl'
+                controller: 'resetPasswordCtrl',
+                data: {
+                    login: true,
+                    admin: false
+                }
             });
     }])
 
@@ -19,10 +23,6 @@ angular.module('myApp.resetPassword', ['ui.router'])
             $scope.error = {err:false, msg:""};
             $scope.emailSent = false;
 
-            // Redirect logged in users to their profile
-            if($rootScope.user) {
-                $state.go('profile');
-            }
 
             $scope.submit = function (form) {
                 $scope.error.err = false;
