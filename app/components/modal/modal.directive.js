@@ -24,7 +24,7 @@ angular.module('myApp.directives.modalDialog', [])
     })
 
 
-    .controller('modalCtrl', ['$rootScope', '$scope', 'topicService', 'articleService', function ($rootScope, $scope, topicService, articleService) {
+    .controller('modalCtrl', ['$state', '$scope', 'topicService', 'articleService', function ($state, $scope, topicService, articleService) {
 
         $scope.article = {};
         $scope.topicLookup = {};
@@ -64,7 +64,7 @@ angular.module('myApp.directives.modalDialog', [])
             articleService.createArticle(articleData)
                 .then(function (res) {
                  
-                    $rootScope.goTo('/article/' + res.id + '/edit');
+                    $state.go('editArticle', {id: res.id});
                     $scope.hideModal();
                 }, function (err) {
                     //console.log(err);

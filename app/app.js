@@ -2,8 +2,9 @@
 
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
-    'ngRoute',
+    //'ngRoute',
     //'ngStorage',
+    'ui.router',
     'angular-storage',
     'angular-jwt',
     'ngSanitize',
@@ -32,8 +33,9 @@ angular.module('myApp', [
     'myApp.services'
 ])
 
-    .config(['$httpProvider', '$routeProvider', 'jwtInterceptorProvider', function ($httpProvider, $routeProvider, jwtInterceptorProvider) {
-        $routeProvider.otherwise({redirectTo: '/'});
+    .config(['$httpProvider', '$urlRouterProvider', 'jwtInterceptorProvider', function ($httpProvider, $urlRouterProvider, jwtInterceptorProvider) {
+        //$routeProvider.otherwise({redirectTo: '/'});
+        $urlRouterProvider.otherwise('welcome');
 
         $httpProvider.defaults.withCredentials = true;
         $httpProvider.defaults.xsrfHeaderName = 'x-csrf-token';
@@ -47,7 +49,7 @@ angular.module('myApp', [
         $httpProvider.interceptors.push('jwtInterceptor');
 
 
-        $httpProvider.interceptors.push(['$q', '$location', function ($q, $location) {
+        $httpProvider.interceptors.push(['$q', function ($q) {
             return {
                 'request': function (config) {              // Is run once per request
                     return config;
@@ -67,13 +69,15 @@ angular.module('myApp', [
         //$locationProvider.html5Mode(true);
     }])
 
-    .run(['$http', '$rootScope', '$location', 'authService', 'jwtHelper', 'AuthStore',
-        function ($http, $rootScope, $location, authService, jwtHelper, AuthStore) {
+    .run(['$http', '$rootScope', '$state', 'authService', 'jwtHelper', 'AuthStore',
+        function ($http, $rootScope, $state, authService, jwtHelper, AuthStore) {
 
             // @deprecated and should be changed
             $rootScope.goTo = function (route, params) {        // Global function for changing view
-                var searchParams = params || {};
-                return $location.path(route).search(searchParams);
+                console.log("@deprecated goTo: HVEM KALLER MEG?? " + route);
+                //var searchParams = params || {};
+                //return $location.path(route).search(searchParams);
+                //return $state.go('feilURLnavn!');
             };
 
 
@@ -102,10 +106,17 @@ angular.module('myApp', [
                     }
                 }
             });
-
-            $rootScope.$on('$routeChangeStart', function (event, to, from) {
-
+            $rootScope.$on('$stateChangeStart', function (event, to, from) {
+                console.log("APP.js: trying to change state");
             });
+
+            // somewhere else
+            $rootScope.$on('$stateNotFound',
+                function (event, unfoundState, fromState, fromParams) {
+                    console.log(unfoundState.to); // "lazy.state"
+                    console.log(unfoundState.toParams); // {a:1, b:2}
+                    console.log(unfoundState.options); // {inherit:false} + default options
+                });
         }
     ])
 

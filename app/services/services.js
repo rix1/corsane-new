@@ -1,5 +1,3 @@
- //DEPRECATED 2015-11-27 -rix1
-
 angular.module('myApp.services', [])
     .factory('apiService', [
         function () {

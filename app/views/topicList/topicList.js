@@ -1,10 +1,13 @@
-angular.module('myApp.topicList', ['ngRoute'])
+angular.module('myApp.topicList', ['ui.router'])
 
-    .config(['$routeProvider', function($routeProvider) {
-        $routeProvider.when('/topics', {
-            templateUrl: 'views/topicList/topicList.html',
-            controller: 'topicListCtrl'
-        });
+    .config(['$stateProvider', function($stateProvider) {
+
+        $stateProvider
+            .state('topics', {
+                url: "/topics",
+                templateUrl: 'views/topicList/topicList.html',
+                controller: 'topicListCtrl'
+            });
     }])
 
     .controller('topicListCtrl', ['$scope', 'topicService', function($scope, topicService) {

@@ -1,25 +1,30 @@
 'use strict';
 
-angular.module('myApp.article', ['ngRoute'])
+angular.module('myApp.article', ['ui.router'])
 
-    .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider
-            .when('/article/create', {
+    .config(['$stateProvider', function($stateProvider) {
+
+        $stateProvider
+            .state('newArticle', {
+                url: "/article/create",
                 template: '',
                 controller: 'newArticleCtrl'
             })
-            .when('/article/:id', {
-                templateUrl: 'views/article/article.html',
-                controller: 'articleCtrl'
+            .state('showArticle',{
+                url: "/article/{id}",
+                controller: 'articleCtrl',
+                templateUrl: 'views/article/article.html'
             })
-            .when('/article/:id/edit', {
+            .state('editArticle', {
+                url: "/article/{id}/edit",
                 templateUrl: 'views/article/newArticle.html',
                 controller: 'editArticleCtrl'
             });
     }])
 
-    .controller('articleCtrl', ['$rootScope', '$scope', '$routeParams', 'articleService', function ($rootScope, $scope, $routeParams, articleService) {
-        var articleId = $routeParams.id;
+
+    .controller('articleCtrl', ['$state', '$rootScope', '$scope', '$stateParams', 'articleService', function ($state, $rootScope, $scope, $stateParams, articleService) {
+        var articleId = $stateParams.id;
         $scope.article = {};
         $scope.owner = false;
 
@@ -27,7 +32,8 @@ angular.module('myApp.article', ['ngRoute'])
             function (article) {
                 $scope.article = article;
                 if ($rootScope.user && article.author.id === $rootScope.user.id) {
-                    $rootScope.goTo('/article/' + articleId + '/edit');
+                    //$rootScope.goTo('/article/' + articleId + '/edit');
+                    $state.go('editArticle', {id: articleId});
                 }
             },
             function (err) {
@@ -39,7 +45,7 @@ angular.module('myApp.article', ['ngRoute'])
 // =================================================================== // WORK BELOW THIS LINE ===================================================================
 
 
-    .controller('editArticleCtrl', ['$rootScope', '$scope', '$routeParams', 'articleService', 'topicService', 'paragraphService', function ($rootScope, $scope, $routeParams, articleService, topicService, paragraphService) {
+    .controller('editArticleCtrl', ['$state', '$rootScope', '$scope', '$stateParams', 'articleService', 'topicService', 'paragraphService', function ($state, $rootScope, $scope, $stateParams, articleService, topicService, paragraphService) {
         var headerError = 'Please fill inn Title, Description and Topic before continuing...';
 
         $scope.state = {};
@@ -56,7 +62,7 @@ angular.module('myApp.article', ['ngRoute'])
             $scope.paragraphs[index].changed = true;
         };
 
-        var articleId = $routeParams.id;
+        var articleId = $stateParams.id;
         articleService.getArticle(articleId).then(
             function (res) {
                 if($rootScope.user && res.author.id === $rootScope.user.id) {
@@ -65,7 +71,8 @@ angular.module('myApp.article', ['ngRoute'])
                     $scope.owner = true;
 
                 }else{
-                    $rootScope.goTo('/article/' + res.id);
+                    //$rootScope.goTo('/article/' + res.id);
+                    $state.go('showArticle', {id: res.id});
                 }
             },
             function (err) {

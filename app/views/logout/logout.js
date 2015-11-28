@@ -1,20 +1,24 @@
 'use strict';
 
-angular.module('myApp.logout', ['ngRoute'])
-    .config(['$routeProvider', function($routeProvider) {
-        $routeProvider.when('/logout', {
-            controller: 'logoutCtrl',
-            template: ''
-        })
+angular.module('myApp.logout', ['ui.router'])
+
+    .config(['$stateProvider', function($stateProvider) {
+
+        $stateProvider
+            .state('logout', {
+                url: "/logout",
+                controller: 'logoutCtrl',
+                template: ''
+            });
     }])
 
-    .controller('logoutCtrl', ['$rootScope', '$scope', '$location', 'authService',
-        function($rootScope, $scope, $location, authService) {
+    .controller('logoutCtrl', ['$rootScope', '$scope', '$state', 'authService',
+        function($rootScope, $scope, $state, authService) {
 
             authService.logout()
                 .then(function (res) {
                     delete $rootScope.user;
-                    $location.path('/landing');
+                    $state.go('welcome');
                 }, function (err) {
                     console.log(err);
                 });

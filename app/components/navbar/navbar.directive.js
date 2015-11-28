@@ -6,19 +6,21 @@ angular.module('myApp.directives.navbar', [])
                 user: '='
             },
             replace: true,
-            templateUrl: "components/navbar/navbar_new.html",
+            templateUrl: "components/navbar/navbar.html",
             controller: 'navCtrl'
         };
     }])
 
-    .controller('navCtrl', ['$rootScope', '$scope', '$location', '$timeout', function($rootScope, $scope, $location, $timeout) {
+    .controller('navCtrl', ['$rootScope', '$scope', '$state', '$timeout', function($rootScope, $scope, $state, $timeout) {
 
-        $scope.checked = function(){
+        $scope.checked = function () {
             $scope.check = false;
-        }
+        };
 
         $scope.isActive = function (destination) {
-            return (destination === $location.path());
+            console.log($state.current);
+            return true; // todo: NEVER FORGET... THIS..
+            //return (destination === $state.path());
         };
         $scope.model = {};
         $scope.model.check = true;

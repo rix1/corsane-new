@@ -1,23 +1,26 @@
 //'use strict';
 
-angular.module('myApp.login', ['ngRoute'])
+angular.module('myApp.login', ['ui.router'])
 
-    .config(['$routeProvider', function($routeProvider) {
-        $routeProvider.when('/login', {
-            templateUrl: 'views/login/login.html',
-            controller: 'authCtrl'
-        })
+    .config(['$stateProvider', function($stateProvider) {
+
+        $stateProvider
+            .state('login', {
+                url: "/login",
+                templateUrl: 'views/login/login.html',
+                controller: 'authCtrl'
+            });
     }])
 
-    .controller('authCtrl', ['$scope', '$rootScope', '$location', 'authService', 'jwtHelper',
-        function($scope, $rootScope, $location, authService, jwtHelper) {
+    .controller('authCtrl', ['$scope', '$rootScope', '$state', 'authService', 'jwtHelper',
+        function($scope, $rootScope, $state, authService, jwtHelper) {
 
             $scope.pending = false;
             $scope.error = {err:false, msg:""};
 
             // Redirect logged in users to their profile
             if($rootScope.user) {
-                return $location.path("/profile");
+                $state.go('profile');
             }
 
             $scope.submit = function (form) {
@@ -35,7 +38,7 @@ angular.module('myApp.login', ['ngRoute'])
             var login = function (credentials) {
                 authService.login(credentials)
                     .then(function (res) {
-                        //$location.path("/profile");
+                        //$state.path("/profile");
                         console.log("login successful");
                         var tokenPayload = jwtHelper.decodeToken(res.token);
 
