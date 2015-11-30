@@ -12,13 +12,13 @@
             <div class="pure-u-7-12 center-content pull-right">
                 <h1>{{user.first_name}} {{user.last_name}}</h1>
                 <p>{{user.username}}</p>
-                <!-- <p class="help-text"><em>{{$root.user.id}}</em></p> -->
-                <button ng-if="$root.user.id" class="button-error pure-button pure-u-3-5" type="button" ng-click="logout()" ng-confirm-click="Log out?">Log out</button>
+                <!-- <p class="help-text"><em>{{owner}}</em></p> -->
+                <button ng-if="owner" class="button-error pure-button pure-u-3-5" type="button" ng-click="logout()" ng-confirm-click="Log out?">Log out</button>
             </div>
         </div>
     </div>
 
-    <div ng-if="$root.user.id" class="pure-u-1 pure-u-sm-3-4 center-content center-text account-settings">
+    <div ng-if="owner" class="pure-u-1 pure-u-sm-3-4 center-content center-text account-settings">
         <div class="v-space-2"></div>
         <hr class="hr-style"/>
         <div class="v-space-2"></div>
@@ -49,21 +49,24 @@
                 </form>
             </div>
 
-
             <button class="button-error pure-button pure-u-1-2" type="button" ng-confirm-click="Are you sure? This will delete your account forever!" ng-confirmed="deleteAccount()">Delete account</button>
 
         </div>
+    </div>
+    <div class="pure-u-1 pure-u-sm-3-4 center-content center-text account-settings">
         <div class="v-space-2"></div>
         <hr class="hr-style"/>
-        <p>Your articles:</p>
-        <div class="l-box" ng-repeat="article in myArticles">
+        <p ng-if="owner">Your Articles:</p>
+        <p ng-if="!owner">Articles:</p>
+        <div class="l-box" ng-repeat="article in articles">
             <div class="tinyList">
                 <a href="#/article/{{article.id}}">
                     <p>{{article.title}}</p>
-                    <p><small>Published: {{article.published}} | Created: {{article.date_created}}</small></p>
+                    <p ng-if="!owner"><small>Created: {{article.date_created}}</small></p>
+                    <p ng-if="owner"><small>Published: {{article.published}} | Created: {{article.date_created}}</small></p>
                 </a>
-                <button class="button-error pure-button pure-u-1-2" type="button" ng-confirm-click="Are you sure? This will delete your article forever!" ng-confirmed="deleteArticle(article)">Delete article</button>
-                
+                <button ng-if="owner" class="button-error pure-button pure-u-1-2" type="button" ng-confirm-click="Are you sure? This will delete your article forever!" ng-confirmed="deleteArticle(article)">Delete article</button>
+
             </div>
         </div>
     </div>

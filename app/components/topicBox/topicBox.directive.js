@@ -11,7 +11,8 @@ angular.module('myApp.directives.topicBox', [])
         }
     }])
 
-    .controller('topicBoxCtrl', ['$scope','$window', '$location', function ($scope, $window, $location) {
+    .controller('topicBoxCtrl', ['$scope', '$state', function ($scope, $state) {
+        //$state.go('topic', {id: topic.id});
 
         if($scope.selectable){
             $scope.topic.class = 'selectable';
@@ -30,7 +31,8 @@ angular.module('myApp.directives.topicBox', [])
                     topic.class = 'selectable';
                 }
             }else{
-                $window.location.href = '#/topic';
+                //$window.location.href = '#/topic';
+                $state.go('topics');
             }
         };
 
@@ -38,7 +40,7 @@ angular.module('myApp.directives.topicBox', [])
             if($scope.selectable){
                 changeClass(topic)
             }else{
-                $location.path("/topic/" + topic.id);
+                $state.go('topic', {id: topic.id});
             }
         }
     }]);

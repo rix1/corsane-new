@@ -146,14 +146,13 @@ h2, h3 {
 }
 
 .border-round {
-  background: yellow;
-  border: solid 1px @green-bright;
+  border: solid 1px fade(@blue-dark,10%);
   padding: 0 1em 1.4em;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
-  border-radius: 8px;
+  border-radius: 4px;
   margin: 1em;
-  background: fade(@grey-light, 10%);
+  background: fade(@grey-light, 6%);
 }
 
 
@@ -184,6 +183,10 @@ h2, h3 {
   border: 1px solid fade(@grey-light, 50%);
   border-radius: 5px;
   background-color: fade(@grey-light, 5%);
+}
+
+.byline{
+  font-weight: 600;
 }
 
 .banner {
@@ -366,13 +369,22 @@ h2, h3 {
 }
 
 .footer {
-  background: #0e2b34;
-  color: #888;
+  //background: #0e2b34;
+  //color: #888;
+  background: transparent;
+  color: #0e2b34;
   text-align: center;
   width: 100%;
   position:absolute;
   bottom:0;
   left:0;
+
+  &::before {
+    border-top: solid 1px red;
+    width: 100px;
+    height: 10px;
+    background-color: #0000FF;
+  }
 }
 
 .footer a {

@@ -1,23 +1,30 @@
 'use strict';
 
-angular.module('myApp.register', ['ngRoute'])
+angular.module('myApp.register', ['ui.router'])
 
-    .config(['$routeProvider', function($routeProvider) {
-        $routeProvider.when('/register', {
-            templateUrl: 'views/register/register.html',
-            controller: 'registerCtrl'
-        });
+    .config(['$stateProvider', function($stateProvider) {
+
+        $stateProvider
+            .state('register', {
+                url: "/register?topics",
+                templateUrl: 'views/register/register.html',
+                controller: 'registerCtrl',
+                data: {
+                    login: false,
+                    admin: false
+                }
+            });
     }])
 
-    .controller('registerCtrl', ['$scope', '$rootScope', '$routeParams', 'userService', 'authService',
-        function($scope, $rootScope, $routeParams, userService, authService) {
+    .controller('registerCtrl', ['$scope', '$stateParams', 'userService', 'authService', '$state',
+        function($scope, $stateParams, userService, authService, $state) {
 
             $scope.pending = false;
             $scope.error = {err:false, msg:""};
 
             // Redirect logged in users to their profile
-            if($rootScope.user) {
-                $rootScope.goTo('/profile');
+            if(userService.currentUser().isAuthenticated()) {
+                $state.go('myProfile');
             }
 
             $scope.submit = function (form) {
@@ -30,8 +37,8 @@ angular.module('myApp.register', ['ngRoute'])
             var register = function (userInfo) {
 
                 // If topics is part of GET request, add them to the user object before registration
-                if($routeParams.topics)
-                    userInfo.topic_subscriptions = $routeParams.topics;
+                if($stateParams.topics)
+                    userInfo.topic_subscriptions = $stateParams.topics;
 
                 userService.register(userInfo).then(
                     function (res) {
@@ -42,7 +49,7 @@ angular.module('myApp.register', ['ngRoute'])
 
                         authService.login(user).then(
                             function (res) {
-                                $rootScope.goTo("/feed");
+                                $scope.go('feed')
                             },
                             function (err) {
                                 $scope.pending = false;

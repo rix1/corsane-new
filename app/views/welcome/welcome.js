@@ -1,41 +1,45 @@
 'use strict';
 
-angular.module('myApp.welcome', ['ngRoute'])
+angular.module('myApp.welcome', ['ui.router'])
 
-    .config(['$routeProvider', function($routeProvider) {
-        $routeProvider.when('/welcome', {
-            templateUrl: 'views/welcome/welcome.html',
-            controller: 'welcomeCtrl'
-        });
+    .config(['$stateProvider', function($stateProvider) {
+
+        $stateProvider
+            .state('welcome', {
+                url: "/welcome",
+                templateUrl: 'views/welcome/welcome.html',
+                controller: 'welcomeCtrl',
+                data: {
+                    login: false,
+                    admin: false
+                }
+            });
     }])
 
-    .controller('welcomeCtrl', ['$rootScope', '$scope', 'topicService', function($rootScope, $scope, topicService) {
+    .controller('welcomeCtrl', ['$scope', 'topicService', '$state',
+        function($scope, topicService, $state) {
 
-        // If user logged in, display feed
-        if ($rootScope.user) {
-            return $rootScope.goTo('/');
-        }
+            //console.log("WelcomeWelcomeWelcome!");
 
-
-        // Get topics and display
-        topicService.getAllTopics().then(
-            function (topics) {
-                $scope.topics = topics;
-            },
-            function (err) {
-                console.log(err);
-            });
+            // Get topics and display
+            topicService.getAllTopics().then(
+                function (topics) {
+                    $scope.topics = topics;
+                },
+                function (err) {
+                    console.log(err);
+                });
 
 
-        $scope.register = function () {
-            var selectedTopics = [];
+            $scope.register = function () {
+                var selectedTopics = [];
 
-            $scope.topics.forEach(function(topic) {
-                if(topic.selected)
-                    selectedTopics.push(topic.id);
-            });
+                $scope.topics.forEach(function(topic) {
+                    if(topic.selected)
+                        selectedTopics.push(topic.id);
+                });
 
-            $rootScope.goTo('/register', {topics: selectedTopics});
-        };
+                $state.go('register', {topics: selectedTopics});
+            };
 
-    }]);
+        }]);

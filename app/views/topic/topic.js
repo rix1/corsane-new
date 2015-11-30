@@ -1,20 +1,27 @@
 'use strict';
 
-angular.module('myApp.topic', ['ngRoute'])
+angular.module('myApp.topic', ['ui.router'])
 
-    .config(['$routeProvider', function($routeProvider) {
-        $routeProvider.when('/topic/:id', {
-            templateUrl: 'views/topic/topic.html',
-            controller: 'topicCtrl'
-        });
+    .config(['$stateProvider', function($stateProvider) {
+
+        $stateProvider
+            .state('topic', {
+                url: "/topic/{id}",
+                templateUrl: 'views/topic/topic.html',
+                controller: 'topicCtrl',
+                data: {
+                    login: false,
+                    admin: false
+                }
+            });
     }])
 
-    .controller('topicCtrl', ['$scope', '$routeParams', '$location', 'topicService',
-        function($scope, $routeParams, $location, topicService) {
+    .controller('topicCtrl', ['$scope', '$stateParams', '$state', 'topicService',
+        function($scope, $stateParams, $state, topicService) {
 
             $scope.authors = [];
 
-            var topicId = $routeParams.id;
+            var topicId = $stateParams.id;
             topicService.getTopic(topicId).then(
                 function(topic) {
                     $scope.topic = topic;
@@ -25,7 +32,7 @@ angular.module('myApp.topic', ['ngRoute'])
             );
             
             $scope.getArticle = function(id) {
-                $location.path("/article/" + id);
+                $state.go('showArticle', {id: id});
             }
         }
     ]);

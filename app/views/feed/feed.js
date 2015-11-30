@@ -1,23 +1,26 @@
 'use strict';
 
-angular.module('myApp.feed', ['ngRoute'])
+angular.module('myApp.feed', ['ui.router'])
 
-    .config(['$routeProvider', function($routeProvider) {
-        $routeProvider.when('/', {
-            templateUrl: 'views/feed/feed.html',
-            controller: 'feedCtrl'
-        });
+    .config(['$stateProvider', function($stateProvider) {
+
+        $stateProvider
+            .state('feed', {
+                url: "/feed",
+                templateUrl: 'views/feed/feed.html',
+                controller: 'feedCtrl',
+                data: {
+                    login: true,
+                    admin: false
+                }
+            });
     }])
 
-    .controller('feedCtrl', ['$scope', '$rootScope', 'feedService', function($scope, $rootScope, feedService) {
-
-        if(!$rootScope.user)
-            return $rootScope.goTo('/welcome');
+    .controller('feedCtrl', ['$scope', '$state', 'feedService', function($scope, $state, feedService) {
 
         feedService.getFeed().then(function(res) {
             $scope.articles = res;
         }, function(err) {
             console.log('Error while getting feed');
         });
-
     }]);

@@ -7,7 +7,7 @@
         <div id="loginInfo" class="border-round">
             <form ng-submit="submit(loginForm)" class="pure-form" id="myLogin" ng-model="loginForm">
                 <div class="center-text">
-                    <h1>Login</h1>or <a ng-click="goTo('/register')">Sign up</a>
+                    <h1>Login</h1>or <a ui-sref="register">Sign up</a>
                 </div>
                 <br/>
                 <hr class="hr-style"/>
@@ -15,7 +15,7 @@
                 <fieldset class="pure-group">
                     <input ng-model="loginForm.username" type="email" class="pure-input-1" name="email" id="email" placeholder="Email" tabindex=1/>
                     <input ng-model="loginForm.password" type="{{showpw ? 'text':'password'}}" class="pure-input-1" name="password" id="password" placeholder="Password" tabindex=2/>
-                    <a ng-click="goTo('/reset')" class="forgot-password">Forgot password</a>
+                    <a ui-sref="resetPw" class="forgot-password">Forgot password</a>
                 </fieldset>
                 <p ng-if="error.err" class="center-text center-content error">{{error.msg}}</p>
                 <div class="pure-g">

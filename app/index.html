@@ -35,7 +35,7 @@
     <div id="content" >
         <navbar></navbar>
         <modal-dialog show='$root.modal' width='750px' height='400px'></modal-dialog>
-        <div ng-view>
+        <div ui-view>
         </div>
         <!-- BELOW TEMPLATE -->
         <div class="footer">
@@ -47,10 +47,13 @@
 
 <!-- LIBRARIES -->
 <script src="bower_components/angular/angular.min.js"></script>
-<script src="bower_components/angular-route/angular-route.min.js"></script>
+<!--<script src="bower_components/angular-route/angular-route.min.js"></script>-->
+<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
-<script src="bower_components/ngstorage/ngStorage.min.js"></script>
-<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<!--<script src="bower_components/ngstorage/ngStorage.min.js"></script>-->
+<!--<script src="bower_components/angular-cookies/angular-cookies.js"></script>-->
+<script src="bower_components/a0-angular-storage/dist/angular-storage.min.js"></script>
+<script src="bower_components/angular-jwt/dist/angular-jwt.min.js"></script>
 
 <!-- APPLICATION -->
 <script src="app.js"></script>

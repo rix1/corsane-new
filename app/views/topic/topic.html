@@ -9,11 +9,12 @@
             <div class="pure-u-1-4"></div>
             <div class="article-preview pure-u-lg-1-2">
                 <div class="pure-u-2-24">
-                    <img class="pure-img clip-circle" src="{{article.author.profile_image}}" alt="Profile Image"/>
+                    <img class="pure-img clip-circle" src="static/images/user_icon.png" alt="Profile Image"/>
                 </div>
                 <div class="pure-u-7-8">
                     <h1 ng-click="getArticle(article.id)" class="hoverhand"><!--<span>{{$index+1}}</span>--> {{article.title}}</h1>
-                    <p>By: Rikard Eide</p>
+                    <p>{{article.introduction}}</p>
+                    <p class="byline">By: <a ui-sref="pubProfile({id: article.author.id})">{{article.author.first_name}} {{article.author.last_name}}</a></p>
                 </div>
             </div>
         </div>

@@ -2,10 +2,12 @@
 
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
-    'ngRoute',
-    'ngStorage',
+    //'ngRoute',
+    //'ngStorage',
+    'ui.router',
+    'angular-storage',
+    'angular-jwt',
     'ngSanitize',
-    'ngCookies',
 
     'myApp.config',
     'myApp.welcome',
@@ -31,78 +33,106 @@ angular.module('myApp', [
     'myApp.services'
 ])
 
-    .config(['$httpProvider', '$routeProvider', function($httpProvider, $routeProvider) {
-        $routeProvider.otherwise({redirectTo: '/'});
+    .config(['$httpProvider', '$urlRouterProvider', 'jwtInterceptorProvider',
+        function ($httpProvider, $urlRouterProvider, jwtInterceptorProvider) {
+            $urlRouterProvider.otherwise('welcome');
 
-        $httpProvider.defaults.withCredentials = true;
-        $httpProvider.defaults.xsrfHeaderName = 'x-csrf-token';
-        $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
-        $httpProvider.defaults.headers.post['Content-Type'] =  'application/x-www-form-urlencoded';
+            $httpProvider.defaults.withCredentials = true;
+            $httpProvider.defaults.xsrfHeaderName = 'x-csrf-token';
+            $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
+            $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
-        $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function ($q, $location, $localStorage) {
-            return {
-                'request': function (config) {
-                    config.headers = config.headers || {};
-                    if ($localStorage.token) {
-                        config.headers.Authorization = 'Bearer ' + $localStorage.token;
+            jwtInterceptorProvider.tokenGetter = ['AuthStore', function (AuthStore) {
+                return AuthStore.get('jwt');
+            }];
+
+            $httpProvider.interceptors.push('jwtInterceptor');
+
+
+            $httpProvider.interceptors.push(['$q', function ($q) {
+                return {
+                    'request': function (config) {              // Is run once per request
+                        return config;
+                    },
+
+                    'responseError': function (response) {
+                        console.log("Response error: " + response.status);
+                        console.log(response);
+
+                        if(response.status === 401 || response.status === 403){
+                            // Go login failed...
+                        }
+                        return $q.reject(response);
                     }
-                    return config;
-                },
-                'responseError': function (response) {
-                    if (response.status === 401 || response.status === 403) {
-                        $location.path('/login');
-                    }
-                    return $q.reject(response);
-                }
-            };
-        }]);
-        //$locationProvider.html5Mode(true);
-    }])
 
-    .run(['$http', '$rootScope', '$location', '$localStorage', 'authService', 'apiService',
-        function($http, $rootScope, $location, $localStorage, authService, apiService) {
+                };
+            }]);
+            //$locationProvider.html5Mode(true);
+        }])
 
-            // Global function for changing view
-            $rootScope.goTo = function(route, params) {
-                var searchParams = params || {};
-                return $location.path(route).search(searchParams);
-            };
+    .run(['$http', '$rootScope', '$state', 'authService', 'jwtHelper', 'AuthStore', 'userService',
+        function ($http, $rootScope, $state, authService, jwtHelper, AuthStore, User) {
 
-            // Add CSRF token to header
-            authService.getCSRF().then(function(token) {
+            authService.getCSRF().then(function (token) {       // Add CSRF token to header
                 $http.defaults.headers.common['x-csrf-token'] = token;
 
-                // Get user from token (if it exists)
-                var user = apiService.getClaimsFromToken();
+                //console.log(token);
 
-                // Set user from token
-                $rootScope.user = apiService.getClaimsFromToken();
-                if(typeof $rootScope.user == 'undefined') {
-                    $rootScope.user = false;
+                // The token should be refreshed each time the user opens the app
+                var token = AuthStore.get('jwt');
+
+                if(!token){                                     // No token exist...
+
                 }else{
+                    if(jwtHelper.isTokenExpired(token)) {       // Token is expired.
+                        AuthStore.remove('jwt');
+                        User.currentUser().setAuthenticated(false); // This should maybe be done in service?
+                        $state.go('login');
+                    }else{                                      // Token is valid. Refresh token and continue
+                        authService.refreshToken()
+                            .then(function (res) {
+                                //console.log("token refreshed");
+                                jwtHelper.decodeToken(res.token);
+                            }, function (err) {
+                                console.log(err);
+                                //console.log("Could not reach server");
+                            });
+                    }
                 }
-                //console.log($rootScope.user);
 
-                // If user exists, but is expired
-                if(user && authService.isTokenExpired(user)) {
-                    delete $localStorage.token;
-                    delete $rootScope.user;
-                    return $rootScope.goTo('/login');
+            });
+            $rootScope.$on('$stateChangeStart', function (event, to, from) {
+
+                //console.log("==== ROUTE IS CHANGING FROM: ");
+                //console.log(from);
+                //console.log(to);
+                //console.log("==== ROUTE HAS CHANGED: ");
+
+                var requireLogin = to.data.login;
+                var admin = to.data.admin;
+
+                var userAuth = User.currentUser().isAuthenticated();
+                var userAdmin = userAuth ? User.currentUser().getUser().is_admin:false;
+
+                if(userAuth){
+                    //$urlRouterProvider.otherwise('feed');
                 }
 
-                // If user exists, and has not expired
-                else if(user) {
-                    authService.refreshToken().then(
-                        function(res) {
-                            // Add token to header
-                            $http.defaults.headers.common.Authorization = 'Bearer ' + res.token;
-                        },
-                        function(err) {
-                            //console.log(err);
-                            return $rootScope.goTo('/login');
-                        });
+                if(requireLogin && !userAuth){
+                    event.preventDefault();
+                    //event.preventDefault();
+                    // Redirect to login
+                    $state.go('login');
+                }
+
+                if(admin && !userAdmin){
+                    //console.log("NO PERMISSION HERE");
+                    event.preventDefault();
                 }
             });
-
         }
-    ]);
+    ])
+
+    .factory('AuthStore', ['store', function (store) {
+        return store.getNamespacedStore('authStorage');
+    }]);

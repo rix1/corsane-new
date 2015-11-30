@@ -1,25 +1,28 @@
 'use strict';
 
-angular.module('myApp.resetPassword', ['ngRoute'])
+angular.module('myApp.resetPassword', ['ui.router'])
 
-    .config(['$routeProvider', function($routeProvider) {
-        $routeProvider.when('/reset', {
-            templateUrl: 'views/resetPassword/resetPassword.html',
-            controller: 'resetPasswordCtrl'
-        })
+    .config(['$stateProvider', function($stateProvider) {
+
+        $stateProvider
+            .state('resetPw', {
+                url: "/reset",
+                templateUrl: 'views/resetPassword/resetPassword.html',
+                controller: 'resetPasswordCtrl',
+                data: {
+                    login: true,
+                    admin: false
+                }
+            });
     }])
 
-    .controller('resetPasswordCtrl', ['$scope', '$rootScope', '$location', 'userService',
-        function($scope, $rootScope, $location, userService) {
+    .controller('resetPasswordCtrl', ['$scope', '$rootScope', '$state', 'userService',
+        function($scope, $rootScope, $state, userService) {
 
             $scope.pending = false;
             $scope.error = {err:false, msg:""};
             $scope.emailSent = false;
 
-            // Redirect logged in users to their profile
-            if($rootScope.user) {
-                $location.path("/profile");
-            }
 
             $scope.submit = function (form) {
                 $scope.error.err = false;
