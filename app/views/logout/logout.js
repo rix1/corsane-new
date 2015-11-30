@@ -23,6 +23,6 @@ angular.module('myApp.logout', ['ui.router'])
                 .then(function (res) {
                     $state.go('welcome');
                 }, function (err) {
-                    console.log(err);
+                    //console.log(err);
                 });
         }]);

@@ -56,8 +56,8 @@ angular.module('myApp', [
                     },
 
                     'responseError': function (response) {
-                        console.log("Response error: " + response.status);
-                        console.log(response);
+                        //console.log("Response error: " + response.status);
+                        //console.log(response);
 
                         if(response.status === 401 || response.status === 403){
                             // Go login failed...
@@ -94,7 +94,7 @@ angular.module('myApp', [
                                 //console.log("token refreshed");
                                 jwtHelper.decodeToken(res.token);
                             }, function (err) {
-                                console.log(err);
+                                //console.log(err);
                                 //console.log("Could not reach server");
                             });
                     }

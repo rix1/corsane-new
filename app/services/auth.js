@@ -45,7 +45,7 @@ angular.module('myApp.services')
                         defer.resolve(res);
                     }).error(function (err, data, status, config) {
                         //var error = {};
-                        console.log(err);
+                        //console.log(err);
                         //error.message = "Wops - validation error. Try again!";
                         defer.reject(err)
                     });

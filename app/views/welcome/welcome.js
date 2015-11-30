@@ -27,7 +27,7 @@ angular.module('myApp.welcome', ['ui.router'])
                     $scope.topics = topics;
                 },
                 function (err) {
-                    console.log(err);
+                    //console.log(err);
                 });
 
 

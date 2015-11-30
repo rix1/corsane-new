@@ -24,10 +24,10 @@ angular.module('myApp.login', ['ui.router'])
 
             // Redirect logged in users to their profile
             if(userService.currentUser().isAuthenticated()) {
-                console.log("LOGINCTRL: user is authenticated");
+                //console.log("LOGINCTRL: user is authenticated");
                 $state.go('myProfile');
             }else{
-                console.log("LOGINCTRL: user is NOT authenticated");
+                //console.log("LOGINCTRL: user is NOT authenticated");
             }
 
             $scope.submit = function (form) {
@@ -46,9 +46,9 @@ angular.module('myApp.login', ['ui.router'])
                 authService.login(credentials)
                     .then(function (res) {
                         $state.go('myProfile');
-                        console.log("login successful");
-                        var tokenPayload = jwtHelper.decodeToken(res.token);
-                        console.log(tokenPayload);
+                        //console.log("login successful");
+                        //var tokenPayload = jwtHelper.decodeToken(res.token);
+                        //console.log(tokenPayload);
                     }, function (err) {
                         $scope.pending = false;
                         $scope.error.msg = err.message;
