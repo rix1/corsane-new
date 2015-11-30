@@ -22,6 +22,8 @@ angular.module('myApp.services')
                     }).error(function (err, data, status, config) {
                         console.log("login error: ");
                         console.log(err);
+                        console.log(data);
+
                         defer.reject(err);
                     });
                     return defer.promise;
