@@ -20,6 +20,8 @@ angular.module('myApp.services')
 
                         defer.resolve(res);
                     }).error(function (err, data, status, config) {
+                        console.log("login error: ");
+                        console.log(err);
                         defer.reject(err);
                     });
                     return defer.promise;
