@@ -49,7 +49,7 @@ angular.module('myApp.register', ['ui.router'])
 
                         authService.login(user).then(
                             function (res) {
-                                $scope.go('feed')
+                                $state.go('feed');
                             },
                             function (err) {
                                 $scope.pending = false;

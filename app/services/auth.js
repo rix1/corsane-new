@@ -12,7 +12,8 @@ angular.module('myApp.services')
                         transformRequest: apiService.transformRequest,
                         data: userCredentials
                     }).success(function (res) {
-
+                        console.log("login: ");
+                        console.log(res);
                         User.currentUser().setAuthenticated(true);
                         User.currentUser().setUser(jwtHelper.decodeToken(res.token));
                         AuthStore.set('jwt', res.token);                    // Save userToken
@@ -60,6 +61,8 @@ angular.module('myApp.services')
                         url: config.baseUrl + '/csrfToken',
                         withCredentials: true
                     }).success(function (data) {
+                        console.log("csrf token");
+                        console.log(data);
                         q.resolve(data._csrf);
                     }).error(function (err) {
                         q.reject(err);
