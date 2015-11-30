@@ -21,6 +21,7 @@
   //background: #d1dbbd;
   //background: #91AA9D;
   background: @blue-light;
+  height: 200px;
   //background: #193441;
 }
 
@@ -63,22 +64,24 @@
   }
 }
 
+span {
+  position: relative;
+  bottom: 0;
+  display: block;
+  font-size: 1em;
+  padding: 2em;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.5);
+  //*color: #fff;
+}
+
+
 .topic-box-icon {
   font-size: 6em;
   font-weight: 100;
 
   i {
     //font-size: 10px;
-  }
-
-  span {
-    margin-top: 1em;
-    display: block;
-    font-size: 0.15em;
-    padding-bottom: 2em;
-    font-weight: 400;
-    color: rgba(255, 255, 255, 0.5);
-    //*color: #fff;
   }
 
   @media (max-width: @screen-xs-max) {
