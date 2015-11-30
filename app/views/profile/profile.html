@@ -52,17 +52,21 @@
             <button class="button-error pure-button pure-u-1-2" type="button" ng-confirm-click="Are you sure? This will delete your account forever!" ng-confirmed="deleteAccount()">Delete account</button>
 
         </div>
+    </div>
+    <div class="pure-u-1 pure-u-sm-3-4 center-content center-text account-settings">
         <div class="v-space-2"></div>
         <hr class="hr-style"/>
-        <p>Your articles:</p>
-        <div class="l-box" ng-repeat="article in myArticles">
+        <p ng-if="owner">Your Articles:</p>
+        <p ng-if="!owner">Articles:</p>
+        <div class="l-box" ng-repeat="article in articles">
             <div class="tinyList">
                 <a href="#/article/{{article.id}}">
                     <p>{{article.title}}</p>
-                    <p><small>Published: {{article.published}} | Created: {{article.date_created}}</small></p>
+                    <p ng-if="!owner"><small>Created: {{article.date_created}}</small></p>
+                    <p ng-if="owner"><small>Published: {{article.published}} | Created: {{article.date_created}}</small></p>
                 </a>
-                <button class="button-error pure-button pure-u-1-2" type="button" ng-confirm-click="Are you sure? This will delete your article forever!" ng-confirmed="deleteArticle(article)">Delete article</button>
-                
+                <button ng-if="owner" class="button-error pure-button pure-u-1-2" type="button" ng-confirm-click="Are you sure? This will delete your article forever!" ng-confirmed="deleteArticle(article)">Delete article</button>
+
             </div>
         </div>
     </div>

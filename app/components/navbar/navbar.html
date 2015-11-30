@@ -8,17 +8,17 @@
     <div class="outer">
         <div class="flexbar">
             <p class="logo">lessonlist</p>
-            <a ng-click="checked()" ng-hide="$root.user" ui-sref="welcome" class="nav-item"
+            <a ng-click="checked()" ng-hide="user" ui-sref-active="active" ui-sref="welcome" class="nav-item"
             >Home</a>
-            <a ng-click="checked()" ui-sref="topics" class="nav-item">Topics</a>
-            <a ng-click="checked()" ui-sref="feed" class="nav-item">Feed</a>
-            <div ng-show="$root.user" class="nav-item">
-                <a ng-click="checked()" ui-sref="myProfile">Profile <small>/</small></a>
-                <a ng-click="checked()" ui-sref="logout">Logout</a>
+            <a ng-click="checked()" ui-sref-active="active" ui-sref="topics" class="nav-item">Topics</a>
+            <a ng-click="checked()" ui-sref-active="active" ui-sref="feed" class="nav-item">Feed</a>
+            <div ng-show="user" class="nav-item">
+                <a ng-click="checked()" ui-sref-active="active" ui-sref="myProfile">Profile</a><small> /</small>
+                <a ng-click="checked()" ui-sref-active="active" ui-sref="logout">Logout</a>
             </div>
-            <div ng-hide="$root.user" class="nav-item">
-                <a ng-click="checked()" ui-sref="login">Login <small>/</small></a>
-                <a ng-click="checked()" ui-sref="register">Register</a>
+            <div ng-hide="user" class="nav-item">
+                <a ng-click="checked()" ui-sref-active="active" ui-sref="login">Login</a><small> /</small>
+                <a ng-click="checked()" ui-sref-active="active" ui-sref="register">Register</a>
             </div>
         </div>
     </div>

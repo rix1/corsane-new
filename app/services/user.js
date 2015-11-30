@@ -81,7 +81,6 @@ angular.module('myApp.services')
                 },
 
                 currentUser: function () {
-                    //return localUser.userObject;
                     return {
                         getUser: function () {
                             return localUser.userObject;

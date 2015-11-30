@@ -8,21 +8,14 @@ angular.module('myApp.services')
                 getTopic: function(id) {
 
                     var defer = $q.defer();
-                    console.log("i am sending: ");
-                    console.log(id);
-                    console.log("to");
-                    console.log(config.baseUrl + '/topic/' + id);
 
                     $http.get(config.baseUrl + '/topic/' + id)
                         .success(function(res) {
-                            console.log(res);
                             defer.resolve(res);
                         })
                         .error(function(err, status) {
-                            console.log(err);
                             defer.reject(err)
                         });
-                    console.log("=============== error has happened =======");
                     return defer.promise;
                 },
 

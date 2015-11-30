@@ -19,7 +19,7 @@ angular.module('myApp.welcome', ['ui.router'])
     .controller('welcomeCtrl', ['$scope', 'topicService', '$state',
         function($scope, topicService, $state) {
 
-            console.log("WelcomeWelcomeWelcome!");
+            //console.log("WelcomeWelcomeWelcome!");
 
             // Get topics and display
             topicService.getAllTopics().then(

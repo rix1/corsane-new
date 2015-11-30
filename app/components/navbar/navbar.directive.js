@@ -11,35 +11,16 @@ angular.module('myApp.directives.navbar', [])
         };
     }])
 
-    .controller('navCtrl', ['$rootScope', '$scope', '$state', '$timeout', function($rootScope, $scope, $state, $timeout) {
+    .controller('navCtrl', ['$scope', '$state', 'userService', '$rootScope',
+        function($scope, $state, User, $rootScope) {
 
-        $scope.checked = function () {
-            $scope.check = false;
-        };
+            $scope.user = User.currentUser().isAuthenticated();
 
-        $scope.isActive = function (destination) {
-            console.log($state.current);
-            return true; // todo: NEVER FORGET... THIS..
-            //return (destination === $state.path());
-        };
-        $scope.model = {};
-        $scope.model.check = true;
+            $rootScope.$on('$stateChangeStart', function (event, to, from) {
+                $scope.user = User.currentUser().isAuthenticated();
+            });
 
-        $scope.open = 'custom-wrapper';
-        $scope.toggle = '';
-        $scope.list = '';
-
-
-        $scope.$watch('model.check', function (old, newval) {
-
-            if(old){
-                $scope.open = 'custom-wrapper';
-                $scope.toggle = '';
-                $scope.list = 'pure-menu-horizontal';
-            }else{
-                $scope.open = 'custom-wrapper open';
-                $scope.list = '';
-                $scope.toggle = 'x';
-            }
-        });
-    }]);
+            $scope.checked = function () {
+                $scope.check = false;
+            };
+        }]);

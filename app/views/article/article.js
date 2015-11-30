@@ -38,29 +38,36 @@ angular.module('myApp.article', ['ui.router'])
     .controller('articleCtrl', ['$state', '$scope', '$stateParams', 'articleService', 'userService',
         function ($state, $scope, $stateParams, articleService, userService) {
             var articleId = $stateParams.id;
-            $scope.article = {};
-            $scope.owner = false;
 
-            articleService.getArticle(articleId).then(
-                function (article) {
-                    console.log(article);
-                    //if(userService.currentUser().isAuthenticated() &&
-                    //    article.author.id == userService.currentUser().getUser().id){
-                    //    $state.go('editArticle', {id: articleId});
+            if(articleId.length < 1){
+                //console.log("duset");
+                $state.go('topics');
+            }else {
 
-                        /*
-                         * Two remarks: this is a waste because:
-                         * - The article is already feteched from the server, and should be passed along to the next view (in the next view the article is fetched again
-                         * - todo: This should be refactored to only include a button that enable "edit-mode"
-                         */
+                $scope.article = {};
+                $scope.owner = false;
 
-                    //}
-                    $scope.article = article;
-                },
-                function (err) {
-                    //console.log(err);
-                }
-            );
+                articleService.getArticle(articleId).then(
+                    function (article) {
+                        //console.log(article);
+                        if (userService.currentUser().isAuthenticated() &&
+                            article.author.id == userService.currentUser().getUser().id) {
+                            $scope.owner = true;
+
+                            /*
+                             * Two remarks: this is a waste because:
+                             * - The article is already feteched from the server, and should be passed along to the next view (in the next view the article is fetched again
+                             * - todo: This should be refactored to only include a button that enable "edit-mode"
+                             */
+
+                        }
+                        $scope.article = article;
+                    },
+                    function (err) {
+                        //console.log(err);
+                    }
+                );
+            }
         }])
 
     .controller('editArticleCtrl', ['$state', '$scope', '$stateParams', 'articleService', 'topicService', 'paragraphService', 'userService',

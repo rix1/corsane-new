@@ -22,15 +22,12 @@ angular.module('myApp.topic', ['ui.router'])
             $scope.authors = [];
 
             var topicId = $stateParams.id;
-            console.log("or here?");
             topicService.getTopic(topicId).then(
                 function(topic) {
-                    console.log("or after its received?");
                     $scope.topic = topic;
                 },
                 function(err) {
-                    console.log("or after its received?");
-                    console.log(err);
+                    //console.log(err);
                 }
             );
             

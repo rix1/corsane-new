@@ -28,8 +28,10 @@ angular.module('myApp.profile', ['ui.router'])
 
 	.controller('profileCtrl', ['$scope', '$stateParams', 'userService', '$state',
 		function($scope, $stateParams, userService, $state) {
+			$scope.articles = {};
 
 			var userId = $stateParams.id;
+
 			$scope.owner = false;
 
 			// If we ever want to show people a "public" profile, remove this redirect.
@@ -40,30 +42,43 @@ angular.module('myApp.profile', ['ui.router'])
 				userService.getUser(userId).then(
 					function (res) {
 						$scope.user = res;
+						getArticles();
 					},
 					function (err) {
-						console.log(err);
+						//console.log(err);
 					});
 			}
+
+			var getArticles = function () {
+				userService.getUser($scope.user.id).then(
+					function (res) {
+						$scope.articles = res.articles;
+						//console.log(res);
+					},
+					function (err) {
+						//console.log(err);
+					});
+			};
+
 		}
 	])
 
 	.controller('myProfileCtrl', ['$state', '$scope', 'userService', 'articleService',
 		function($state, $scope, userService, articleService) {
-			console.log("myProfileCtrol");
-			$scope.myArticles = {};
+			$scope.articles = {};
 
 			$scope.user = userService.currentUser().getUser();
 			$scope.owner = true;
+			//console.log($scope.user.id);
 
 
 			var getArticles = function () {
 				userService.getUser($scope.user.id).then(
 					function (res) {
-						$scope.myArticles = res.articles;
+						$scope.articles = res.articles;
 					},
 					function (err) {
-						console.log(err);
+						//console.log(err);
 					});
 			};
 
@@ -90,7 +105,7 @@ angular.module('myApp.profile', ['ui.router'])
 							$scope.passwordForm = false;
 						},
 						function(err) {
-							$scope.error = err;
+							//$scope.error = err;
 						});
 				}
 			};
@@ -102,7 +117,7 @@ angular.module('myApp.profile', ['ui.router'])
 						getArticles();
 					},
 					function (err) {
-						console.log(err);
+						//console.log(err);
 					});
 			};
 
@@ -112,7 +127,7 @@ angular.module('myApp.profile', ['ui.router'])
 						$scope.logout();
 					},
 					function(err) {
-						console.log("Something went wrong")
+						//console.log(err);
 					});
 			};
 		}

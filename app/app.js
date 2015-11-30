@@ -76,7 +76,7 @@ angular.module('myApp', [
             authService.getCSRF().then(function (token) {       // Add CSRF token to header
                 $http.defaults.headers.common['x-csrf-token'] = token;
 
-                console.log(token);
+                //console.log(token);
 
                 // The token should be refreshed each time the user opens the app
                 var token = AuthStore.get('jwt');
@@ -91,11 +91,11 @@ angular.module('myApp', [
                     }else{                                      // Token is valid. Refresh token and continue
                         authService.refreshToken()
                             .then(function (res) {
-                                console.log("token refreshed");
+                                //console.log("token refreshed");
                                 jwtHelper.decodeToken(res.token);
                             }, function (err) {
                                 console.log(err);
-                                console.log("Could not reach server");
+                                //console.log("Could not reach server");
                             });
                     }
                 }
@@ -103,12 +103,11 @@ angular.module('myApp', [
             });
             $rootScope.$on('$stateChangeStart', function (event, to, from) {
 
-                console.log("==== ROUTE IS CHANGING FROM: ");
-                console.log(from);
-                console.log(to);
-                console.log("==== ROUTE HAS CHANGED: ");
+                //console.log("==== ROUTE IS CHANGING FROM: ");
+                //console.log(from);
+                //console.log(to);
+                //console.log("==== ROUTE HAS CHANGED: ");
 
-                console.log("APP.js: trying to change state");
                 var requireLogin = to.data.login;
                 var admin = to.data.admin;
 
@@ -127,7 +126,7 @@ angular.module('myApp', [
                 }
 
                 if(admin && !userAdmin){
-                    console.log("NO PERMISSION HERE");
+                    //console.log("NO PERMISSION HERE");
                     event.preventDefault();
                 }
             });

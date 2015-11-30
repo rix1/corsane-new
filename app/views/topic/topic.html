@@ -13,7 +13,8 @@
                 </div>
                 <div class="pure-u-7-8">
                     <h1 ng-click="getArticle(article.id)" class="hoverhand"><!--<span>{{$index+1}}</span>--> {{article.title}}</h1>
-                    <p>{{article}}</p>
+                    <p>{{article.introduction}}</p>
+                    <p class="byline">By: <a ui-sref="pubProfile({id: article.author.id})">{{article.author.first_name}} {{article.author.last_name}}</a></p>
                 </div>
             </div>
         </div>

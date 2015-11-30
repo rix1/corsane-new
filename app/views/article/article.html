@@ -6,7 +6,7 @@
 </div>
 
 <div class="pure-g">
-    <div class="l-content">
+    <div class="l-content paragraph-box">
         <div ng-repeat="paragraph in article.paragraphs">
             <div class="pure-u-1 pure-u-md-1-4"></div>
             <div class="pure-u-1 pure-u-md-1-2">
@@ -16,10 +16,19 @@
         </div>
     </div>
 </div> <!-- end l-content -->
-<div class="pure-g">
+<div ng-if="!owner" class="pure-g">
     <div class="topic-box">
         <div class="pure-u-1">
-            <p>Inspired by this article? Write your own <a style="font-weight: 600" href="#/profile">now</a>.</p>
+            <p>Inspired by this article? Write your own <a style="font-weight: 600" ui-sref="myProfile">now</a>.</p>
         </div>
     </div> <!-- end topics-boxes-->
+</div>
+
+<div ng-if="owner" class="pure-g">
+    <div class="v-space-2"></div>
+    <div class="topic-box">
+        <div class="pure-u-1">
+            <button class="pure-button pure-button-primary blue-bg pure-u-1" type="button" ui-sref="editArticle({ id: article.id })">Edit Article</button>
+        </div>
+    </div>
 </div>
